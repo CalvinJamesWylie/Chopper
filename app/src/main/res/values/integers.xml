@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //Integers referring to the models
+    <integer name="HELICOPTER">     0</integer>
+    <integer name="BASE">           1</integer>
+    <integer name="BULLET">         2</integer>
+    <integer name="TERRAIN">        3</integer>
+    <integer name="TOTAL_MODELS">   4</integer>
+
+    //Integers referring to the shaders
+    <integer name="TEXTURE_SHADER"> 0</integer>
+    <integer name="COLOR_SHADER">   1</integer>
+
+</resources>
