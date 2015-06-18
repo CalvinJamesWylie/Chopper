@@ -42,6 +42,7 @@ import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.ColorShaderProgram;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShaderProgram;
+import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 
 
@@ -91,6 +92,10 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         for (GameObject go: m_GamePack.m_RenderList){
             go.loadTexture(m_Context);
         }
+
+        for (UIElement uie: m_GamePack.m_UIRenderList){
+            uie.loadTexture(m_Context);
+        }
     }
 
 
@@ -98,23 +103,28 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height); //Set the viewport to fill the entire surface.
         m_GamePack.m_Camera.onSurfaceChanged(width, height);
+        m_GamePack.m_UICamera.onSurfaceChanged(width, height);
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
         //Log.i(tag, "onDraw");
         glClear(GL_COLOR_BUFFER_BIT);
+
         m_GamePack.m_Camera.onDrawFrame();
         for(GameObject go: m_GamePack.m_RenderList){
-
             m_TextureProgram.useProgram();
             m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getTexture());
             m_TextureProgram.bindData(go.getVertexData());
             go.draw();
         }
 
-
-
-
+        m_GamePack.m_UICamera.onDrawFrame();
+        for (UIElement uie: m_GamePack.m_UIRenderList){
+            m_TextureProgram.useProgram();
+            m_TextureProgram.setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), uie.getTexture());
+            m_TextureProgram.bindData(uie.getVertexData());
+            uie.draw();
+        }
     }
 }

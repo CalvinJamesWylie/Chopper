@@ -30,7 +30,21 @@ public class VertexArray {
         m_FloatBuffer.position(0);
     }
 
-    public void scale(float multiplier){
+    public void scaleXYZ(float multiplier){
+//TODO fill in
+    }
+
+    public void scaleXY(float multiplier){
+
+    }
+
+    public void scaleX(float multiplier) {
+
+    }
+    public void scaleY(float multiplier){
+
+    }
+    public void scaleZ(float multiplier){
 
     }
 }

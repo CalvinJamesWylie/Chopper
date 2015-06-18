@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
     private GameLogic m_Logic;
     private GameThread m_GameThread;
     private MainRenderer m_MainRenderer;
+    private Point m_DisplaySize;
 
 
 
@@ -52,8 +53,8 @@ public class MainActivity extends Activity {
 
         WindowManager wm = (WindowManager) this.getSystemService(this.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getRealSize(size);
+        m_DisplaySize = new Point();
+        display.getRealSize(m_DisplaySize);
 
         if(supportEs2){
             m_GlSurfaceView = new GLSurfaceView(this);
@@ -63,7 +64,7 @@ public class MainActivity extends Activity {
             m_GlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
             m_RendererSet  = true;
 
-            m_TouchHandler = new TouchHandler(size.x, size.y);
+            m_TouchHandler = new TouchHandler(m_DisplaySize.x, m_DisplaySize.y, R.drawable.orange);
             m_Logic        = new GameLogic(this, m_GamePack, m_TouchHandler);
             m_GameThread   = new GameThread(m_Logic, m_GlSurfaceView);
             m_GameThread.start();
@@ -87,6 +88,9 @@ public class MainActivity extends Activity {
 
                 float touchX =  MotionEventCompat.getX(event, index);
                 float touchY =  MotionEventCompat.getY(event, index);
+
+                touchX -= m_DisplaySize.x/2;
+                touchY += m_DisplaySize.y/2;
 
                 m_TempTouchVector.set(touchX, touchY);
 
@@ -113,6 +117,9 @@ public class MainActivity extends Activity {
 
                             touchX = MotionEventCompat.getX(event, index);
                             touchY = MotionEventCompat.getY(event, index);
+
+                            touchX -= m_DisplaySize.x/2;
+                            touchY += m_DisplaySize.y/2;
 
                            // normalisedX =   (x / (float) v.getWidth())  * 2 - 1;
                             //normalisedY = -((y / (float) v.getHeight()) * 2 - 1);
