@@ -44,4 +44,20 @@ public class Rotation {
     public void increment(){
         m_Angle++;
     }
+
+    public void setAngle(float angle) {
+        m_Angle = angle;
+    }
+
+    public void setXAxis(float xAxis) {
+        m_XAxis = xAxis;
+    }
+
+    public void setYAxis(float yAxis) {
+        m_YAxis = yAxis;
+    }
+
+    public void setZAxis(float zAxis) {
+        m_ZAxis = zAxis;
+    }
 }

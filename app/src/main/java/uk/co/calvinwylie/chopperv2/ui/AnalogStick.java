@@ -39,7 +39,8 @@ public class AnalogStick {
         m_Active = true;
         m_AssociatedPointerId = id;
 
-        m_CenterMarker.setPosition(new Vector3()); //CHange back to center
+        Log.i(tag, ""+center.toString());
+        m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, -center.Y));
         m_CenterMarker.setVisible(true);
     }
 
@@ -93,6 +94,8 @@ public class AnalogStick {
         }else{
             m_Angle = 0;
         }
+
+        m_CenterMarker.setRotation((float)Math.toDegrees(-m_Angle), 0.0f, 1.0f, 0.0f);
 
 //        if(!m_Moved && m_DeltaPosition.length() > 10){
 //            m_Moved = true;

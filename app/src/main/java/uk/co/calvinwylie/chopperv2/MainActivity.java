@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
                 float touchY =  MotionEventCompat.getY(event, index);
 
                 touchX -= m_DisplaySize.x/2;
-                touchY += m_DisplaySize.y/2;
+                touchY -= m_DisplaySize.y/2;
 
                 m_TempTouchVector.set(touchX, touchY);
 
@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
                             touchY = MotionEventCompat.getY(event, index);
 
                             touchX -= m_DisplaySize.x/2;
-                            touchY += m_DisplaySize.y/2;
+                            touchY -= m_DisplaySize.y/2;
 
                            // normalisedX =   (x / (float) v.getWidth())  * 2 - 1;
                             //normalisedY = -((y / (float) v.getHeight()) * 2 - 1);
@@ -142,7 +142,6 @@ public class MainActivity extends Activity {
         setContentView(m_GlSurfaceView);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
