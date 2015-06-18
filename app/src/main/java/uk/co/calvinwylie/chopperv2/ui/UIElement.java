@@ -21,8 +21,8 @@ public abstract class UIElement {
 
     private final String tag = this.getClass().getSimpleName();
 
-    static float XScale = 4.0f;
-    static float YScale = 4.0f;
+    static float XScale = 8f;
+    static float YScale = 8f;
 
     private static final float[] VERTEX_DATA = {
             //Element Format: X,Y,Z,U,V;
@@ -75,7 +75,6 @@ public abstract class UIElement {
 
     public void draw() {
         if(m_Visible) {
-            Log.i(tag, "drawing UIE");
             glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
         }
     }
@@ -86,10 +85,20 @@ public abstract class UIElement {
 
     public void setPosition(Vector3 position){
         m_Position = position;
+        updateModelMatrix();
     }
 
+
+    public void setRotation(float angle, float xAxis, float yAxis, float zAxis){
+        m_Rotation.setAngle(angle);
+        m_Rotation.setXAxis(xAxis);
+        m_Rotation.setYAxis(yAxis);
+        m_Rotation.setZAxis(zAxis);
+        updateModelMatrix();
+    }
     public void setRotation(Rotation rotation){
         m_Rotation = rotation;
+        updateModelMatrix();
     }
 
     public float[] getModelMatrix() {
