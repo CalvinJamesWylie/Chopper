@@ -11,19 +11,22 @@ public class TouchHandler {
 
     private String tag = this.getClass().getSimpleName();
 
-    public AnalogStick leftAnalogStick  = new AnalogStick();
-    public AnalogStick rightAnalogStick = new AnalogStick();
+    public AnalogStick leftAnalogStick;
+    public AnalogStick rightAnalogStick;
 
     private int m_ScreenWidth, m_ScreenHeight;
 
-    public TouchHandler(int screenWidth, int screenHeight){
+    public TouchHandler(int screenWidth, int screenHeight, int textureResourceId){
         m_ScreenWidth = screenWidth;
         m_ScreenHeight = screenHeight;
+
+        leftAnalogStick  = new AnalogStick(textureResourceId);
+        rightAnalogStick = new AnalogStick(textureResourceId);
     }
 
     public void handleActionDown(Vector2 touchVec, int pointerId) {
         Log.i(tag, "Down");
-        if (touchVec.X < m_ScreenWidth/2){
+        if (touchVec.X < 0){//m_ScreenWidth/2){
             leftAnalogStick.activate(touchVec, pointerId);
         }else {
             rightAnalogStick.activate(touchVec, pointerId);

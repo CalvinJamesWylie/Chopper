@@ -2,7 +2,10 @@ package uk.co.calvinwylie.chopperv2.ui;
 
 import android.util.Log;
 
+import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
+import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 
 /**
  * Created by Calvin on 29/05/2015.
@@ -14,6 +17,7 @@ public class AnalogStick {
     private Vector2 m_CurrentPosition = new Vector2();
     private Vector2 m_ButtonPressPos  = new Vector2();
     private Vector2 m_DeltaPosition   = new Vector2();
+
     private float m_Angle = 0.0f;
     private float m_MaxRange = 75.0f;
 
@@ -22,8 +26,10 @@ public class AnalogStick {
 
     private int m_AssociatedPointerId = -1;
 
-    public AnalogStick(){
+    private UISprite m_CenterMarker;
 
+    public AnalogStick(int textureResourceId){
+        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 1.0f , 1.0f, textureResourceId); //TODO add params
     }
 
     public void activate(Vector2 center, int id) {
@@ -32,6 +38,9 @@ public class AnalogStick {
         m_DeltaPosition = new Vector2();
         m_Active = true;
         m_AssociatedPointerId = id;
+
+        m_CenterMarker.setPosition(new Vector3()); //CHange back to center
+        m_CenterMarker.setVisible(true);
     }
 
     public void deactivate(Vector2 lastTouch) {
@@ -39,6 +48,7 @@ public class AnalogStick {
             m_ButtonPressPos = lastTouch;
         }
         m_Active = false;
+        m_CenterMarker.setVisible(false);
     }
 
     public Vector2 getDelta(){
@@ -91,5 +101,9 @@ public class AnalogStick {
 
     public boolean isActive(){
         return m_Active;
+    }
+
+    public UIElement getSprite() {
+        return m_CenterMarker;
     }
 }

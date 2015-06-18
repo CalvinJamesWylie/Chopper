@@ -18,6 +18,12 @@ public class Vector3 {
         Z = z;
     }
 
+    public Vector3(Vector2 vector) {
+        X = vector.X;
+        Y = 0.0f;
+        Z = vector.Y;
+    }
+
     public void set(float x, float y, float z){
         X = x;
         Y = y;

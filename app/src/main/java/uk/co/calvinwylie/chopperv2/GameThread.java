@@ -35,7 +35,7 @@ public class GameThread extends Thread {
         while(!m_Paused){
             m_OldTime = m_NewTime;
             m_NewTime = System.currentTimeMillis();
-            m_DeltaTime = +(m_NewTime - m_OldTime);
+            m_DeltaTime += (m_NewTime - m_OldTime);
 
             if(m_DeltaTime >= m_FrameRate) {
                 m_Logic.update((double) m_DeltaTime * 0.001); //convert to seconds.
