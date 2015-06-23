@@ -70,8 +70,8 @@ public class Geometry{
     }
 
     public static float distanceBetween(Vector3 point, Ray ray){
-        Vector3 p1ToPoint = Vector3.vectorBetween(ray.startPoint, point);
-        Vector3 p2ToPoint = Vector3.vectorBetween(ray.startPoint.translate(ray.directionVector), point);
+        Vector3 p1ToPoint = Vector3.vector3Between(ray.startPoint, point);
+        Vector3 p2ToPoint = Vector3.vector3Between(ray.startPoint.translate(ray.directionVector), point);
 
         float areaOfTriangleTimesTwo = p1ToPoint.crossProduct(p2ToPoint).length();
         float lengthOfBase = ray.directionVector.length();
@@ -82,7 +82,7 @@ public class Geometry{
     }
 
     public static Vector3 intersectionPoint(Ray ray, Plane plane){
-        Vector3 rayToPlaneVector = Vector3.vectorBetween(ray.startPoint, plane.point);
+        Vector3 rayToPlaneVector = Vector3.vector3Between(ray.startPoint, plane.point);
 
         float scaleFactor = rayToPlaneVector.dotProduct(plane.normal) / ray.directionVector.dotProduct(plane.normal);
         Vector3 intersectionPoint = ray.startPoint.translate(ray.directionVector.scaled(scaleFactor));

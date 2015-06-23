@@ -68,6 +68,8 @@ public class Vehicle extends GameObject {
 
     public void update(double deltaTime){
 
+            Log.i(tag, ""+m_Velocity.length());
+
         if(m_TouchHandler.leftAnalogStick.isActive()) {
             m_Engine.exertForce(m_TouchHandler.leftAnalogStick.getDelta(), deltaTime);
             m_Velocity.add(m_Engine.getAcceleration());
@@ -86,8 +88,16 @@ public class Vehicle extends GameObject {
 
 
     public void move(){
+        if(m_Velocity.isZero()){
+            return;
+        }
+        if (m_Velocity.length() < 0.01){
+            m_Velocity.setToZero();
+            return;
+        }
         Dynamics.calcAirResistance(m_Velocity, m_AirResistance);
         m_Position.add(m_Velocity);
+
     }
 
 }

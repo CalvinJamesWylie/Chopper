@@ -4,6 +4,9 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
  * Created by Calvin on 22/04/2015.
  */
 
+import android.util.Log;
+
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Geometry.Ray;
 import static uk.co.calvinwylie.chopperv2.util.MatrixHelper.perspectiveM;
@@ -19,6 +22,8 @@ import static android.opengl.Matrix.setLookAtM;
  */
 public class Camera {
 
+    private String tag = this.getClass().getSimpleName();
+
     private final float[] m_ProjectionMatrix = new float[16];
     private final float[] m_ViewMatrix = new float[16];
     private final float[] m_ViewProjectionMatrix = new float[16];
@@ -27,6 +32,12 @@ public class Camera {
     private Vector3 m_Position;
     private Vector3 m_LookAt;
     private Vector3 m_UpVector;
+
+    private Vector3 m_Velocity = new Vector3();
+
+    private GameObject m_ObjectToFollow;
+
+    private final float m_FollowRadius = 5.0f;
 
     public Camera(float x, float y, float z, float lookAtX, float lookAtY, float lookAtZ, float upX, float upY, float upZ){
         m_Position = new Vector3(x, y, z);
@@ -47,8 +58,12 @@ public class Camera {
 
     public float[] getMVPMatrix(float[] modelMatrix) {
         float[] modelViewProjectionMatrix = new float[16];
-        multiplyMM(modelViewProjectionMatrix, 0 , m_ViewProjectionMatrix, 0 , modelMatrix, 0);
+        multiplyMM(modelViewProjectionMatrix, 0, m_ViewProjectionMatrix, 0, modelMatrix, 0);
         return modelViewProjectionMatrix;
+    }
+
+    public void setFollow(GameObject go){
+        m_ObjectToFollow = go;
     }
 
     public Ray convertNormalised2DPointToRay(float normalisedX, float normalisedY) {
@@ -72,7 +87,7 @@ public class Camera {
         Vector3 nearPointRay = new Vector3(nearPointWorld[0], nearPointWorld[1], nearPointWorld[2]);
         Vector3 farPointRay = new Vector3(farPointWorld[0], farPointWorld[1], farPointWorld[2]);
 
-        return new Geometry.Ray(nearPointRay, Vector3.vectorBetween(nearPointRay, farPointRay));
+        return new Geometry.Ray(nearPointRay, Vector3.vector3Between(nearPointRay, farPointRay));
     }
 
     private void divideByW(float[] vector) {
@@ -81,7 +96,15 @@ public class Camera {
         vector[2] /= vector[3];
     }
 
-    public void update() {
-        //TODO fill.
+    public void update(double deltaTime) {
+        Vector2 vectorBetween = Vector3.vector2Between(m_Position, m_ObjectToFollow.getPosition(), "XZ");
+        vectorBetween.scaleBy((float)deltaTime);
+        m_Velocity.set(vectorBetween);
+        move();
+    }
+
+    private void move(){
+        m_Position.add(m_Velocity);
+        m_LookAt.add(m_Velocity);
     }
 }

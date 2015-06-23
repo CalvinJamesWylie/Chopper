@@ -41,6 +41,7 @@ public class GameLogic {
         m_UpdateList.add(m_Heli);
 
         m_Camera = new Camera(0.0f, 50f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
+        m_Camera.setFollow(m_Heli);
         m_GamePack.assignCamera(m_Camera);
 
         m_UICamera = new UICamera();
@@ -48,7 +49,7 @@ public class GameLogic {
     }
 
     public void update(double deltaTime){
-        m_Camera.update();//Make this happen.
+        m_Camera.update(deltaTime);//Make this happen.
         for (GameObject go: m_UpdateList){
             go.update(deltaTime);
         }

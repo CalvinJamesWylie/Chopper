@@ -174,6 +174,7 @@ public class MainActivity extends Activity {
         }
         if(!m_GameThread.isPaused()){
             m_GameThread.setPaused(true);
+            //TODO stop thread here
         }
     }
 

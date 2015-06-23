@@ -1,15 +1,17 @@
 package uk.co.calvinwylie.chopperv2.dataTypes;
 
 import android.util.FloatMath;
+import android.util.Log;
 
 /**
  * Created by Calvin on 16/04/2015.
  */
 public class Vector3 {
+    private static String tag = "Vector3";
     public float X, Y, Z;
 
     public Vector3(){
-        X = Y = Z = 0.0f;
+        setToZero();
     }
 
     public Vector3(float x, float y, float z){
@@ -22,6 +24,10 @@ public class Vector3 {
         X = vector.X;
         Y = 0.0f;
         Z = vector.Y;
+    }
+
+    public void setToZero(){
+        X = Y = Z = 0.0f;
     }
 
     public void set(float x, float y, float z){
@@ -105,13 +111,32 @@ public class Vector3 {
         );
     }
 
-
-    public static Vector3 vectorBetween(Vector3 from, Vector3 to){
+    public static Vector3 vector3Between(Vector3 from, Vector3 to){
         return new Vector3(
                 to.X - from.X,
                 to.Y - from.Y,
                 to.Z - from.Z
         );
+    }
+
+    public static Vector2 vector2Between(Vector3 from, Vector3 to, String XY_XZ_YZ){
+        Vector3 tempVector =  new Vector3(
+                to.X - from.X,
+                to.Y - from.Y,
+                to.Z - from.Z
+        );
+
+        switch(XY_XZ_YZ){
+            case "XY":
+                return new Vector2(tempVector.X, tempVector.Y);
+            case "XZ":
+                return new Vector2(tempVector.X, tempVector.Z);
+            case "YZ":
+                return new Vector2(tempVector.Y, tempVector.Z);
+            default:
+                Log.e(tag, "Incorrect string used in vector2Between");
+                return new Vector2();
+        }
     }
 
     public void normalise(){
