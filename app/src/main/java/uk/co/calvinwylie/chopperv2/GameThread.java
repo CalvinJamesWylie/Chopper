@@ -10,6 +10,7 @@ import uk.co.calvinwylie.chopperv2.game.GameLogic;
 public class GameThread extends Thread {
 
     private boolean m_Paused = false;
+    private boolean m_Running = true;
     private GameLogic m_Logic;
     private GLSurfaceView m_View;
     private long m_NewTime;
@@ -32,20 +33,23 @@ public class GameThread extends Thread {
 
         m_NewTime = System.currentTimeMillis();
 
-        while(!m_Paused){
+        while(m_Running){
+            if(m_Paused) {
+                continue;
+            }
+
             m_OldTime = m_NewTime;
             m_NewTime = System.currentTimeMillis();
             m_DeltaTime += (m_NewTime - m_OldTime);
 
-            if(m_DeltaTime >= m_FrameRate) {
+            if (m_DeltaTime >= m_FrameRate) {
                 m_Logic.update((double) m_DeltaTime * 0.001); //convert to seconds.
 
                 m_View.requestRender();
                 m_DeltaTime = 0;
             }
+
         }
-
-
     }
 
     public void setPaused(boolean paused) {

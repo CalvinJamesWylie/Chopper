@@ -1,10 +1,13 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
+import android.opengl.Matrix;
 import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
@@ -20,15 +23,7 @@ import static android.opengl.GLES20.glDrawArrays;
 public class Vehicle extends GameObject {
 
     private String tag = this.getClass().getSimpleName();
-
-    private static final int BYTES_PER_FLOAT = 4;
-
-    private static final int POSITION_COMPONENT_COUNT = 3;
-    private static final int TEXTURE_COORDINATES_COMPONENT_COUNT = 2;
-    private static final int STRIDE = (POSITION_COMPONENT_COUNT
-                                     + TEXTURE_COORDINATES_COMPONENT_COUNT)
-                                     * BYTES_PER_FLOAT;
-
+    private Vector3 m_ForwardVector;
     private TouchHandler m_TouchHandler;
     private Engine m_Engine;
 
@@ -67,18 +62,14 @@ public class Vehicle extends GameObject {
     }
 
     public void update(double deltaTime){
-
-            Log.i(tag, ""+m_Velocity.length());
-
         if(m_TouchHandler.leftAnalogStick.isActive()) {
             m_Engine.exertForce(m_TouchHandler.leftAnalogStick.getDelta(), deltaTime);
             m_Velocity.add(m_Engine.getAcceleration());
         }
         if(m_TouchHandler.rightAnalogStick.isActive()){
-            float rot = m_TouchHandler.rightAnalogStick.getAngle();
-            m_Rotation = new Rotation((float)Math.toDegrees(rot), 0.0f, 1.0f, 0.0f);
+            m_TargetYaw = m_TouchHandler.rightAnalogStick.getAngle();
         }
-        move();
+        move(deltaTime);
         updateModelMatrix();
     }
 
@@ -86,8 +77,21 @@ public class Vehicle extends GameObject {
         glDrawArrays(GL_TRIANGLE_FAN, 0, 12);
     }
 
+    private Vector3 tempvect = new Vector3(); //TODO clean this up
+    private Vector3 Up = new Vector3(0,1,0);
+    public void move(double deltaTime){
 
-    public void move(){
+        float angleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
+
+        if(angleToTarget > Math.PI){
+            angleToTarget = (float)(2*Math.PI) - angleToTarget;
+            m_TurnSpeed = angleToTarget/10;
+            m_Yaw -= m_TurnSpeed;
+        }else{
+            m_TurnSpeed = angleToTarget/10;
+            m_Yaw += m_TurnSpeed;
+        }
+
         if(m_Velocity.isZero()){
             return;
         }
@@ -97,6 +101,9 @@ public class Vehicle extends GameObject {
         }
         Dynamics.calcAirResistance(m_Velocity, m_AirResistance);
         m_Position.add(m_Velocity);
+        tempvect.set(m_Velocity);
+        m_Rotation.setAxis(tempvect.crossProduct(Up));
+        m_Rotation.setAngle(-m_Velocity.length()*450);
 
     }
 

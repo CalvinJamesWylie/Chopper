@@ -2,7 +2,6 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
@@ -22,6 +21,9 @@ public abstract class GameObject {
     //Physical attibutes
 
     protected Rotation  m_Rotation;
+    protected float m_Yaw = 0.0f;
+    protected float m_TargetYaw = 0.0f;
+    protected float m_TurnSpeed = (float)Math.PI/180;
 
     protected Vector3   m_Position;
     protected Vector3   m_Velocity;
@@ -32,9 +34,7 @@ public abstract class GameObject {
 
     //Model attributes
     private final float[] m_ModelMatrix = new float[16];
-
     protected int m_Texture = -1;
-
     protected VertexArray m_VertexArray;
     private float[] VERTEX_DATA = {};
 
@@ -47,7 +47,6 @@ public abstract class GameObject {
 
         m_Position = new Vector3();             //empty Vector constructor sets values to 0;
         m_Velocity = new Vector3();
-
         m_Rotation = new Rotation();           //empty Rotation constructor sets values to 0 bar the yAxis to ensure no NaNs;
 
         m_MaxSpeed = 0.0f;
@@ -65,7 +64,6 @@ public abstract class GameObject {
     ){
         m_Position = position;
         m_Rotation = rotation;
-
         m_Velocity = velocity;
         m_MaxSpeed = speed;
 
@@ -97,10 +95,12 @@ public abstract class GameObject {
         translateM(m_ModelMatrix, 0, m_Position.X, m_Position.Y, m_Position.Z);
 
         if(m_Rotation.isValid()){
-            Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getXAxis(), m_Rotation.getYAxis(), m_Rotation.getZAxis());
+            Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getAxisX(), m_Rotation.getAxisY(), m_Rotation.getAxisZ());
         }else{
             //Log.e(tag + " " + functionTag, "either angle or axis is set to zero");
         }
+        Matrix.rotateM(m_ModelMatrix, 0, (float)Math.toDegrees(m_Yaw), 0.0f, 1.0f, 0.0f);
+
     }
 
     public void setVelocity(Vector3 velocity){

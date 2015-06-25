@@ -1,63 +1,84 @@
 package uk.co.calvinwylie.chopperv2.dataTypes;
 
+import android.opengl.Matrix;
+
 /**
  * Created by Calvin on 16/04/2015.
  */
 public class Rotation {
-    private float m_Angle, m_XAxis, m_YAxis, m_ZAxis;
+    private float m_Angle;
+    private Vector3 m_Axis;
+
 
     public Rotation(){
-        m_Angle = m_XAxis = m_ZAxis = 0.0f;
-        m_YAxis = 1.0f;
+        m_Angle = 0.0f;
+        m_Axis = new Vector3(0.0f, 1.0f, 0.0f);
     }
 
-    public Rotation(float angle, float xAxis, float yAxis, float zAxis){
+    public Rotation(float angle, Vector3 axis) {
         m_Angle = angle;
-        m_XAxis = xAxis;
-        m_YAxis = yAxis;
-        m_ZAxis = zAxis;
+        m_Axis = axis;
+    }
+    public Rotation(float angle, float x, float y, float z){
+        m_Angle = angle;
+        m_Axis.X = x;
+        m_Axis.Y = y;
+        m_Axis.Z = z;
     }
 
     public boolean isValid() {
-        if (m_Angle != 0.0f && (m_XAxis != 0.0f || m_YAxis != 0.0f || m_ZAxis != 0.0f))
+        if (m_Angle != 0.0f && !m_Axis.isZero()){
             return true;
-        else
+        }else{
             return false;
+        }
     }
 
     public float getAngle() {
         return m_Angle;
     }
 
-    public float getXAxis() {
-        return m_XAxis;
+    public float getAxisX() {
+        return m_Axis.X;
     }
 
-    public float getYAxis() {
-        return m_YAxis;
+    public float getAxisY() {
+        return m_Axis.Y;
     }
 
-    public float getZAxis() {
-        return m_ZAxis;
+    public float getAxisZ() {
+        return m_Axis.Z;
     }
 
-    public void increment(){
-        m_Angle++;
+    public void set(float angle, Vector3 axis){
+        m_Angle = angle;
+        m_Axis = axis;
+    }
+
+    public void set(float angle, float x, float y, float z){
+        m_Angle = angle;
+        m_Axis.X = x;
+        m_Axis.Y = y;
+        m_Axis.Z = z;
     }
 
     public void setAngle(float angle) {
         m_Angle = angle;
     }
 
-    public void setXAxis(float xAxis) {
-        m_XAxis = xAxis;
+    public void setAxis(Vector3 axis){
+        m_Axis = axis;
     }
 
-    public void setYAxis(float yAxis) {
-        m_YAxis = yAxis;
+    public void setXAxis(float x) {
+        m_Axis.X = x;
     }
 
-    public void setZAxis(float zAxis) {
-        m_ZAxis = zAxis;
+    public void setYAxis(float y) {
+        m_Axis.Y = y;
+    }
+
+    public void setZAxis(float z) {
+        m_Axis.Z = z;
     }
 }

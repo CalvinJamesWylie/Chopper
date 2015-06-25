@@ -2,7 +2,6 @@ package uk.co.calvinwylie.chopperv2.ui;
 
 import android.content.Context;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
@@ -112,7 +111,7 @@ public abstract class UIElement {
         translateM(m_ModelMatrix, 0, m_Position.X, m_Position.Y, m_Position.Z);
 
         if(m_Rotation.isValid()){
-            Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getXAxis(), m_Rotation.getYAxis(), m_Rotation.getZAxis());
+            Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getAxisX(), m_Rotation.getAxisY(), m_Rotation.getAxisZ());
         }else{
             //Log.e(tag + " " + functionTag, "either angle or axis is set to zero");
         }
