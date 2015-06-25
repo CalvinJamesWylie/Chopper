@@ -99,8 +99,8 @@ public class Vehicle extends GameObject {
         Dynamics.calcAirResistance(m_Velocity, m_AirResistance);
         m_Position.add(m_Velocity);
         tempvect.set(m_Velocity);
-        m_Rotation.setAxis(tempvect.crossProduct(Up));
-        m_Rotation.setAngle(-m_Velocity.lengthSquared()*450);
+        m_Rotation.setAxis(tempvect.crossProduct(Up)); //TODO remove mem alloc in cross prod
+        m_Rotation.setAngle(-m_Velocity.lengthSquared()*3000); // TODO remove magic number, controlls the amount the heli leans.
 
     }
 

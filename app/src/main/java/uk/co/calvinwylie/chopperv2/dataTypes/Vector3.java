@@ -3,12 +3,16 @@ package uk.co.calvinwylie.chopperv2.dataTypes;
 import android.util.FloatMath;
 import android.util.Log;
 
+import java.security.InvalidParameterException;
+
 /**
  * Created by Calvin on 16/04/2015.
  */
 public class Vector3 {
     private static String tag = "Vector3";
+    private static Vector3 m_TempVector = new Vector3();
     public float X, Y, Z;
+
 
     public Vector3(){
         setToZero();
@@ -118,6 +122,14 @@ public class Vector3 {
         );
     }
 
+    public static Vector3 vector3Between(Vector3 rv, Vector3 from, Vector3 to){
+        rv.set(to.X - from.X,
+                to.Y - from.Y,
+                to.Z - from.Z
+        );
+        return rv;
+    }
+
     public static Vector3 vector3Between(Vector3 from, Vector3 to){
         return new Vector3(
                 to.X - from.X,
@@ -126,8 +138,8 @@ public class Vector3 {
         );
     }
 
-    public static Vector2 vector2Between(Vector3 from, Vector3 to, String XY_XZ_YZ){
-        Vector3 tempVector =  new Vector3(
+    public static void vector2Between(Vector2 rv, Vector3 from, Vector3 to, String XY_XZ_YZ){
+        m_TempVector.set(
                 to.X - from.X,
                 to.Y - from.Y,
                 to.Z - from.Z
@@ -135,14 +147,16 @@ public class Vector3 {
 
         switch(XY_XZ_YZ){
             case "XY":
-                return new Vector2(tempVector.X, tempVector.Y);
+                rv.set(m_TempVector.X, m_TempVector.Y);
+                break;
             case "XZ":
-                return new Vector2(tempVector.X, tempVector.Z);
+                rv.set(m_TempVector.X, m_TempVector.Z);
+                break;
             case "YZ":
-                return new Vector2(tempVector.Y, tempVector.Z);
+                rv.set(m_TempVector.Y, m_TempVector.Z);
+                break;
             default:
-                Log.e(tag, "Incorrect string used in vector2Between");
-                return new Vector2();
+                throw new InvalidParameterException("Incorrect string used in vector2Between");
         }
     }
 

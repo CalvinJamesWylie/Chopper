@@ -13,6 +13,7 @@ import static android.opengl.Matrix.setLookAtM;
  * Created by Calvin on 15/06/2015.
  */
 public class UICamera {
+    private final float[] modelViewProjectionMatrix = new float[16];
     private final float[] m_ViewProjectionMatrix = new float[16];
     private final float[] m_OrthoMatrix = new float[16];
     private final float[] m_ViewMatrix = new float[16];
@@ -29,7 +30,6 @@ public class UICamera {
     }
 
     public float[] getMVPMatrix(float[] modelMatrix) {
-        float[] modelViewProjectionMatrix = new float[16];
         multiplyMM(modelViewProjectionMatrix, 0 , m_ViewProjectionMatrix, 0 , modelMatrix, 0);
         return modelViewProjectionMatrix;
     }

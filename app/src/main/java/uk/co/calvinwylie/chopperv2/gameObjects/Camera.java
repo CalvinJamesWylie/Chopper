@@ -4,8 +4,6 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
  * Created by Calvin on 22/04/2015.
  */
 
-import android.util.Log;
-
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Geometry.Ray;
@@ -24,6 +22,8 @@ public class Camera {
 
     private String tag = this.getClass().getSimpleName();
 
+
+    float[] modelViewProjectionMatrix = new float[16];
     private final float[] m_ProjectionMatrix = new float[16];
     private final float[] m_ViewMatrix = new float[16];
     private final float[] m_ViewProjectionMatrix = new float[16];
@@ -35,7 +35,9 @@ public class Camera {
 
     private Vector3 m_Velocity = new Vector3();
 
-    private GameObject m_ObjectToFollow;
+    private GameObject m_TargetObject;
+    private Vector2 m_VectorToTarget = new Vector2();
+
 
     private final float m_FollowRadius = 5.0f;
 
@@ -57,13 +59,12 @@ public class Camera {
     }
 
     public float[] getMVPMatrix(float[] modelMatrix) {
-        float[] modelViewProjectionMatrix = new float[16];
         multiplyMM(modelViewProjectionMatrix, 0, m_ViewProjectionMatrix, 0, modelMatrix, 0);
         return modelViewProjectionMatrix;
     }
 
     public void setFollow(GameObject go){
-        m_ObjectToFollow = go;
+        m_TargetObject = go;
     }
 
     public Ray convertNormalised2DPointToRay(float normalisedX, float normalisedY) {
@@ -97,9 +98,9 @@ public class Camera {
     }
 
     public void update(double deltaTime) {
-        Vector2 vectorBetween = Vector3.vector2Between(m_Position, m_ObjectToFollow.getPosition(), "XZ");
-        vectorBetween.scaleBy((float)deltaTime);
-        m_Velocity.set(vectorBetween);
+        Vector3.vector2Between(m_VectorToTarget, m_Position, m_TargetObject.getPosition(), "XZ");
+        m_VectorToTarget.scaleBy((float) deltaTime);
+        m_Velocity.set(m_VectorToTarget);
         move();
     }
 

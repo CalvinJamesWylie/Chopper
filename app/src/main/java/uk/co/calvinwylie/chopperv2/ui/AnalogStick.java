@@ -5,7 +5,6 @@ import android.util.Log;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 
 /**
  * Created by Calvin on 29/05/2015.
@@ -68,7 +67,7 @@ public class AnalogStick {
 
         // -- Set the new normalised stick position between 0 and max range -- //
         m_CurrentPosition.set(touchVec);
-        m_DeltaPosition = Vector2.vectorBetween(m_CurrentPosition, m_Center);
+        Vector2.vector2Between(m_DeltaPosition, m_CurrentPosition, m_Center);
 
         float length = m_DeltaPosition.length();
         if(length > m_MaxRange){

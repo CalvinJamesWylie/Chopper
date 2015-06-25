@@ -26,7 +26,7 @@ public class Engine {
         m_Force.set(vector);
         m_Force.scaleBy((float)deltaTime);
 
-        m_Acceleration = m_Force.scaled(m_InverseMass);
+        m_Acceleration = m_Force.scaled(m_InverseMass); //TODO  remove mem alloc
     }
 
     public void exertForce(Vector3 vector, double deltaTime){

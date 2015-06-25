@@ -32,9 +32,15 @@ public class Vector2 {
         Y = vector.Y;
     }
 
-    public static Vector2 vectorBetween(Vector2 endVector, Vector2 startVector) {
+    public static Vector2 vector2Between(Vector2 endVector, Vector2 startVector) {
         return new Vector2(
                 endVector.X - startVector.X,
+                endVector.Y - startVector.Y
+        );
+    }
+
+    public static void vector2Between(Vector2 rv, Vector2 endVector, Vector2 startVector) {
+        rv.set( endVector.X - startVector.X,
                 endVector.Y - startVector.Y
         );
     }
