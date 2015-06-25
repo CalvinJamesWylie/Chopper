@@ -84,7 +84,7 @@ public class AnalogStick {
         float x = m_DeltaPosition.X;
         float y = m_DeltaPosition.Y;
 
-        float hyp = (float) Math.sqrt((x*x) + (y*y));
+        float hyp = (float) Math.sqrt((x*x) + (y*y)); //TODO remove this sqrt
         if(hyp != 0){
             m_Angle = (float) Math.asin(y / hyp);
             m_Angle += Math.PI / 2;

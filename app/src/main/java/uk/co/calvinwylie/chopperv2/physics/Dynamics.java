@@ -1,7 +1,6 @@
 package uk.co.calvinwylie.chopperv2.physics;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.util.Constants;
 
 /**
  * Created by Calvin on 08/06/2015.

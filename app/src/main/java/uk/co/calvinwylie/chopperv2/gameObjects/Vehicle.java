@@ -1,12 +1,8 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
-import android.opengl.Matrix;
-import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.R;
-import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
-import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
@@ -77,11 +73,12 @@ public class Vehicle extends GameObject {
         glDrawArrays(GL_TRIANGLE_FAN, 0, 12);
     }
 
-    private Vector3 tempvect = new Vector3(); //TODO clean this up
+    private Vector3 tempvect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
+    float angleToTarget;
     public void move(double deltaTime){
 
-        float angleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
+        angleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
 
         if(angleToTarget > Math.PI){
             angleToTarget = (float)(2*Math.PI) - angleToTarget;
@@ -95,7 +92,7 @@ public class Vehicle extends GameObject {
         if(m_Velocity.isZero()){
             return;
         }
-        if (m_Velocity.length() < 0.01){
+        if (m_Velocity.lengthSquared() < Math.pow(0.01, 2)){
             m_Velocity.setToZero();
             return;
         }
@@ -103,7 +100,7 @@ public class Vehicle extends GameObject {
         m_Position.add(m_Velocity);
         tempvect.set(m_Velocity);
         m_Rotation.setAxis(tempvect.crossProduct(Up));
-        m_Rotation.setAngle(-m_Velocity.length()*450);
+        m_Rotation.setAngle(-m_Velocity.lengthSquared()*450);
 
     }
 

@@ -56,6 +56,13 @@ public class Vector3 {
         );
     }
 
+    public float lengthSquared(){
+        return    X * X
+                + Y * Y
+                + Z * Z;
+    }
+
+
     public Vector3 scaled(float multiplier){
 
         return new Vector3(
