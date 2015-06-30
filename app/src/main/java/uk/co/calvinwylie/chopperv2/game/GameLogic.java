@@ -20,13 +20,20 @@ public class GameLogic {
 
     private GamePacket m_GamePack;
     private ArrayList<GameObject> m_UpdateList = new ArrayList<>();
+    private Context m_Context;
     private Camera m_Camera;
     private UICamera m_UICamera;
     private Vehicle m_Heli;
     private Terrain m_Terrain;
+
+    //-- Managers -- //
     private PubSubManager m_PubSubManager = new PubSubManager();
+    private GameObjectManager m_GameObjectManager = new GameObjectManager();
+    private BulletManager m_BulletManager = new BulletManager();
+
 
     public GameLogic(Context context, GamePacket gamePack, TouchHandler touchHandler) {
+        m_Context = context;
         m_GamePack = gamePack;
 
         m_GamePack.addToRenderer(touchHandler.leftAnalogStick.getSprite());
@@ -35,10 +42,10 @@ public class GameLogic {
         m_Terrain = new Terrain();
         m_GamePack.addToRenderer(m_Terrain);
 
-        m_Heli = new Vehicle(context, touchHandler);
+        m_Heli = new Vehicle(this, touchHandler);
         m_Heli.setPosition(new Vector3(0.0f, 10.0f, 0.0f));
         m_GamePack.addToRenderer(m_Heli);
-        m_UpdateList.add(m_Heli);
+        m_GameObjectManager.add(m_Heli);
 
         m_Camera = new Camera(0.0f, 50f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
         m_Camera.setFollow(m_Heli);
@@ -50,8 +57,29 @@ public class GameLogic {
 
     public void update(double deltaTime){
         m_Camera.update(deltaTime);//Make this happen.
-        for (GameObject go: m_UpdateList){
-            go.update(deltaTime);
-        }
+        m_GameObjectManager.update(deltaTime);
+        m_BulletManager.update(deltaTime);
+    }
+
+//    public void addToUpdate(GameObject go){
+//        m_UpdateList.add(go);
+//    }
+
+    public Context getContext() {
+        return m_Context;
+    }
+
+    public GamePacket getGamePack(){
+        return m_GamePack;
+    }
+
+    public BulletManager getBulletManager() {
+        return m_BulletManager;
+    }
+
+    public GameObjectManager getGameObjectManager() {
+        return m_GameObjectManager;
     }
 }
+
+

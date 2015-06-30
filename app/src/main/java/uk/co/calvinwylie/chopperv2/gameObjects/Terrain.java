@@ -12,19 +12,21 @@ import uk.co.calvinwylie.chopperv2.util.TextureHelper;
  */
 public class Terrain extends GameObject {
 
-    private static final float[] VERTEX_DATA = {
-            //Element Format: X,Y,U,V;
+    static float XScale = 256.0f;
+    static float YScale = 256.0f;
 
-            //TableTop Triangle Fan
+    private static float[] VERTEX_DATA = {
+            //Element Format: X,Y,Z,U,V;
 
-                0.0f, 0.0f,    0.0f, 0.5f, 0.5f, //Center
-            -1280.0f, 0.0f,-1280.0f, 0.0f, 1.0f,  //Bttm left
-             1280.0f, 0.0f,-1280.0f, 1.0f, 1.0f,  //Bttm Right
-             1280.0f, 0.0f, 1280.0f, 1.0f, 0.0f,  //Tp Right
-            -1280.0f, 0.0f, 1280.0f, 0.0f, 0.0f,  //Tp Left
-            -1280.0f, 0.0f,-1280.0f, 0.0f, 1.0f  //Bttm left
+            //Triangle Fan
+
+            0.0f,   0.0f,    0.0f, 0.5f, 0.5f, //Center
+            -XScale, 0.0f, -YScale, 0.0f, 1.0f,  //Bttm left
+            XScale, 0.0f, -YScale, 1.0f, 1.0f,  //Bttm Right
+            XScale, 0.0f,  YScale, 1.0f, 0.0f,  //Tp Right
+            -XScale, 0.0f,  YScale, 0.0f, 0.0f,  //Tp Left
+            -XScale, 0.0f, -YScale, 0.0f, 1.0f  //Bttm left
     };
-
     public Terrain(){
         m_VertexArray = new VertexArray(VERTEX_DATA);
     }

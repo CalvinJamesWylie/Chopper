@@ -6,6 +6,7 @@ import android.util.Log;
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
 import uk.co.calvinwylie.chopperv2.util.MathsHelper;
@@ -24,6 +25,8 @@ public class Vehicle extends GameObject {
     private Vector3 m_ForwardVector;
     private TouchHandler m_TouchHandler;
     private Engine m_Engine;
+    private Gun m_Gun;
+    private boolean m_Firing;
 
     private static final float[] VERTEX_DATA_3D = {
 
@@ -45,7 +48,7 @@ public class Vehicle extends GameObject {
 
     private boolean scaled = false;
 
-    public Vehicle(Context context, TouchHandler touchHandler){
+    public Vehicle(GameLogic gameLogic, TouchHandler touchHandler){
 
         m_TouchHandler = touchHandler;
         m_MaxSpeed = 5.0f;
@@ -53,6 +56,8 @@ public class Vehicle extends GameObject {
         m_AirResistance = -0.75f;
         m_VertexArray = new VertexArray(VERTEX_DATA_3D);
         m_Engine = new Engine(this);
+
+        m_Gun = new Gun(this, gameLogic);
     }
 
     public void loadTexture(Context context){//TODO fill this.
@@ -60,12 +65,19 @@ public class Vehicle extends GameObject {
     }
 
     public void update(double deltaTime){
+        m_Gun.update(deltaTime);
         if(m_TouchHandler.leftAnalogStick.isActive()) {
             m_Engine.exertForce(m_TouchHandler.leftAnalogStick.getDelta(), deltaTime);
             m_Velocity.add(m_Engine.getAcceleration());
         }
         if(m_TouchHandler.rightAnalogStick.isActive()){
-            m_TargetYaw = m_TouchHandler.rightAnalogStick.getAngle();
+            if(!m_TouchHandler.rightAnalogStick.getDelta().isZero()) {
+                m_TargetYaw = m_TouchHandler.rightAnalogStick.getAngle();
+                m_Gun.setDirection(m_TouchHandler.rightAnalogStick.getDelta(), m_TargetYaw);
+                m_Firing = true;
+            }
+        }else{
+            m_Firing = false;
         }
         move(deltaTime);
         updateModelMatrix();
@@ -78,7 +90,7 @@ public class Vehicle extends GameObject {
     private Vector3 tempvect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
     float angleToTarget;
-    public void move(double deltaTime){
+    public void move(double deltaTime){ // TODO make velocity scale by delta time.
 
         angleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
 
@@ -89,6 +101,10 @@ public class Vehicle extends GameObject {
         }else{
             m_TurnSpeed = angleToTarget/10;
             m_Yaw += m_TurnSpeed;
+        }
+        float fireRange = 15.0f;
+        if(m_Firing && (angleToTarget <= Math.toRadians(fireRange) || angleToTarget >= Math.toRadians(360 - fireRange))){
+            m_Gun.requestFire();
         }
 
         m_Yaw = MathsHelper.RoundClamp(m_Yaw, 0, (float)Math.PI*2);

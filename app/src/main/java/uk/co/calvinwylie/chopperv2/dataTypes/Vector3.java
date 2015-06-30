@@ -34,6 +34,10 @@ public class Vector3 {
         X = Y = Z = 0.0f;
     }
 
+    public void set(float xyz){
+        X = Y = Z = xyz;
+    }
+
     public void set(float x, float y, float z){
         X = x;
         Y = y;
@@ -177,16 +181,8 @@ public class Vector3 {
     }
 
     public boolean isZero(){
-        if(X != 0.0f){
-            return false;
-        }
-        if(Y != 0.0f){
-            return false;
-        }
-        if(Z != 0.0f){
-            return false;
-        }
-        return true;
+        if(X == 0.0f && Y == 0.0f && Z == 0.0f) return true;
+        return false;
     }
 
 }

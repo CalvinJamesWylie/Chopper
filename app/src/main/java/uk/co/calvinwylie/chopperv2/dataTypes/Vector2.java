@@ -80,4 +80,9 @@ public class Vector2 {
     public String toString(){
         return "(" + X + ", " + Y + ")";
     }
+
+    public boolean isZero(){
+        if (X == 0.0f && Y == 0.0f) return true;
+        return false;
+    }
 }

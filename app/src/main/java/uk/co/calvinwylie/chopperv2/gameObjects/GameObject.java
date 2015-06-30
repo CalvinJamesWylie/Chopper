@@ -21,6 +21,7 @@ public abstract class GameObject {
     //Physical attibutes
 
     protected Rotation  m_Rotation;
+    protected Vector3 m_Scale = new Vector3(1.0f, 1.0f, 1.0f);
     protected float m_Yaw = 0.0f;
     protected float m_TargetYaw = 0.0f;
     protected float m_TurnSpeed = (float)Math.PI/180;
@@ -93,6 +94,8 @@ public abstract class GameObject {
         setIdentityM(m_ModelMatrix, 0);
 
         translateM(m_ModelMatrix, 0, m_Position.X, m_Position.Y, m_Position.Z);
+
+        Matrix.scaleM(m_ModelMatrix, 0, m_Scale.X, m_Scale.Y, m_Scale.Z);
 
         if(m_Rotation.isValid()){
             Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getAxisX(), m_Rotation.getAxisY(), m_Rotation.getAxisZ());

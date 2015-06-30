@@ -113,6 +113,9 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
         m_GamePack.m_Camera.onDrawFrame();
         for(GameObject go: m_GamePack.m_RenderList){
+            if(go.getTexture() == -1){
+                go.loadTexture(m_Context);
+            }
             m_TextureProgram.useProgram();
             m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getTexture());
             m_TextureProgram.bindData(go.getVertexData());
