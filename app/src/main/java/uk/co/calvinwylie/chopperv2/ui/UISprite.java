@@ -16,6 +16,7 @@ import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 public class UISprite extends UIElement {
 
     public UISprite(Vector3 position, Rotation rotation, float width, float height, int textureResourceId){
+        super(width, height);
         m_Position = position;
         m_Rotation = rotation;
         m_Width = width;

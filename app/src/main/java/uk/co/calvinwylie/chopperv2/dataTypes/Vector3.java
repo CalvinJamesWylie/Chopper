@@ -145,6 +145,8 @@ public class Vector3 {
                 to.Z - from.Z
         );
 
+        XY_XZ_YZ.toUpperCase(); // make sure the string isnt seen as incorrect even if the correct letters are used.
+
         switch(XY_XZ_YZ){
             case "XY":
                 rv.set(m_TempVector.X, m_TempVector.Y);

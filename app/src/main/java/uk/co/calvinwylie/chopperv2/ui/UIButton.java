@@ -7,5 +7,7 @@ import android.opengl.GLES20;
  * Created by Calvin on 15/06/2015.
  */
 public class UIButton extends UIElement {
-
+ public UIButton(float width, float height){
+     super(width, height);
+ }
 }

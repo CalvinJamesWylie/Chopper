@@ -28,7 +28,7 @@ public class AnalogStick {
     private UISprite m_CenterMarker;
 
     public AnalogStick(int textureResourceId){
-        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 1.0f , 1.0f, textureResourceId); //TODO add params
+        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 32.0f , 32.0f, textureResourceId); //TODO add params
     }
 
     public void activate(Vector2 center, int id) {
@@ -41,6 +41,7 @@ public class AnalogStick {
         Log.i(tag, ""+center.toString());
         m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, -center.Y));
         m_CenterMarker.setVisible(true);
+       // m_CenterMarker.scale(32,32);
     }
 
     public void deactivate(Vector2 lastTouch) {

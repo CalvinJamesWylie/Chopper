@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
             m_GlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
             m_RendererSet  = true;
 
-            m_TouchHandler = new TouchHandler(m_DisplaySize.x, m_DisplaySize.y, R.drawable.orange);
+            m_TouchHandler = new TouchHandler(m_DisplaySize.x, m_DisplaySize.y, R.drawable.analog_stick_no_alpha);
             m_Logic        = new GameLogic(this, m_GamePack, m_TouchHandler);
             m_GameThread   = new GameThread(m_Logic, m_GlSurfaceView);
             m_GameThread.start();

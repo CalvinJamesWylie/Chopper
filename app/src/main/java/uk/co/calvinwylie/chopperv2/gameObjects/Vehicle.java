@@ -1,12 +1,14 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
+import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
+import uk.co.calvinwylie.chopperv2.util.MathsHelper;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 
@@ -88,6 +90,10 @@ public class Vehicle extends GameObject {
             m_TurnSpeed = angleToTarget/10;
             m_Yaw += m_TurnSpeed;
         }
+
+        m_Yaw = MathsHelper.RoundClamp(m_Yaw, 0, (float)Math.PI*2);
+
+        Log.i(tag, "" + m_Yaw);
 
         if(m_Velocity.isZero()){
             return;

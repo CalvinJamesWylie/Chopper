@@ -20,10 +20,10 @@ public abstract class UIElement {
 
     private final String tag = this.getClass().getSimpleName();
 
-    static float XScale = 8f;
-    static float YScale = 8f;
+    static float XScale = 1f;
+    static float YScale = 1f;
 
-    private static final float[] VERTEX_DATA = {
+    private static float[] VERTEX_DATA = {
             //Element Format: X,Y,Z,U,V;
 
             //Triangle Fan
@@ -48,13 +48,16 @@ public abstract class UIElement {
     protected boolean m_Centered = true;
     protected boolean m_Visible = false;
 
-    public UIElement(){
+    public UIElement(float width, float height){
         setIdentityM(m_ModelMatrix, 0);
 
         m_Position = new Vector3();             //empty Vector constructor sets values to 0;
         m_Rotation = new Rotation();           //empty Rotation constructor sets values to 0 bar the yAxis to ensure no NaNs;
 
         m_VertexArray = new VertexArray(VERTEX_DATA);
+
+        m_Width = width;
+        m_Height = height;
 
         updateModelMatrix();
     }
@@ -71,6 +74,9 @@ public abstract class UIElement {
         return m_Texture;
     }
 
+    public void scale(float xScale, float yScale){
+        Matrix.scaleM(m_ModelMatrix, 0 , xScale, 0.0f, yScale);
+    }
 
     public void draw() {
         if(m_Visible) {
@@ -108,7 +114,10 @@ public abstract class UIElement {
 
         setIdentityM(m_ModelMatrix, 0);
 
+
         translateM(m_ModelMatrix, 0, m_Position.X, m_Position.Y, m_Position.Z);
+
+        Matrix.scaleM(m_ModelMatrix, 0, m_Width, 1.0f, m_Height);
 
         if(m_Rotation.isValid()){
             Matrix.rotateM(m_ModelMatrix, 0, m_Rotation.getAngle(), m_Rotation.getAxisX(), m_Rotation.getAxisY(), m_Rotation.getAxisZ());
