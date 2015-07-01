@@ -20,8 +20,8 @@ public class TouchHandler {
         m_ScreenWidth = screenWidth;
         m_ScreenHeight = screenHeight;
 
-        leftAnalogStick  = new AnalogStick(textureResourceId);
-        rightAnalogStick = new AnalogStick(textureResourceId);
+        leftAnalogStick  = new AnalogStick();
+        rightAnalogStick = new AnalogStick();
     }
 
     public void handleActionDown(Vector2 touchVec, int pointerId) {

@@ -44,6 +44,7 @@ import uk.co.calvinwylie.chopperv2.shaderPrograms.ColorShaderProgram;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShaderProgram;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
+import uk.co.calvinwylie.chopperv2.util.TextureManager;
 
 
 /**
@@ -52,6 +53,8 @@ import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 public class MainRenderer implements GLSurfaceView.Renderer {
 
     private String tag = this.getClass().getSimpleName();
+
+    private TextureManager m_TextureManager = new TextureManager();
     private TextureShaderProgram m_TextureProgram;
     private ColorShaderProgram m_ColorProgram;
 
@@ -64,8 +67,6 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     public MainRenderer(Context context, GamePacket gamePacket){
         m_Context = context;
         m_GamePack = gamePacket;
-
-
     }
 
     @Override
@@ -89,13 +90,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_ColorProgram = new ColorShaderProgram(m_Context);
         m_TextureProgram = new TextureShaderProgram(m_Context);
 
-        for (GameObject go: m_GamePack.m_RenderList){
-            go.loadTexture(m_Context);
-        }
-
-        for (UIElement uie: m_GamePack.m_UIRenderList){
-            uie.loadTexture(m_Context);
-        }
+        m_TextureManager.loadTextures(m_Context);
     }
 
 
@@ -113,11 +108,9 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
         m_GamePack.m_Camera.onDrawFrame();
         for(GameObject go: m_GamePack.m_RenderList){
-            if(go.getTexture() == -1){
-                go.loadTexture(m_Context);
-            }
+
             m_TextureProgram.useProgram();
-            m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getTexture());
+            m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
             m_TextureProgram.bindData(go.getVertexData());
             go.draw();
         }
@@ -125,7 +118,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_GamePack.m_UICamera.onDrawFrame();
         for (UIElement uie: m_GamePack.m_UIRenderList){
             m_TextureProgram.useProgram();
-            m_TextureProgram.setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), uie.getTexture());
+            m_TextureProgram.setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), m_TextureManager.getTexture(uie.getTexture()));
             m_TextureProgram.bindData(uie.getVertexData());
             uie.draw();
         }

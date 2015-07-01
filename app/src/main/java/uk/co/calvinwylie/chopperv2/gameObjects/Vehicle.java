@@ -12,6 +12,7 @@ import uk.co.calvinwylie.chopperv2.physics.Engine;
 import uk.co.calvinwylie.chopperv2.util.MathsHelper;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
+import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.glDrawArrays;
@@ -56,12 +57,8 @@ public class Vehicle extends GameObject {
         m_AirResistance = -0.75f;
         m_VertexArray = new VertexArray(VERTEX_DATA_3D);
         m_Engine = new Engine(this);
-
+        m_TextureType = TextureType.orange;
         m_Gun = new Gun(this, gameLogic);
-    }
-
-    public void loadTexture(Context context){//TODO fill this.
-        m_Texture = TextureHelper.loadTexture(context, R.drawable.orange);
     }
 
     public void update(double deltaTime){

@@ -8,6 +8,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
+import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 /**
  * Created by Calvin on 30/06/2015.
@@ -36,8 +37,9 @@ public class Bullet extends GameObject {
         m_Position.set(position);
         forwardVector.scaleBy(speed);
         m_Velocity.set(forwardVector);
-        m_Rotation.setAngle((float)Math.toDegrees(yaw));
+        m_Rotation.setAngle((float) Math.toDegrees(yaw));
         m_Scale.set(0.2f);
+        m_TextureType = TextureType.orange;
     }
 
     @Override
@@ -51,10 +53,6 @@ public class Bullet extends GameObject {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
     }
 
-    @Override
-    public void loadTexture(Context context) {
-        m_Texture = TextureHelper.loadTexture(context, R.drawable.orange);
-    }
 
     private void move(double deltaTime){
         //m_Velocity.scaleBy((float)deltaTime);

@@ -5,6 +5,7 @@ import android.util.Log;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
+import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 /**
  * Created by Calvin on 29/05/2015.
@@ -27,8 +28,8 @@ public class AnalogStick {
 
     private UISprite m_CenterMarker;
 
-    public AnalogStick(int textureResourceId){
-        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 32.0f , 32.0f, textureResourceId); //TODO add params
+    public AnalogStick(){
+        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 32.0f , 32.0f, TextureType.analog_stick); //TODO add params
     }
 
     public void activate(Vector2 center, int id) {
@@ -38,10 +39,10 @@ public class AnalogStick {
         m_Active = true;
         m_AssociatedPointerId = id;
 
-        Log.i(tag, ""+center.toString());
+        Log.i(tag, "" + center.toString());
         m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, -center.Y));
+        m_CenterMarker.update();
         m_CenterMarker.setVisible(true);
-       // m_CenterMarker.scale(32,32);
     }
 
     public void deactivate(Vector2 lastTouch) {
@@ -95,8 +96,8 @@ public class AnalogStick {
             m_Angle = 0;
         }
 
-        m_CenterMarker.setRotation((float)Math.toDegrees(-m_Angle), 0.0f, 1.0f, 0.0f);
-
+        m_CenterMarker.setRotation((float) Math.toDegrees(-m_Angle), 0.0f, 1.0f, 0.0f);
+        m_CenterMarker.update();
 //        if(!m_Moved && m_DeltaPosition.length() > 10){
 //            m_Moved = true;
 //        }

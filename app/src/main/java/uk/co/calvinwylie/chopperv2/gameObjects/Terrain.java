@@ -6,6 +6,7 @@ import android.opengl.GLES20;
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
+import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 /**
  * Created by Calvin on 12/06/2015.
@@ -29,6 +30,7 @@ public class Terrain extends GameObject {
     };
     public Terrain(){
         m_VertexArray = new VertexArray(VERTEX_DATA);
+        m_TextureType = TextureType.check;
     }
 
     @Override
@@ -41,9 +43,9 @@ public class Terrain extends GameObject {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0,6);
     }
 
-    @Override
-    public void loadTexture(Context context) {
-        m_Texture = TextureHelper.loadTexture(context, R.drawable.check);
-
-    }
+//    @Override
+//    public void loadTexture(Context context) {
+//        m_Texture = TextureHelper.loadTexture(context, R.drawable.check);
+//
+//    }
 }

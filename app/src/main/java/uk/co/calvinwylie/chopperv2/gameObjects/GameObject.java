@@ -1,11 +1,11 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
-import android.content.Context;
 import android.opengl.Matrix;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
@@ -35,9 +35,8 @@ public abstract class GameObject {
 
     //Model attributes
     private final float[] m_ModelMatrix = new float[16];
-    protected int m_Texture = -1;
+    protected TextureType m_TextureType;
     protected VertexArray m_VertexArray;
-    private float[] VERTEX_DATA = {};
 
 
     private int m_Model; //TODO do something with these values, make values for the different ones
@@ -52,23 +51,8 @@ public abstract class GameObject {
 
         m_MaxSpeed = 0.0f;
 
-        m_VertexArray = new VertexArray(VERTEX_DATA);
+        m_TextureType = TextureType.check;
 
-        updateModelMatrix();
-    }
-
-    public GameObject(
-            Vector3 position,
-            Rotation rotation,
-            Vector3 velocity,
-            float speed
-    ){
-        m_Position = position;
-        m_Rotation = rotation;
-        m_Velocity = velocity;
-        m_MaxSpeed = speed;
-
-        m_VertexArray = new VertexArray(VERTEX_DATA);
 
         updateModelMatrix();
     }
@@ -77,10 +61,10 @@ public abstract class GameObject {
 
     public abstract void draw();
 
-    public abstract void loadTexture(Context context);
+   // public abstract void loadTexture(Context context);
 
-    public int getTexture(){
-        return m_Texture;
+    public TextureType getTexture(){
+        return m_TextureType;
     }
 
     public VertexArray getVertexData(){
@@ -121,6 +105,13 @@ public abstract class GameObject {
 
     public void setRotation(Rotation rotation){
         m_Rotation = rotation;
+    }
+
+    public void setRotation(float angle, float xAxis, float yAxis, float zAxis){
+        m_Rotation.setAngle(angle);
+        m_Rotation.setXAxis(xAxis);
+        m_Rotation.setYAxis(yAxis);
+        m_Rotation.setZAxis(zAxis);
     }
 
     public Rotation getRotation(){
