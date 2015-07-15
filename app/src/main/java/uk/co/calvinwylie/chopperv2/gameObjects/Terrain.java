@@ -39,7 +39,7 @@ public class Terrain extends GameObject {
     }
 
     @Override
-    public void draw() {
+    public void draw(int positionAttribLocation, int textureAttribute) {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0,6);
     }
 

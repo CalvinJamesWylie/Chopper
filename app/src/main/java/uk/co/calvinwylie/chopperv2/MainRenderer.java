@@ -36,10 +36,14 @@ import static android.opengl.GLES20.glViewport;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
+import uk.co.calvinwylie.chopperv2.models.Mesh;
+import uk.co.calvinwylie.chopperv2.models.ModelLoader;
+import uk.co.calvinwylie.chopperv2.models.Vertex;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.ColorShaderProgram;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShaderProgram;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
@@ -60,6 +64,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
     private Context m_Context;                              //used for shaders
     private GamePacket m_GamePack;
+    Mesh mesh = new Mesh();
 
 
     // private ArrayList<Model> m_ModelList;
@@ -112,8 +117,9 @@ public class MainRenderer implements GLSurfaceView.Renderer {
             m_TextureProgram.useProgram();
             m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
             m_TextureProgram.bindData(go.getVertexData());
-            go.draw();
+            go.draw(m_TextureProgram.getPositionAttributeLocation(), m_TextureProgram.getTextureCoordinatesAttributeLocation());
         }
+
 
         m_GamePack.m_UICamera.onDrawFrame();
         for (UIElement uie: m_GamePack.m_UIRenderList){
@@ -122,5 +128,6 @@ public class MainRenderer implements GLSurfaceView.Renderer {
             m_TextureProgram.bindData(uie.getVertexData());
             uie.draw();
         }
+
     }
 }

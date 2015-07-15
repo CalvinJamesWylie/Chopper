@@ -11,6 +11,8 @@ import java.security.InvalidParameterException;
 public class Vector3 {
     private static String tag = "Vector3";
     private static Vector3 m_TempVector = new Vector3();
+
+    public static int SIZE = 3;
     public float X, Y, Z;
 
 

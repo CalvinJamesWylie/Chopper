@@ -10,12 +10,15 @@ import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
  */
 public class BulletManager {
     private ArrayList<Bullet> m_BulletList = new ArrayList<>();
+    private GameLogic m_GameLogic;
 
-    public BulletManager(){
+    public BulletManager(GameLogic gameLogic){
+        m_GameLogic = gameLogic;
         m_BulletList.clear();
     }
 
     public void add(Bullet bullet){
+        m_GameLogic.getGamePack().addToRenderer(bullet);
         m_BulletList.add(bullet);
     }
 

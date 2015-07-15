@@ -23,4 +23,9 @@ public class UIButton extends UIElement {
     public void update(double deltaTime) {
 
     }
+
+    @Override
+    public void draw(int positionAttribLocation, int textureAttribLocation) {
+
+    }
 }

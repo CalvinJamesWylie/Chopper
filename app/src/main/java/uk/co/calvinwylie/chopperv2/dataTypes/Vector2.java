@@ -6,6 +6,7 @@ import android.util.FloatMath;
  * Created by Calvin on 16/04/2015.
  */
 public class Vector2 {
+    public static int SIZE = 2;
     public float X,Y;
 
     public Vector2(){

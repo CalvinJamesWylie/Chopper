@@ -4,6 +4,7 @@ import android.opengl.Matrix;
 
 /**
  * Created by Calvin on 16/04/2015.
+ * Rotation is a data type for holding quaternion information.
  */
 public class Rotation {
     private float m_Angle;

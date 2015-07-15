@@ -28,6 +28,12 @@ public class TextureManager{
                 case check:
                     id = R.drawable.check;
                     break;
+                case heli_texture:
+                    id = R.drawable.heli_texture;
+                    break;
+                case world:
+                    id = R.drawable.world;
+                    break;
                 default:
                     id = R.drawable.ic_launcher;
             }

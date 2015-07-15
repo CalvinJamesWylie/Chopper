@@ -32,4 +32,9 @@ public class UISprite extends UIElement {
     public void update(double deltaTime) {
         updateModelMatrix();
     }
+
+    @Override
+    public void draw(int positionAttribLocation, int textureAttribLocation) {
+
+    }
 }

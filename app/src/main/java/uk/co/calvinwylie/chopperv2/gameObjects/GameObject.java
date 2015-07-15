@@ -53,15 +53,12 @@ public abstract class GameObject {
 
         m_TextureType = TextureType.check;
 
-
         updateModelMatrix();
     }
 
     public abstract void update(double deltaTime);
 
-    public abstract void draw();
-
-   // public abstract void loadTexture(Context context);
+    public abstract void draw(int positionAttribLocation, int textureAttribLocation);
 
     public TextureType getTexture(){
         return m_TextureType;
@@ -87,7 +84,6 @@ public abstract class GameObject {
             //Log.e(tag + " " + functionTag, "either angle or axis is set to zero");
         }
         Matrix.rotateM(m_ModelMatrix, 0, (float)Math.toDegrees(m_Yaw), 0.0f, 1.0f, 0.0f);
-
     }
 
     public void setVelocity(Vector3 velocity){

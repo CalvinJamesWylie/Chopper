@@ -3,6 +3,7 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
 import java.util.ArrayList;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
+import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 
@@ -15,14 +16,14 @@ public class Gun {
     private float m_Yaw;
     private boolean m_WeaponReady = false;
     private GameObject m_Parent;
-    private GameLogic m_GameLogic;
+    private BulletManager m_BulletManager;
     private float m_MuzzleVelocity = 1.0f;
     private float m_TimeSinceLastFire = 0.0f;
     private float m_ReloadTime = 0.25f;
 
-    public Gun(GameObject parent, GameLogic gameLogic){
+    public Gun(GameObject parent, BulletManager bulletManager){
         m_Parent = parent;
-        m_GameLogic = gameLogic;
+        m_BulletManager = bulletManager;
     }
 
     public void update(double deltaTime){
@@ -35,9 +36,7 @@ public class Gun {
     public void fire(){
         m_TimeSinceLastFire = 0.0f;
         Bullet bullet = new Bullet(m_Parent.getPosition(), m_Yaw, m_ForwardVector, m_MuzzleVelocity);
-        //bullet.loadTexture(m_GameLogic.getContext());
-        m_GameLogic.getBulletManager().add(bullet);
-        m_GameLogic.getGamePack().addToRenderer(bullet);
+        m_BulletManager.add(bullet);
         m_WeaponReady = false;
     }
 
