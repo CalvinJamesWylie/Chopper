@@ -13,7 +13,6 @@ public class TextureManager{
 
     public void loadTextures(Context context){
 
-
         TextureType textures[] = TextureType.values();
 
         for(TextureType texture: textures) {
@@ -38,7 +37,6 @@ public class TextureManager{
                     id = R.drawable.ic_launcher;
             }
             m_TextureHandles[texture.ordinal()] = TextureHelper.loadTexture(context, id);
-
         }
     }
 

@@ -49,7 +49,7 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public void draw(int positionAttribLocation, int textureAttribLocation) {
+    public void draw() {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
     }
 

@@ -12,7 +12,7 @@ import static android.opengl.GLES20.glUniformMatrix4fv;
 /**
  * Created by Calvin on 16/04/2015.
  */
-public class ColorShaderProgram extends ShaderProgram {
+public class ColorShader extends Shader {
     //Uniform Locations.
     private final int u_MatrixLocation;
     private final int uColorLocation;
@@ -20,7 +20,7 @@ public class ColorShaderProgram extends ShaderProgram {
     //Attribute Locations
     private final int a_PositionLocation;
 
-    public ColorShaderProgram(Context context){
+    public ColorShader(Context context){
 
         super(context, R.raw.color_vertex_shader, R.raw.color_fragment_shader);
         //Retrieve uniform locations for the shader program.

@@ -12,7 +12,7 @@ import static android.opengl.GLES20.glUseProgram;
 /**
  * Created by Calvin on 16/04/2015.
  */
-public class ShaderProgram {
+public class Shader {
     //Uniform constants
     protected static final String U_MATRIX = "u_Matrix";
     protected static final String U_TEXTURE_UNIT = "u_TextureUnit";
@@ -26,7 +26,7 @@ public class ShaderProgram {
     //Shader program
     protected final int program;
 
-    protected ShaderProgram(Context context, int vertexShaderResourceId, int fragmentShaderResourceId){
+    protected Shader(Context context, int vertexShaderResourceId, int fragmentShaderResourceId){
         //Compile the shaders and link the program.
 
         //Log.e("ddd", TextResourceReader.readTextFileFromResource(context, vertexShaderResourceId));

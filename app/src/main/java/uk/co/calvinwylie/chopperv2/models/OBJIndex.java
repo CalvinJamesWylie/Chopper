@@ -5,13 +5,15 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 /**
  * Created by Calvin on 10/07/2015.
  */
-public class Index {
+public class OBJIndex {
     public int vertexIndex;
     public int texCoordIndex;
+    public int normalIndex;
 
-    public Index(short vertexIndex, short texCoordIndex){
+    public OBJIndex(short vertexIndex, short texCoordIndex, short normalIndex){
         this.vertexIndex = vertexIndex;
         this.texCoordIndex = texCoordIndex;
+        this.normalIndex = normalIndex;
     }
 
 }

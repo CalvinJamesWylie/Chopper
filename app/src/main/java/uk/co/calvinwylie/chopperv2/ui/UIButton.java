@@ -25,7 +25,7 @@ public class UIButton extends UIElement {
     }
 
     @Override
-    public void draw(int positionAttribLocation, int textureAttribLocation) {
+    public void draw() {
 
     }
 }

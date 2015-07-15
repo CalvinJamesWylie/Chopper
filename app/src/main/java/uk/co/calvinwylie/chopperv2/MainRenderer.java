@@ -1,53 +1,36 @@
 package uk.co.calvinwylie.chopperv2;
 
 import android.content.Context;
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
-import java.util.ArrayList;
-
-import static android.opengl.GLES20.GL_BACK;
 import static android.opengl.GLES20.GL_BLEND;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.GL_CULL_FACE;
 import static android.opengl.GLES20.GL_DEPTH_TEST;
 import static android.opengl.GLES20.GL_LEQUAL;
-import static android.opengl.GLES20.GL_NEAREST;
 import static android.opengl.GLES20.GL_ONE_MINUS_SRC_ALPHA;
 import static android.opengl.GLES20.GL_SRC_ALPHA;
-import static android.opengl.GLES20.GL_TEXTURE;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
-import static android.opengl.GLES20.GL_TEXTURE_MAG_FILTER;
-import static android.opengl.GLES20.GL_TEXTURE_MIN_FILTER;
 import static android.opengl.GLES20.glBlendFunc;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.glClearColor;
 import static android.opengl.GLES20.glClearDepthf;
-import static android.opengl.GLES20.glCullFace;
 import static android.opengl.GLES20.glDepthFunc;
 import static android.opengl.GLES20.glDepthMask;
 import static android.opengl.GLES20.glDepthRangef;
 import static android.opengl.GLES20.glEnable;
-import static android.opengl.GLES20.glTexParameterf;
-import static android.opengl.GLES20.glTexParameteri;
 import static android.opengl.GLES20.glViewport;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
-import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.models.Mesh;
-import uk.co.calvinwylie.chopperv2.models.ModelLoader;
-import uk.co.calvinwylie.chopperv2.models.Vertex;
-import uk.co.calvinwylie.chopperv2.shaderPrograms.ColorShaderProgram;
-import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShaderProgram;
+import uk.co.calvinwylie.chopperv2.models.ModelManager;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.ColorShader;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
-import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 import uk.co.calvinwylie.chopperv2.util.TextureManager;
 
 
@@ -59,8 +42,10 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     private String tag = this.getClass().getSimpleName();
 
     private TextureManager m_TextureManager = new TextureManager();
-    private TextureShaderProgram m_TextureProgram;
-    private ColorShaderProgram m_ColorProgram;
+    private ModelManager m_ModelManager = new ModelManager();
+    private PhongShader m_PhongShader;
+    private TextureShader m_TextureShader;
+    private ColorShader m_ColorShader;
 
     private Context m_Context;                              //used for shaders
     private GamePacket m_GamePack;
@@ -92,10 +77,12 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-        m_ColorProgram = new ColorShaderProgram(m_Context);
-        m_TextureProgram = new TextureShaderProgram(m_Context);
+        m_ColorShader = new ColorShader(m_Context);
+        m_TextureShader = new TextureShader(m_Context);
+        m_PhongShader = new PhongShader(m_Context);
 
         m_TextureManager.loadTextures(m_Context);
+        m_ModelManager.loadModels(m_Context);
     }
 
 
@@ -114,18 +101,24 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_GamePack.m_Camera.onDrawFrame();
         for(GameObject go: m_GamePack.m_RenderList){
 
-            m_TextureProgram.useProgram();
-            m_TextureProgram.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
-            m_TextureProgram.bindData(go.getVertexData());
-            go.draw(m_TextureProgram.getPositionAttributeLocation(), m_TextureProgram.getTextureCoordinatesAttributeLocation());
+            if(go.hasModel()){
+                m_PhongShader.useProgram();
+                m_PhongShader.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
+                m_ModelManager.getModel(go.getModelType()).draw(m_TextureShader.getPositionAttributeLocation(), m_TextureShader.getTextureCoordinatesAttributeLocation());
+            }else{
+                m_TextureShader.useProgram();
+                m_TextureShader.setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
+                m_TextureShader.bindData(go.getVertexData());
+                go.draw();
+            }
         }
 
 
         m_GamePack.m_UICamera.onDrawFrame();
         for (UIElement uie: m_GamePack.m_UIRenderList){
-            m_TextureProgram.useProgram();
-            m_TextureProgram.setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), m_TextureManager.getTexture(uie.getTexture()));
-            m_TextureProgram.bindData(uie.getVertexData());
+            m_TextureShader.useProgram();
+            m_TextureShader.setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), m_TextureManager.getTexture(uie.getTexture()));
+            m_TextureShader.bindData(uie.getVertexData());
             uie.draw();
         }
 
