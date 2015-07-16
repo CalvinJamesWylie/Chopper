@@ -21,14 +21,14 @@ public class ModelLoader {
     private static final int FLOATS_PER_VERTEX = 3;
     private int offset = 0;
 
-    public static Mesh loadModel(Context context, int modelResourceId){
+    public static Mesh loadModel(Context context, String fileName){
         ArrayList<Vector3> vertices  = new ArrayList<>();
         ArrayList<Vector2> texCoords = new ArrayList<>();
         ArrayList<Vector3> normals   = new ArrayList<>();
         ArrayList<OBJIndex> indices  = new ArrayList<>();
 
         try{
-            InputStream inputStream = context.getResources().openRawResource(modelResourceId);
+            InputStream inputStream = context.getAssets().open("models/" + fileName);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -68,10 +68,10 @@ public class ModelLoader {
             return toIndexedMesh(vertices, texCoords, normals, indices);
 
         }catch(IOException e){
-            throw new RuntimeException("Could not open resource: " + modelResourceId, e);
+            throw new RuntimeException("Could not open resource: " + fileName, e);
 
         }catch (Resources.NotFoundException nfe){
-            throw new RuntimeException("Resource not found: " + modelResourceId, nfe);
+            throw new RuntimeException("Resource not found: " + fileName, nfe);
         }
     }
 

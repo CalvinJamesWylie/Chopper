@@ -17,7 +17,7 @@ public class ModelManager {
         for(ModelType modelType: models){
             switch(modelType){
                 case helicopter:
-                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, R.raw.heli_final);
+                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, "heli_final.obj");
                     break;
             }
         }

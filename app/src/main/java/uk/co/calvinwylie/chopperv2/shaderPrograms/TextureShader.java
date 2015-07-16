@@ -38,13 +38,12 @@ public class TextureShader extends Shader {
         super(context, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader);
 
         //Retrieve uniform locations for the shader program.
-        u_MatrixLocation = glGetUniformLocation(program, U_MATRIX);
-        u_TextureUnitLocation = glGetUniformLocation(program, U_TEXTURE_UNIT);
-       // uTextureUnit1Location = glGetUniformLocation(program, U_TEXTURE_UNIT_1);
+        u_MatrixLocation = glGetUniformLocation(program, "u_Matrix");
+        u_TextureUnitLocation = glGetUniformLocation(program, "u_TextureUnit");
 
         //Retrieve attribute locations for the shader program.
-        a_PositionLocation = glGetAttribLocation(program, A_POSITION);
-        a_TextureCoordinatesLocation = glGetAttribLocation(program, A_TEXTURE_COORDINATES);
+        a_PositionLocation = glGetAttribLocation(program, "a_Position");
+        a_TextureCoordinatesLocation = glGetAttribLocation(program, "a_TextureCoordinates");
     }
     public void setUniforms(float[] matrix, int textureId){
         //Pass the matrix into the shader program

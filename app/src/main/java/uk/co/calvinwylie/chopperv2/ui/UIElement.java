@@ -60,6 +60,7 @@ public abstract class UIElement extends GameObject{
         return m_TextureType;
     }
 
+
     public void draw() {
         if(m_Visible) {
             glDrawArrays(GL_TRIANGLE_FAN, 0, 6);

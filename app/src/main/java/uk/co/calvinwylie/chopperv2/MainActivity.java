@@ -62,11 +62,11 @@ public class MainActivity extends Activity {
             m_GlSurfaceView.setRenderer(m_MainRenderer);
             m_GlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
             m_RendererSet  = true;
-
             m_TouchHandler = new TouchHandler(m_DisplaySize.x, m_DisplaySize.y, R.drawable.analog_stick);
             m_Logic        = new GameLogic(this, m_GamePack, m_TouchHandler);
             m_GameThread   = new GameThread(m_Logic, m_GlSurfaceView);
             m_GameThread.start();
+
         }else{
             Toast.makeText(this, "This device does not support OpenGL 2.0", Toast.LENGTH_LONG).show();
             return;

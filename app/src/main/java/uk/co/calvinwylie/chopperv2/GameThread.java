@@ -33,10 +33,8 @@ public class GameThread extends Thread {
 
         m_NewTime = System.currentTimeMillis();
 
-        while(m_Running){
-            if(m_Paused) {
-                continue;
-            }
+        while(!m_Paused){
+
 
             m_OldTime = m_NewTime;
             m_NewTime = System.currentTimeMillis();

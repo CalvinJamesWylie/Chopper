@@ -8,5 +8,4 @@ public enum TextureType {
     analog_stick,
     check,
     heli_texture,
-    world
 }

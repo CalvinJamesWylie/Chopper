@@ -1,35 +1,35 @@
 package uk.co.calvinwylie.chopperv2.shaderPrograms;
 
 import android.content.Context;
-import android.util.Log;
 
+import java.util.HashMap;
+
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.util.ShaderHelper;
 import uk.co.calvinwylie.chopperv2.util.TextResourceReader;
 
-import static android.opengl.GLES20.glEnableVertexAttribArray;
+import static android.opengl.GLES20.glGetAttribLocation;
+import static android.opengl.GLES20.glGetUniformLocation;
+import static android.opengl.GLES20.glUniform1f;
+import static android.opengl.GLES20.glUniform1i;
+import static android.opengl.GLES20.glUniform3f;
+import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 
 /**
  * Created by Calvin on 16/04/2015.
  */
 public class Shader {
-    //Uniform constants
-    protected static final String U_MATRIX = "u_Matrix";
-    protected static final String U_TEXTURE_UNIT = "u_TextureUnit";
-    protected static final String U_COLOR = "u_Color";
-
-    //Attribute constants
-    protected static final String A_POSITION = "a_Position";
-    protected static final String A_COLOR = "a_Color";
-    protected static final String A_TEXTURE_COORDINATES = "a_TextureCoordinates";
 
     //Shader program
     protected final int program;
+    protected HashMap <String, Integer> m_Uniforms;
+    protected HashMap <String, Integer> m_Attributes;
 
     protected Shader(Context context, int vertexShaderResourceId, int fragmentShaderResourceId){
-        //Compile the shaders and link the program.
 
-        //Log.e("ddd", TextResourceReader.readTextFileFromResource(context, vertexShaderResourceId));
+        m_Uniforms = new HashMap<String, Integer>();
+        m_Attributes = new HashMap<String, Integer>();
 
         program = ShaderHelper.buildProgram(
                 TextResourceReader.readTextFileFromResource(context, vertexShaderResourceId),
@@ -41,4 +41,31 @@ public class Shader {
         //Set the current OpenGL shader program to this program.
         glUseProgram(program);
     }
+
+    protected void addUniform(String uniform){
+        int uniformLocation = glGetUniformLocation(program, uniform);
+        m_Uniforms.put(uniform, uniformLocation);
+    }
+    public void setUniform(String uniform, int value){
+        glUniform1i(m_Uniforms.get(uniform), value);
+    }
+    public void setUniform(String uniform, float value){
+        glUniform1f(m_Uniforms.get(uniform), value);
+    }
+    public void setUniform(String uniform, Vector3 value){
+        glUniform3f(m_Uniforms.get(uniform), value.X, value.Y, value.Z);
+    }
+    public void setUniform(String uniform, float[] value){
+        glUniformMatrix4fv(m_Uniforms.get(uniform), 1, false, value, 0);
+    }
+
+    protected void addAttribute(String attribute){
+        int attributeLocation = glGetAttribLocation(program, attribute);
+        m_Attributes.put(attribute, attributeLocation);
+    }
+    protected int getAttributeLocation(String attribute){
+        return m_Attributes.get(attribute);
+    }
+
+
 }
