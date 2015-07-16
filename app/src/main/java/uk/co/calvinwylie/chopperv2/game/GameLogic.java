@@ -31,6 +31,8 @@ public class GameLogic {
     private GameObjectManager m_GameObjectManager = new GameObjectManager();
     private BulletManager m_BulletManager = new BulletManager(this);
 
+    double m_TotalTime = 0.0;
+
 
     public GameLogic(Context context, GamePacket gamePack, TouchHandler touchHandler) {
         m_Context = context;
@@ -59,6 +61,13 @@ public class GameLogic {
         m_Camera.update(deltaTime);//Make this happen.
         m_GameObjectManager.update(deltaTime);
         m_BulletManager.update(deltaTime);
+
+        m_TotalTime += deltaTime;
+
+        float aL = (float)Math.abs(Math.sin(m_TotalTime));
+
+        m_GamePack.getPhongShader().getAmbientLight().set(aL, aL, aL);
+
     }
 
 //    public void addToUpdate(GameObject go){

@@ -21,6 +21,7 @@ public class Mesh {
     private int size;
     private FloatBuffer m_VertexBuffer;
     private FloatBuffer m_TexCoordBuffer;
+    private FloatBuffer m_NormalBuffer;
     private ShortBuffer m_IndexBuffer;
 
 
@@ -28,10 +29,11 @@ public class Mesh {
         size = 0;
     }
 
-    public void addVertices(Vector3[] positions, Vector2[] texCoords, short[] indices){
+    public void addVertices(Vector3[] positions, Vector2[] texCoords, Vector3[] normals, short[] indices){
         size = indices.length;
         m_VertexBuffer = ModelUtil.createFlippedBuffer(positions);
         m_TexCoordBuffer = ModelUtil.createFlippedBuffer(texCoords);
+        m_NormalBuffer = ModelUtil.createFlippedBuffer(normals);
         m_IndexBuffer = ModelUtil.createFlippedBuffer(indices);
     }
 

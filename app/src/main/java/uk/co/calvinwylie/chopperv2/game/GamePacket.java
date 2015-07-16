@@ -5,8 +5,12 @@ import android.content.Context;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.Shader;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
 import uk.co.calvinwylie.chopperv2.ui.UICamera;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 
@@ -18,6 +22,9 @@ public class GamePacket {
     public ArrayList<GameObject> m_RenderList = new ArrayList<>();
     public ArrayList<UIElement> m_UIRenderList = new ArrayList<>();
 
+    private PhongShader m_PhongShader;
+    private TextureShader m_TextureShader;
+
     private Context m_Context;
     public Camera m_Camera; //Todo make not public
     public UICamera m_UICamera;// and this
@@ -26,6 +33,9 @@ public class GamePacket {
         m_Context = context;
         m_RenderList.clear();
         m_UIRenderList.clear();
+
+
+
     }
 
     public void assignCamera(Camera camera){
@@ -49,9 +59,16 @@ public class GamePacket {
         return m_Context;
     }
 
-//    public void update(double deltaTime){
-//        for(GameObject go; m_UpdateList){
-//            go.update(deltaTime);
-//        }
-//    }
+    public PhongShader getPhongShader(){
+        return m_PhongShader;
+    }
+
+    public TextureShader getTextureShader(){
+        return m_TextureShader;
+    }
+
+    public void initShaders(){
+        m_TextureShader = new TextureShader(m_Context);
+        m_PhongShader = new PhongShader(m_Context);
+    }
 }

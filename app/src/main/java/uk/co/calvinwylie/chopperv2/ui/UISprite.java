@@ -33,8 +33,5 @@ public class UISprite extends UIElement {
         updateModelMatrix();
     }
 
-    @Override
-    public void draw(int positionAttribLocation, int textureAttribLocation) {
 
-    }
 }

@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.util.TextureType;
 
 import static android.opengl.Matrix.setIdentityM;
@@ -36,8 +37,9 @@ public abstract class GameObject {
     //Model attributes
     private final float[] m_ModelMatrix = new float[16];
     protected TextureType m_TextureType;
+    protected ModelType m_ModelType;
     protected VertexArray m_VertexArray;
-
+    protected boolean m_HasModel = false;
 
     private int m_Model; //TODO do something with these values, make values for the different ones
     private int m_Shader;
@@ -58,7 +60,7 @@ public abstract class GameObject {
 
     public abstract void update(double deltaTime);
 
-    public abstract void draw(int positionAttribLocation, int textureAttribLocation);
+    public abstract void draw();
 
     public TextureType getTexture(){
         return m_TextureType;
@@ -126,5 +128,11 @@ public abstract class GameObject {
         return m_ModelMatrix;
     }
 
+    public boolean hasModel() {
+        return m_HasModel;
+    }
 
+    public ModelType getModelType() {
+        return m_ModelType;
+    }
 }

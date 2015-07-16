@@ -17,7 +17,7 @@ import static android.opengl.GLES20.glUniformMatrix4fv;
 /**
  * Created by Calvin on 16/04/2015.
  */
-public class TextureShaderProgram extends ShaderProgram {
+public class TextureShader extends Shader {
     private static final int POSITION_COMPONENT_COUNT = 3;
     private static final int TEXTURE_COORDINATES_COMPONENT_COUNT = 2;
     private static final int STRIDE =
@@ -34,17 +34,16 @@ public class TextureShaderProgram extends ShaderProgram {
     private final int a_PositionLocation;
     private final int a_TextureCoordinatesLocation;
 
-    public TextureShaderProgram(Context context){
+    public TextureShader(Context context){
         super(context, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader);
 
         //Retrieve uniform locations for the shader program.
-        u_MatrixLocation = glGetUniformLocation(program, U_MATRIX);
-        u_TextureUnitLocation = glGetUniformLocation(program, U_TEXTURE_UNIT);
-       // uTextureUnit1Location = glGetUniformLocation(program, U_TEXTURE_UNIT_1);
+        u_MatrixLocation = glGetUniformLocation(program, "u_Matrix");
+        u_TextureUnitLocation = glGetUniformLocation(program, "u_TextureUnit");
 
         //Retrieve attribute locations for the shader program.
-        a_PositionLocation = glGetAttribLocation(program, A_POSITION);
-        a_TextureCoordinatesLocation = glGetAttribLocation(program, A_TEXTURE_COORDINATES);
+        a_PositionLocation = glGetAttribLocation(program, "a_Position");
+        a_TextureCoordinatesLocation = glGetAttribLocation(program, "a_TextureCoordinates");
     }
     public void setUniforms(float[] matrix, int textureId){
         //Pass the matrix into the shader program

@@ -13,7 +13,6 @@ public class TextureManager{
 
     public void loadTextures(Context context){
 
-
         TextureType textures[] = TextureType.values();
 
         for(TextureType texture: textures) {
@@ -31,14 +30,10 @@ public class TextureManager{
                 case heli_texture:
                     id = R.drawable.heli_texture;
                     break;
-                case world:
-                    id = R.drawable.world;
-                    break;
                 default:
                     id = R.drawable.ic_launcher;
             }
             m_TextureHandles[texture.ordinal()] = TextureHelper.loadTexture(context, id);
-
         }
     }
 

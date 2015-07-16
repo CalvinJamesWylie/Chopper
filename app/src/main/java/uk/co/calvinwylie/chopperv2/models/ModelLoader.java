@@ -11,10 +11,6 @@ import java.util.ArrayList;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
-import uk.co.calvinwylie.chopperv2.models.Mesh;
-import uk.co.calvinwylie.chopperv2.models.ModelUtil;
-import uk.co.calvinwylie.chopperv2.models.Vertex;
 
 /**
  * Created by Calvin on 17/04/2015.
@@ -25,13 +21,14 @@ public class ModelLoader {
     private static final int FLOATS_PER_VERTEX = 3;
     private int offset = 0;
 
-    public static Mesh loadModel(Context context, int modelResourceId){
-        ArrayList<Vector3> vertices = new ArrayList<>();
+    public static Mesh loadModel(Context context, String fileName){
+        ArrayList<Vector3> vertices  = new ArrayList<>();
         ArrayList<Vector2> texCoords = new ArrayList<>();
-        ArrayList<Index> indices = new ArrayList<>();
+        ArrayList<Vector3> normals   = new ArrayList<>();
+        ArrayList<OBJIndex> indices  = new ArrayList<>();
 
         try{
-            InputStream inputStream = context.getResources().openRawResource(modelResourceId);
+            InputStream inputStream = context.getAssets().open("models/" + fileName);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -48,10 +45,15 @@ public class ModelLoader {
                             Float.valueOf(tokens[1]),
                             Float.valueOf(tokens[2]),
                             Float.valueOf(tokens[3])));
-                }else if (tokens[0].equals("vt")){
+                }else if (tokens[0].equals("vt")) {
                     texCoords.add(new Vector2(
                             Float.valueOf(tokens[1]),
                             Float.valueOf(tokens[2])));
+                }else if(tokens[0].equals("vn")){
+                    normals.add(new Vector3(
+                            Float.valueOf(tokens[1]),
+                            Float.valueOf(tokens[2]),
+                            Float.valueOf(tokens[3])));
                 } else if (tokens[0].equals("f")) {
                     indices.add(parseIndex(tokens[1]));
                     indices.add(parseIndex(tokens[2]));
@@ -63,45 +65,51 @@ public class ModelLoader {
             inputStreamReader.close();
             inputStream.close();
 
-            return toIndexedMesh(vertices, texCoords, indices);
+            return toIndexedMesh(vertices, texCoords, normals, indices);
 
         }catch(IOException e){
-            throw new RuntimeException("Could not open resource: " + modelResourceId, e);
+            throw new RuntimeException("Could not open resource: " + fileName, e);
 
         }catch (Resources.NotFoundException nfe){
-            throw new RuntimeException("Resource not found: " + modelResourceId, nfe);
+            throw new RuntimeException("Resource not found: " + fileName, nfe);
         }
-
     }
 
-    private static Index parseIndex(String token){
+    private static OBJIndex parseIndex(String token){
         short vertexIndex;
         short texCoordIndex;
+        short normalIndex;
 
         String[] values = token.split("/");
 
-        vertexIndex =   (short) (Short.parseShort(values[0]) - 1);
+        vertexIndex   = (short) (Short.parseShort(values[0]) - 1);
         texCoordIndex = (short) (Short.parseShort(values[1]) - 1);
+        normalIndex   = (short) (Short.parseShort(values[2]) - 1);
 
-        return new Index(vertexIndex, texCoordIndex);
+        return new OBJIndex(vertexIndex, texCoordIndex, normalIndex);
     }
 
-    private static Mesh toIndexedMesh(ArrayList<Vector3> vertices, ArrayList<Vector2> texCoords, ArrayList<Index> indices){
+    private static Mesh toIndexedMesh(ArrayList<Vector3> vertices, ArrayList<Vector2> texCoords, ArrayList<Vector3> normals, ArrayList<OBJIndex> indices){
 
         ArrayList<Vector3> newVertices = new ArrayList<>();
         ArrayList<Vector2> newTexCoords = new ArrayList<>();
+        ArrayList<Vector3> newNormals = new ArrayList<>();
         ArrayList<Short> newIndices = new ArrayList<>();
 
         int i = 0;
-        for(Index index: indices){
+        for(OBJIndex index: indices){
             i++;
             Vector3 vertex;
             Vector2 texCoord;
+            Vector3 normal;
+
             vertex = vertices.get(index.vertexIndex);
             texCoord = texCoords.get(index.texCoordIndex);
+            normal = normals.get(index.normalIndex);
 
             newVertices.add(vertex);
             newTexCoords.add(texCoord);
+            newNormals.add(normal);
             newIndices.add((short)(i - 1));
         }
 
@@ -113,9 +121,12 @@ public class ModelLoader {
         Vector2[] texCoordData = new Vector2[newTexCoords.size()];
         newTexCoords.toArray(texCoordData);
 
+        Vector3[] normalData = new Vector3[newNormals.size()];
+        newNormals.toArray(normalData);
+
         Short[] indexData = new Short[newIndices.size()];
         newIndices.toArray(indexData);
-        mesh.addVertices(vertexData, texCoordData, ModelUtil.toShortArray(indexData));
+        mesh.addVertices(vertexData, texCoordData, normalData, ModelUtil.toShortArray(indexData));
 
         return mesh;
     }

@@ -9,6 +9,7 @@ import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.models.Mesh;
 import uk.co.calvinwylie.chopperv2.models.ModelLoader;
+import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
@@ -28,7 +29,7 @@ public class Helicopter extends Vehicle {
     private Vector3 m_TempVect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
     float m_AngleToTarget;
-    private Mesh m_Mesh = new Mesh();
+
     private static float[] VERTEX_DATA = {
             //Element Format: X,Y,Z,U,V;
 
@@ -49,8 +50,9 @@ public class Helicopter extends Vehicle {
         m_Mass = 2.0f;
         m_AirResistance = -0.75f;
         m_TextureType = TextureType.heli_texture;
+        m_ModelType = ModelType.helicopter;
+        m_HasModel = true;
         m_Engine = new Engine(this);
-        m_Mesh = ModelLoader.loadModel(context, R.raw.heli_tex_tri);
         m_VertexArray = new VertexArray(VERTEX_DATA);
     }
 
@@ -74,8 +76,7 @@ public class Helicopter extends Vehicle {
         updateModelMatrix();
     }
 
-    public void draw(int positionAttribLocation, int textureAttribLocation) {
-        m_Mesh.draw(positionAttribLocation, textureAttribLocation);
+    public void draw() {
     }
 
     public void move(double deltaTime) {// TODO make velocity scale by delta time.
