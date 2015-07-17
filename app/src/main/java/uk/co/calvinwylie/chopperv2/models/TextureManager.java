@@ -1,8 +1,9 @@
-package uk.co.calvinwylie.chopperv2.util;
+package uk.co.calvinwylie.chopperv2.models;
 
 import android.content.Context;
 
 import uk.co.calvinwylie.chopperv2.R;
+import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 
 /**
  * Created by Calvin on 30/06/2015.

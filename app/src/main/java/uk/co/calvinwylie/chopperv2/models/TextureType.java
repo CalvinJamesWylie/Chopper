@@ -1,4 +1,4 @@
-package uk.co.calvinwylie.chopperv2.util;
+package uk.co.calvinwylie.chopperv2.models;
 
 /**
  * Created by Calvin on 01/07/2015.

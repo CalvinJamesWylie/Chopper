@@ -8,9 +8,14 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Helicopter;
 import uk.co.calvinwylie.chopperv2.gameObjects.Terrain;
 import uk.co.calvinwylie.chopperv2.gameObjects.Vehicle;
+import uk.co.calvinwylie.chopperv2.lights.Attenuation;
+import uk.co.calvinwylie.chopperv2.lights.BaseLight;
+import uk.co.calvinwylie.chopperv2.lights.PointLight;
+import uk.co.calvinwylie.chopperv2.lights.SpotLight;
 import uk.co.calvinwylie.chopperv2.pubSub.PubSubManager;
 import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 import uk.co.calvinwylie.chopperv2.ui.UICamera;
 
@@ -34,6 +39,7 @@ public class GameLogic {
     double m_TotalTime = 0.0;
 
 
+
     public GameLogic(Context context, GamePacket gamePack, TouchHandler touchHandler) {
         m_Context = context;
         m_GamePack = gamePack;
@@ -55,6 +61,26 @@ public class GameLogic {
 
         m_UICamera = new UICamera();
         m_GamePack.assignUICamera(m_UICamera);
+
+        //PointLight pLight1 = new PointLight(new BaseLight(new Vector3(1, 0,0), 0.8f), new Attenuation(0,0,1), new Vector3(0, 0, 0), 10);
+       // PointLight pLight2 = new PointLight(new BaseLight(new Vector3(0, 0 ,1), 0.8f), new Attenuation(0,0,1), new Vector3(1, 0.5f, 1), 10);
+
+        PointLight pLight1 = new PointLight(
+                new BaseLight(new Vector3(1,0,0), 10),
+                new Attenuation(0,0,1),
+                new Vector3(-3, 1, 0),
+                10);
+
+        PointLight pLight2 = new PointLight(
+                new BaseLight(new Vector3(1,1,1), 5),
+                new Attenuation(0,0,0.1f),
+                new Vector3(3, 1, 0),
+                30);
+        SpotLight sLight1 = new SpotLight(pLight2, new Vector3(1,0,1), 0.7f);
+
+        m_GamePack.getPhongShader().setPointLights(new PointLight[]{pLight1});//, pLight2});
+        m_GamePack.getPhongShader().setSpotLights(new SpotLight[]{sLight1});//, pLight2});
+
     }
 
     public void update(double deltaTime){
@@ -64,9 +90,18 @@ public class GameLogic {
 
         m_TotalTime += deltaTime;
 
-        float aL = (float)Math.abs(Math.sin(m_TotalTime));
+        float tempX = (float)Math.cos(m_TotalTime);
+        float tempY = (float)Math.abs(Math.sin(m_TotalTime));
 
-        m_GamePack.getPhongShader().getAmbientLight().set(aL, aL, aL);
+        //m_GamePack.getPhongShader().getDirectionalLight().getDirection().set(tempX, tempY, 0);
+
+        m_GamePack.getPhongShader().getPointLights()[0].setPosition(m_Heli.getPosition());
+        m_GamePack.getPhongShader().getPointLights()[0].getBase().setIntensity(tempX*tempX*10);
+        m_GamePack.getPhongShader().getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());
+        Vector3 heliForwardVector = new Vector3(m_Heli.getGun().getForwardVector().X,
+                                                -1.0f,
+                                                m_Heli.getGun().getForwardVector().Y);
+        m_GamePack.getPhongShader().getSpotLights()[0].getDirection().set(heliForwardVector);
 
     }
 

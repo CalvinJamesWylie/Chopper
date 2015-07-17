@@ -2,22 +2,15 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
 
-import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.game.BulletManager;
-import uk.co.calvinwylie.chopperv2.game.GameLogic;
-import uk.co.calvinwylie.chopperv2.models.Mesh;
-import uk.co.calvinwylie.chopperv2.models.ModelLoader;
+import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.physics.Dynamics;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 import uk.co.calvinwylie.chopperv2.util.MathsHelper;
-import uk.co.calvinwylie.chopperv2.util.TextureType;
-
-import static android.opengl.GLES20.GL_TRIANGLE_FAN;
-import static android.opengl.GLES20.glDrawArrays;
+import uk.co.calvinwylie.chopperv2.models.TextureType;
 
 /**
  * Created by Calvin on 02/07/2015.
@@ -30,30 +23,15 @@ public class Helicopter extends Vehicle {
     private Vector3 Up = new Vector3(0,1,0);
     float m_AngleToTarget;
 
-    private static float[] VERTEX_DATA = {
-            //Element Format: X,Y,Z,U,V;
-
-            //Triangle Fan
-
-            0.0f,   0.0f,    0.0f, 0.5f, 0.5f, //Center
-            -1.0f, 0.0f, -1.0f, 0.0f, 1.0f,  //Bttm left
-            1.0f, 0.0f, -1.0f, 1.0f, 1.0f,  //Bttm Right
-            1.0f, 0.0f,  1.0f, 1.0f, 0.0f,  //Tp Right
-            -1.0f, 0.0f,  1.0f, 0.0f, 0.0f,  //Tp Left
-            -1.0f, 0.0f, -1.0f, 0.0f, 1.0f  //Bttm left
-    };
-
     public Helicopter(Context context, BulletManager bulletManager, TouchHandler touchHandler){
         super(bulletManager);
         m_TouchHandler = touchHandler;
         m_MaxSpeed = 5.0f;
         m_Mass = 2.0f;
         m_AirResistance = -0.75f;
-        m_TextureType = TextureType.heli_texture;
+        m_Material = new Material(TextureType.heli_texture);
         m_ModelType = ModelType.helicopter;
-        m_HasModel = true;
         m_Engine = new Engine(this);
-        m_VertexArray = new VertexArray(VERTEX_DATA);
     }
 
     @Override
@@ -93,7 +71,7 @@ public class Helicopter extends Vehicle {
         }
         float fireRange = 15.0f;
         if(m_Firing && (m_AngleToTarget <= Math.toRadians(fireRange) || m_AngleToTarget >= Math.toRadians(360 - fireRange))){
-            m_Gun.requestFire();
+            //m_Gun.requestFire();
         }
 
         m_Yaw = MathsHelper.RoundClamp(m_Yaw, 0, (float) Math.PI * 2);

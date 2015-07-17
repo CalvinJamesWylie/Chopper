@@ -23,15 +23,12 @@ import static android.opengl.GLES20.glViewport;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.models.Mesh;
 import uk.co.calvinwylie.chopperv2.models.ModelManager;
-import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
-import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
-import uk.co.calvinwylie.chopperv2.util.TextureManager;
+import uk.co.calvinwylie.chopperv2.models.TextureManager;
 
 
 /**
@@ -95,16 +92,12 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_GamePack.m_Camera.onDrawFrame();
         for(GameObject go: m_GamePack.m_RenderList){
 
-            if(go.hasModel()){
                 m_GamePack.getPhongShader().useProgram();
-                m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
-                m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(), m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation());
-            }else{
-                m_GamePack.getTextureShader().useProgram();
-                m_GamePack.getTextureShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getTexture()));
-                m_GamePack.getTextureShader().bindData(go.getVertexData());
-                go.draw();
-            }
+                m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager,  go.getMaterial());
+                m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
+                                                                m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
+                                                                m_GamePack.getPhongShader().getNormalAttributeLocation());
+
         }
 
         m_GamePack.m_UICamera.onDrawFrame();

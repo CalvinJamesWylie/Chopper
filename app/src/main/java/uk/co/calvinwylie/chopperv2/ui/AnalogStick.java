@@ -5,7 +5,7 @@ import android.util.Log;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
-import uk.co.calvinwylie.chopperv2.util.TextureType;
+import uk.co.calvinwylie.chopperv2.models.TextureType;
 
 /**
  * Created by Calvin on 29/05/2015.

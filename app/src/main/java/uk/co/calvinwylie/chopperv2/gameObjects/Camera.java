@@ -108,4 +108,8 @@ public class Camera {
         m_Position.add(m_Velocity);
         m_LookAt.add(m_Velocity);
     }
+
+    public Vector3 getPosition() {
+        return m_Position;
+    }
 }

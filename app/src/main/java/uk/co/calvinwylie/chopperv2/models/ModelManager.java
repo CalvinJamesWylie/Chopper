@@ -2,8 +2,6 @@ package uk.co.calvinwylie.chopperv2.models;
 
 import android.content.Context;
 
-import uk.co.calvinwylie.chopperv2.R;
-
 /**
  * Created by Calvin on 15/07/2015.
  */
@@ -17,7 +15,13 @@ public class ModelManager {
         for(ModelType modelType: models){
             switch(modelType){
                 case helicopter:
-                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, "heli_final.obj");
+                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
+                    break;
+                case lamina:
+                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
+                    break;
+                case cube:
+                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
                     break;
             }
         }

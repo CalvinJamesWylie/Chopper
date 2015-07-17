@@ -3,6 +3,7 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
 import java.util.ArrayList;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
@@ -12,7 +13,7 @@ import uk.co.calvinwylie.chopperv2.game.GamePacket;
  */
 public class Gun {
 
-    private Vector2 m_ForwardVector;
+    private Vector2 m_ForwardVector = new Vector2(0,-1);
     private float m_Yaw;
     private boolean m_WeaponReady = false;
     private GameObject m_Parent;
@@ -53,4 +54,7 @@ public class Gun {
         }
     }
 
+    public Vector2 getForwardVector() {
+        return m_ForwardVector;
+    }
 }

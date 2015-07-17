@@ -1,14 +1,11 @@
 package uk.co.calvinwylie.chopperv2.ui;
 
-import android.content.Context;
-import android.opengl.Matrix;
-
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
-import uk.co.calvinwylie.chopperv2.util.TextureHelper;
-import uk.co.calvinwylie.chopperv2.util.TextureType;
+import uk.co.calvinwylie.chopperv2.models.Material;
+import uk.co.calvinwylie.chopperv2.models.TextureType;
 
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.glDrawArrays;
@@ -57,7 +54,7 @@ public abstract class UIElement extends GameObject{
     }
 
     public TextureType getTexture(){
-        return m_TextureType;
+        return m_Material.getTextureType();
     }
 
 

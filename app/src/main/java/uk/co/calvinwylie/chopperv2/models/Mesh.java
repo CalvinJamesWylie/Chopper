@@ -37,7 +37,7 @@ public class Mesh {
         m_IndexBuffer = ModelUtil.createFlippedBuffer(indices);
     }
 
-    public void draw(int positionAttributeLocation, int textureAttributeLocation){
+    public void draw(int positionAttributeLocation, int textureAttributeLocation, int normalAttributeLocation){
         glEnableVertexAttribArray(positionAttributeLocation);
         m_VertexBuffer.position(0);
         glVertexAttribPointer(positionAttributeLocation, 3, GL_FLOAT, false, Vector3.SIZE << 2, m_VertexBuffer);
@@ -45,6 +45,10 @@ public class Mesh {
         m_TexCoordBuffer.position(0);
         glEnableVertexAttribArray(textureAttributeLocation);
         glVertexAttribPointer(textureAttributeLocation, 2, GL_FLOAT, false, Vector2.SIZE << 2, m_TexCoordBuffer);
+
+        m_NormalBuffer.position(0);
+        glEnableVertexAttribArray(normalAttributeLocation);
+        glVertexAttribPointer(normalAttributeLocation, 3, GL_FLOAT, false, Vector3.SIZE << 2, m_NormalBuffer);
 
         m_IndexBuffer.position(0);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, m_IndexBuffer);

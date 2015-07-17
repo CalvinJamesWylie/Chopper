@@ -5,8 +5,9 @@ import android.opengl.Matrix;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
-import uk.co.calvinwylie.chopperv2.util.TextureType;
+import uk.co.calvinwylie.chopperv2.models.TextureType;
 
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
@@ -36,13 +37,9 @@ public abstract class GameObject {
 
     //Model attributes
     private final float[] m_ModelMatrix = new float[16];
-    protected TextureType m_TextureType;
+    protected Material m_Material;
     protected ModelType m_ModelType;
     protected VertexArray m_VertexArray;
-    protected boolean m_HasModel = false;
-
-    private int m_Model; //TODO do something with these values, make values for the different ones
-    private int m_Shader;
 
     public GameObject(){
         setIdentityM(m_ModelMatrix, 0);
@@ -53,7 +50,7 @@ public abstract class GameObject {
 
         m_MaxSpeed = 0.0f;
 
-        m_TextureType = TextureType.check;
+        m_Material = new Material(TextureType.check);
 
         updateModelMatrix();
     }
@@ -62,8 +59,8 @@ public abstract class GameObject {
 
     public abstract void draw();
 
-    public TextureType getTexture(){
-        return m_TextureType;
+    public Material getMaterial(){
+        return m_Material;
     }
 
     public VertexArray getVertexData(){
@@ -126,10 +123,6 @@ public abstract class GameObject {
 
     public float[] getModelMatrix(){
         return m_ModelMatrix;
-    }
-
-    public boolean hasModel() {
-        return m_HasModel;
     }
 
     public ModelType getModelType() {
