@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import uk.co.calvinwylie.chopperv2.gameObjects.Bullet;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 
-/**
- * Created by Calvin on 30/06/2015.
- */
+
 public class BulletManager {
     private ArrayList<Bullet> m_BulletList = new ArrayList<>();
     private GameLogic m_GameLogic;

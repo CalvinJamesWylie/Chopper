@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.models;
 
 import android.content.Context;
 
-/**
- * Created by Calvin on 15/07/2015.
- */
+
 public class ModelManager {
 
     Mesh[] m_Models = new Mesh[ModelType.values().length];

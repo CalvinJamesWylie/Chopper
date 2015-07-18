@@ -4,9 +4,7 @@ import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 
-/**
- * Created by Calvin on 13/05/2015.
- */
+
 public class TouchHandler {
 
     private String tag = this.getClass().getSimpleName();

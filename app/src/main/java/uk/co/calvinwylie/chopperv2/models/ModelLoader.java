@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 17/04/2015.
- */
+
 public class ModelLoader {
 
     private static Context m_Context;

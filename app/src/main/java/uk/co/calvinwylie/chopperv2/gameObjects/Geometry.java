@@ -3,9 +3,6 @@ package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 25/02/2015.
- */
 public class Geometry{
 
     public static class Circle{

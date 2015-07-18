@@ -12,9 +12,7 @@ import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 import uk.co.calvinwylie.chopperv2.util.MathsHelper;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 
-/**
- * Created by Calvin on 02/07/2015.
- */
+
 public class Helicopter extends Vehicle {
 
     private TouchHandler m_TouchHandler;

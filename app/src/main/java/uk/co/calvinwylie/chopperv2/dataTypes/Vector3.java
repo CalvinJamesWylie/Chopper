@@ -5,9 +5,6 @@ import android.util.Log;
 
 import java.security.InvalidParameterException;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
 public class Vector3 {
     private static String tag = "Vector3";
     private static Vector3 m_TempVector = new Vector3();

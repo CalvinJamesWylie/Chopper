@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 07/07/2015.
- */
+
 public class ModelUtil {
 
     private static FloatBuffer createFloatBuffer(int size){

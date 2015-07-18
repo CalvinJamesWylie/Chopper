@@ -9,9 +9,7 @@ import static android.opengl.Matrix.invertM;
 import static android.opengl.Matrix.multiplyMM;
 import static android.opengl.Matrix.setLookAtM;
 
-/**
- * Created by Calvin on 15/06/2015.
- */
+
 public class UICamera {
     private final float[] modelViewProjectionMatrix = new float[16];
     private final float[] m_ViewProjectionMatrix = new float[16];

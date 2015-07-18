@@ -12,9 +12,7 @@ import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
 
-/**
- * Created by Calvin on 15/06/2015.
- */
+
 public abstract class UIElement extends GameObject{
 
     private final String tag = this.getClass().getSimpleName();

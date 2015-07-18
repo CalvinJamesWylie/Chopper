@@ -4,9 +4,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 
-/**
- * Created by Calvin on 15/06/2015.
- */
+
 public class UISprite extends UIElement {
 
     public UISprite(Vector3 position, Rotation rotation, float width, float height, TextureType textureType){

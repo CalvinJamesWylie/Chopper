@@ -7,9 +7,7 @@ import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 
-/**
- * Created by Calvin on 12/06/2015.
- */
+
 public class Terrain extends GameObject {
 
     public Terrain(){

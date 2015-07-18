@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.lights;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 16/07/2015.
- */
+
 public class BaseLight {
     private Vector3 color;
     private float intensity;

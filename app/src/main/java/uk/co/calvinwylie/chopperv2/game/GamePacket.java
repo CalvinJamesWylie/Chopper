@@ -14,9 +14,7 @@ import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
 import uk.co.calvinwylie.chopperv2.ui.UICamera;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 
-/**
- * Created by Calvin on 23/04/2015.
- */
+
 public class GamePacket {
 
     public ArrayList<GameObject> m_RenderList = new ArrayList<>();

@@ -7,9 +7,6 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 
-/**
- * Created by Calvin on 29/05/2015.
- */
 public class AnalogStick {
     private String tag = this.getClass().getSimpleName();
 

@@ -19,9 +19,7 @@ import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 import uk.co.calvinwylie.chopperv2.ui.UICamera;
 
-/**
- * Created by Calvin on 23/04/2015.
- */
+
 public class GameLogic {
 
     private GamePacket m_GamePack;

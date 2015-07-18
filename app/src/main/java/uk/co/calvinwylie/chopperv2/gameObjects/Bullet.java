@@ -8,9 +8,7 @@ import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 
-/**
- * Created by Calvin on 30/06/2015.
- */
+
 public class Bullet extends GameObject {
 
 

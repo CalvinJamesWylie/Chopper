@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.lights;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 17/07/2015.
- */
+
 public class SpotLight {
 
     private PointLight pointLight;

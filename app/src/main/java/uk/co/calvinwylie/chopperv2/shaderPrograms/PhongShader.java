@@ -27,9 +27,7 @@ import static android.opengl.GLES20.glUniform1i;
 import static android.opengl.GLES20.glUniform3f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 
-/**
- * Created by Calvin on 15/07/2015.
- */
+
 public class PhongShader  extends Shader {
 
     private static final String tag = "PhongShader";
@@ -50,10 +48,12 @@ public class PhongShader  extends Shader {
     public PhongShader(Context context){
         super(context, R.raw.phong_vertex_shader, R.raw.phong_fragment_shader);
 
+        //Camera and model data
         addUniform("u_MVPMatrix");
         addUniform("u_MMatrix");
         addUniform("u_EyePos");
 
+        //Light Data
         addUniform("u_AmbientLight");
 
         addUniform("u_DirectionalLight.base.color");
@@ -83,11 +83,12 @@ public class PhongShader  extends Shader {
 
         }
 
-
+        //Material Data
         addUniform("u_TextureUnit");
         addUniform("u_SpecularIntensity");
         addUniform("u_SpecularPower");
 
+        //Vertex Data
         addAttribute("a_Position");
         addAttribute("a_TextureCoords");
         addAttribute("a_Normal");

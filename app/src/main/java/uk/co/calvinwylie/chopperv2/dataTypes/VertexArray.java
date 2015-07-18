@@ -8,9 +8,7 @@ import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glVertexAttribPointer;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
+
 public class VertexArray {
 
     private final FloatBuffer m_FloatBuffer;

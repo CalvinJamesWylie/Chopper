@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.physics;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 08/06/2015.
- */
+
 public class Dynamics {
 
     private static Vector3 tempVector = new Vector3();

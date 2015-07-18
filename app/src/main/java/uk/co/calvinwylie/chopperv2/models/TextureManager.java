@@ -5,9 +5,7 @@ import android.content.Context;
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 
-/**
- * Created by Calvin on 30/06/2015.
- */
+
 public class TextureManager{
 
     private int[] m_TextureHandles = new int[TextureType.values().length];

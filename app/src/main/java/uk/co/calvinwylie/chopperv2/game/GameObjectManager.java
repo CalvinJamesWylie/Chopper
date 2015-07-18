@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 
-/**
- * Created by Calvin on 30/06/2015.
- */
+
 public class GameObjectManager {
     ArrayList<GameObject> m_GameObjectList = new ArrayList<>();
 

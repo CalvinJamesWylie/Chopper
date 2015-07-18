@@ -14,9 +14,7 @@ import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
 import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glVertexAttribPointer;
 
-/**
- * Created by Calvin on 07/07/2015.
- */
+
 public class Mesh {
     private int size;
     private FloatBuffer m_VertexBuffer;

@@ -12,9 +12,6 @@ import uk.co.calvinwylie.chopperv2.models.TextureType;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
 public abstract class GameObject {
     //Log strings
     private final String tag = this.getClass().getSimpleName();

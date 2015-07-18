@@ -2,9 +2,6 @@ package uk.co.calvinwylie.chopperv2.models;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 16/07/2015.
- */
 public class Material {
     private TextureType m_TextureType;
     private Vector3 m_Color;

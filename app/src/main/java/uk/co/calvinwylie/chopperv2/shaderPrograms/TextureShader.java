@@ -14,9 +14,7 @@ import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform1i;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
+
 public class TextureShader extends Shader {
     private static final int POSITION_COMPONENT_COUNT = 3;
     private static final int TEXTURE_COORDINATES_COMPONENT_COUNT = 2;

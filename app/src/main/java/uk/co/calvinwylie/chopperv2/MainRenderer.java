@@ -31,9 +31,6 @@ import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.models.TextureManager;
 
 
-/**
- * Created by Calvin on 16/04/2015.
- */
 public class MainRenderer implements GLSurfaceView.Renderer {
 
     private String tag = this.getClass().getSimpleName();

@@ -4,9 +4,7 @@ import android.opengl.GLSurfaceView;
 
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 
-/**
- * Created by Calvin on 23/04/2015.
- */
+
 public class GameThread extends Thread {
 
     private boolean m_Paused = false;

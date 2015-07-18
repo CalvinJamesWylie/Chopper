@@ -8,9 +8,7 @@ import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 
-/**
- * Created by Calvin on 04/06/2015.
- */
+
 public class Gun {
 
     private Vector2 m_ForwardVector = new Vector2(0,-1);

@@ -3,9 +3,7 @@ package uk.co.calvinwylie.chopperv2.models;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 07/07/2015.
- */
+
 public class Vertex {
     public static final int SIZE = 3; //// CHANGE THIS ERRR TIME!
 

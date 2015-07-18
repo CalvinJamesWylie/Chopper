@@ -4,9 +4,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 
-/**
- * Created by Calvin on 24/05/2015.
- */
+
 public class Engine {
     GameObject m_GameObject;
     Vector3 m_Acceleration = new Vector3();

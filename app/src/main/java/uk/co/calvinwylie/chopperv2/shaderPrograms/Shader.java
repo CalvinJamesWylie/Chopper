@@ -16,9 +16,7 @@ import static android.opengl.GLES20.glUniform3f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
+
 public class Shader {
 
     //Shader program

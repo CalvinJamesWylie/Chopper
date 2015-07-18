@@ -4,9 +4,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
 
-/**
- * Created by Calvin on 16/04/2015.
- */
+
 public abstract class Vehicle extends GameObject {
 
     private String tag = this.getClass().getSimpleName();

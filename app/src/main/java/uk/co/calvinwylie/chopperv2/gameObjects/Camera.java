@@ -1,9 +1,5 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
-/**
- * Created by Calvin on 22/04/2015.
- */
-
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Geometry.Ray;
@@ -15,9 +11,6 @@ import static android.opengl.Matrix.multiplyMV;
 import static android.opengl.Matrix.setLookAtM;
 
 
-/**
- * Created by Calvin on 29/03/2015.
- */
 public class Camera {
 
     private String tag = this.getClass().getSimpleName();

@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.pubSub;
 
 import android.util.Log;
 
-/**
- * Created by Calvin on 15/05/2015.
- */
+
 public class PubSubManager {
 
     private String tag = this.getClass().getSimpleName();

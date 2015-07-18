@@ -2,9 +2,7 @@ package uk.co.calvinwylie.chopperv2.models;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
-/**
- * Created by Calvin on 10/07/2015.
- */
+
 public class OBJIndex {
     public int vertexIndex;
     public int texCoordIndex;

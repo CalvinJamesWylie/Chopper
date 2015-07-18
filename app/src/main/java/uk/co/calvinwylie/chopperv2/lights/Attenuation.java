@@ -1,8 +1,6 @@
 package uk.co.calvinwylie.chopperv2.lights;
 
-/**
- * Created by Calvin on 16/07/2015.
- */
+
 public class Attenuation {
     private float constant;
     private float linear;
