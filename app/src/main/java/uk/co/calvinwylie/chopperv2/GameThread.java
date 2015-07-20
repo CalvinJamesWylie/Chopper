@@ -39,6 +39,7 @@ public class GameThread extends Thread {
             m_DeltaTime += (m_NewTime - m_OldTime);
 
             if (m_DeltaTime >= m_FrameRate) {
+
                 m_Logic.update((double) m_DeltaTime * 0.001); //convert to seconds.
 
                 m_View.requestRender();

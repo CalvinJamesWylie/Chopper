@@ -6,8 +6,12 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 public class SpotLight {
 
     private PointLight pointLight;
+
     private Vector3 direction;
+    public int directionLocation;
+
     private float cutOff;
+    public int cutOffLocation;
 
     public SpotLight(PointLight pointLight, Vector3 direction, float cutOff) {
         this.pointLight = pointLight;

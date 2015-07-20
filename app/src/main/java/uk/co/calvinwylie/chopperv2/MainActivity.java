@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
         final boolean supportEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
 
-        WindowManager wm = (WindowManager) this.getSystemService(this.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) this.getSystemService(WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         m_DisplaySize = new Point();
         display.getRealSize(m_DisplaySize);

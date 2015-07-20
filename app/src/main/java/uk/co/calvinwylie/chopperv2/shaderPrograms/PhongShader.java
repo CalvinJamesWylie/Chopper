@@ -37,7 +37,7 @@ public class PhongShader  extends Shader {
 
     private static Vector3 m_AmbientLight = new Vector3(0,0,0.2f);//(0.5f, 0.5f, 0.5f);
     private static DirectionalLight m_DirectionalLight = new DirectionalLight(
-                                                                new BaseLight(new Vector3(0,0,0), 0.0f),
+                                                                new BaseLight(new Vector3(1,1,0.7f), 1.0f),
                                                                 new Vector3(0.5f,1,0.5f));
 
 
@@ -114,7 +114,6 @@ public class PhongShader  extends Shader {
             setUniform("u_SpotLights[" + i + "]", m_SpotLights[i]);
         }
 
-
         glActiveTexture(GL_TEXTURE0);                                                       //Set the active texture unit to texture unit 0.
         glBindTexture(GL_TEXTURE_2D, textureManager.getTexture(material.getTextureType())); //Bind the texture to this unit.
         setUniform("u_TextureUnit", 0);                                                     //Tell the texture uniform sample to use this texture in the shader by telling it to read from texture unit 0.
@@ -127,7 +126,7 @@ public class PhongShader  extends Shader {
     public int getPositionAttributeLocation(){
         int result = getAttributeLocation("a_Position");
         if(result == -1){
-            Log.e("", "a_Position aint a thing");
+            Log.e(tag, "a_Position aint a thing");
             return result;
         }else {
             return result;
@@ -136,7 +135,7 @@ public class PhongShader  extends Shader {
     public int getTextureCoordinatesAttributeLocation(){
         int result = getAttributeLocation("a_TextureCoords");
         if(result == -1){
-            Log.e("", "a_TextureCoords aint a thing");
+            Log.e(tag, "a_TextureCoords aint a thing");
             return result;
         }else {
             return result;
@@ -145,7 +144,7 @@ public class PhongShader  extends Shader {
     public int getNormalAttributeLocation() {
         int result = getAttributeLocation("a_Normal");
         if(result == -1){
-            Log.e("", "a_Normal aint a thing");
+            Log.e(tag, "a_Normal aint a thing");
             return result;
         }else {
             return result;
@@ -181,7 +180,21 @@ public class PhongShader  extends Shader {
             System.exit(1);
         }
         m_PointLights = pointLights;
+
+//        for (int i = 0; i < m_PointLights.length; i++){
+//            m_PointLights[i].getBase().colorLocation     = m_Uniforms.get("u_PointLights[" + i + "].base.color");
+//            m_PointLights[i].getBase().intensityLocation = m_Uniforms.get("u_PointLights[" + i + "].base.intensity");
+//
+//            m_PointLights[i].getAtten().constantLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.constant");
+//            m_PointLights[i].getAtten().linearLocation   = m_Uniforms.get("u_PointLights[" + i + "].atten.linear");
+//            m_PointLights[i].getAtten().exponentLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.exponent");
+//
+//            m_PointLights[i].positionLocation            = m_Uniforms.get("u_PointLights[" + i + "].position");
+//            m_PointLights[i].rangeLocation               = m_Uniforms.get("u_PointLights[" + i + "].range");
+//
+//        }
     }
+
     public static void setSpotLights(SpotLight[] spotLights){
         if(spotLights.length> MAX_POINT_LIGHTS){
             Log.e(tag, "ERROR: you passed in too many spot lights");
@@ -189,6 +202,22 @@ public class PhongShader  extends Shader {
             System.exit(1);
         }
         m_SpotLights = spotLights;
+
+//        for (int i = 0; i < m_SpotLights.length; i++){
+//            m_SpotLights[i].getPointLight().getBase().colorLocation     = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.color");
+//            m_SpotLights[i].getPointLight().getBase().intensityLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.intensity");
+//
+//            m_SpotLights[i].getPointLight().getAtten().constantLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.constant");
+//            m_SpotLights[i].getPointLight().getAtten().linearLocation   = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.linear");
+//            m_SpotLights[i].getPointLight().getAtten().exponentLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.exponent");
+//
+//            m_SpotLights[i].getPointLight().positionLocation            = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.position");
+//            m_SpotLights[i].getPointLight().rangeLocation               = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.range");
+//
+//            m_SpotLights[i].directionLocation                           = m_Uniforms.get("u_SpotLights[" + i + "].direction");
+//            m_SpotLights[i].cutOffLocation                              = m_Uniforms.get("u_SpotLights[" + i + "].cutOff");
+//
+//        }
     }
 
     public void setUniform(String uniform, BaseLight baseLight){
@@ -210,7 +239,35 @@ public class PhongShader  extends Shader {
         setUniform(uniform + ".range", pointLight.getRange());
     }
 
-    public void setUniform(String uniform, SpotLight spotlight){
+    public void setUniform(String uniform , SpotLight spotlight){
+//        setUniform(spotlight.getPointLight().getBase().colorLocation,
+//                   spotlight.getPointLight().getBase().getColor());
+//
+//        setUniform(spotlight.getPointLight().getBase().intensityLocation,
+//                   spotlight.getPointLight().getBase().getIntensity());
+//
+//        setUniform(spotlight.getPointLight().getAtten().constantLocation,
+//                   spotlight.getPointLight().getAtten().getConstant());
+//
+//        setUniform(spotlight.getPointLight().getAtten().linearLocation,
+//                   spotlight.getPointLight().getAtten().getLinear());
+//
+//        setUniform(spotlight.getPointLight().getAtten().exponentLocation,
+//                   spotlight.getPointLight().getAtten().getExponent());
+//
+//        setUniform(spotlight.getPointLight().positionLocation,
+//                   spotlight.getPointLight().getPosition());
+//
+//        setUniform(spotlight.getPointLight().rangeLocation,
+//                   spotlight.getPointLight().getRange());
+//
+//        setUniform(spotlight.directionLocation, spotlight.getDirection());
+//
+//        setUniform(spotlight.cutOffLocation, spotlight.getCutOff());
+
+
+
+
         setUniform(uniform + ".pointLight", spotlight.getPointLight());
         setUniform(uniform + ".direction", spotlight.getDirection());
         setUniform(uniform + ".cutOff", spotlight.getCutOff());

@@ -5,7 +5,10 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
 public class DirectionalLight {
     private BaseLight base;
+
     private Vector3 direction;
+    public int directionLocation;
+
 
     public DirectionalLight(BaseLight base, Vector3 direction) {
         this.base = base;

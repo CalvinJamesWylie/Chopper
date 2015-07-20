@@ -29,6 +29,9 @@ public class TextureManager{
                 case heli_texture:
                     id = R.drawable.heli_texture;
                     break;
+                case none:
+                    id = R.drawable.none;
+                    break;
                 default:
                     id = R.drawable.ic_launcher;
             }

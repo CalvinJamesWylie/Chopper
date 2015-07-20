@@ -47,14 +47,29 @@ public class Shader {
     public void setUniform(String uniform, int value){
         glUniform1i(m_Uniforms.get(uniform), value);
     }
+    public void setUniform(int uniformLocation, int value){
+        glUniform1i(uniformLocation, value);
+    }
+
     public void setUniform(String uniform, float value){
         glUniform1f(m_Uniforms.get(uniform), value);
     }
+    public void setUniform(int uniformLocation, float value){
+        glUniform1f(uniformLocation, value);
+    }
+
     public void setUniform(String uniform, Vector3 value){
         glUniform3f(m_Uniforms.get(uniform), value.X, value.Y, value.Z);
     }
+    public void setUniform(int uniformLocation, Vector3 value){
+        glUniform3f(uniformLocation, value.X, value.Y, value.Z);
+    }
+
     public void setUniform(String uniform, float[] value){
         glUniformMatrix4fv(m_Uniforms.get(uniform), 1, false, value, 0);
+    }
+    public void setUniform(int uniformLocation, float[] value){
+        glUniformMatrix4fv(uniformLocation, 1, false, value, 0);
     }
 
     protected void addAttribute(String attribute){

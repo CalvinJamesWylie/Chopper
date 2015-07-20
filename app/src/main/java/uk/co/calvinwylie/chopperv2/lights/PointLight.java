@@ -5,9 +5,14 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
 public class PointLight {
     private BaseLight base;
+
     private Attenuation atten;
+
     private Vector3 position;
+    public int positionLocation;
+
     private float range;
+    public int rangeLocation;
 
     public PointLight(BaseLight base, Attenuation atten, Vector3 position, float range) {
         this.base = base;

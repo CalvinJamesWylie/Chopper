@@ -3,8 +3,13 @@ package uk.co.calvinwylie.chopperv2.lights;
 
 public class Attenuation {
     private float constant;
+    public int constantLocation;
+
     private float linear;
+    public int linearLocation;
+
     private float exponent;
+    public int exponentLocation;
 
     public Attenuation(float constant, float linear, float exponent) {
         this.constant = constant;

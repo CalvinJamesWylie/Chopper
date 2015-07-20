@@ -52,10 +52,7 @@ public class Helicopter extends Vehicle {
         updateModelMatrix();
     }
 
-    public void draw() {
-    }
-
-    public void move(double deltaTime) {// TODO make velocity scale by delta time.
+    public void move(double deltaTime) {
 
         m_AngleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
 
@@ -69,7 +66,7 @@ public class Helicopter extends Vehicle {
         }
         float fireRange = 15.0f;
         if(m_Firing && (m_AngleToTarget <= Math.toRadians(fireRange) || m_AngleToTarget >= Math.toRadians(360 - fireRange))){
-            //m_Gun.requestFire();
+            m_Gun.requestFire();
         }
 
         m_Yaw = MathsHelper.RoundClamp(m_Yaw, 0, (float) Math.PI * 2);
@@ -85,7 +82,7 @@ public class Helicopter extends Vehicle {
         m_Position.add(m_Velocity);
         m_TempVect.set(m_Velocity);
         m_Rotation.setAxis(m_TempVect.crossProduct(Up)); //TODO remove mem alloc in cross prod
-        m_Rotation.setAngle(-m_Velocity.lengthSquared()*3000); // TODO remove magic number, controlls the amount the heli leans.
+        m_Rotation.setAngle((float)(-m_Velocity.lengthSquared()*120000*deltaTime)); // TODO remove magic number, controlls the amount the heli leans.
 
     }
 }

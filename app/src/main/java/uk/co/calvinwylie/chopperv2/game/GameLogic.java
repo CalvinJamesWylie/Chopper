@@ -36,8 +36,6 @@ public class GameLogic {
 
     double m_TotalTime = 0.0;
 
-
-
     public GameLogic(Context context, GamePacket gamePack, TouchHandler touchHandler) {
         m_Context = context;
         m_GamePack = gamePack;
@@ -60,9 +58,6 @@ public class GameLogic {
         m_UICamera = new UICamera();
         m_GamePack.assignUICamera(m_UICamera);
 
-        //PointLight pLight1 = new PointLight(new BaseLight(new Vector3(1, 0,0), 0.8f), new Attenuation(0,0,1), new Vector3(0, 0, 0), 10);
-       // PointLight pLight2 = new PointLight(new BaseLight(new Vector3(0, 0 ,1), 0.8f), new Attenuation(0,0,1), new Vector3(1, 0.5f, 1), 10);
-
         PointLight pLight1 = new PointLight(
                 new BaseLight(new Vector3(1,0,0), 10),
                 new Attenuation(0,0,1),
@@ -82,6 +77,8 @@ public class GameLogic {
     }
 
     public void update(double deltaTime){
+        if(m_GamePack.getPhongShader() == null)
+            return;
         m_Camera.update(deltaTime);//Make this happen.
         m_GameObjectManager.update(deltaTime);
         m_BulletManager.update(deltaTime);

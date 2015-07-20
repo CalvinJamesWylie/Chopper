@@ -20,8 +20,8 @@ public class GamePacket {
     public ArrayList<GameObject> m_RenderList = new ArrayList<>();
     public ArrayList<UIElement> m_UIRenderList = new ArrayList<>();
 
-    private PhongShader m_PhongShader;
-    private TextureShader m_TextureShader;
+    private static PhongShader m_PhongShader;
+    private static TextureShader m_TextureShader;
 
     private Context m_Context;
     public Camera m_Camera; //Todo make not public
@@ -31,8 +31,6 @@ public class GamePacket {
         m_Context = context;
         m_RenderList.clear();
         m_UIRenderList.clear();
-
-
 
     }
 

@@ -19,8 +19,4 @@ public class UIButton extends UIElement {
 
     }
 
-    @Override
-    public void draw() {
-
-    }
 }

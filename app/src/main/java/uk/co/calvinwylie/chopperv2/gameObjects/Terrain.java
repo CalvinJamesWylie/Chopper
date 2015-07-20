@@ -23,11 +23,6 @@ public class Terrain extends GameObject {
 
     }
 
-    @Override
-    public void draw() {
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0,6);
-    }
-
 //    @Override
 //    public void loadTexture(Context context) {
 //        m_Texture = TextureHelper.loadTexture(context, R.drawable.check);

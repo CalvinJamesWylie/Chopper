@@ -5,7 +5,10 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 
 public class BaseLight {
     private Vector3 color;
+    public int colorLocation;
+
     private float intensity;
+    public int intensityLocation;
 
     public BaseLight(Vector3 color, float intensity){
         this.color = color;
