@@ -26,7 +26,7 @@ public class AnalogStick {
     private UISprite m_CenterMarker;
 
     public AnalogStick(){
-        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 32.0f , 32.0f, TextureType.analog_stick); //TODO add params
+        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 64f , 64f, TextureType.none); //TODO add params
     }
 
     public void activate(Vector2 center, int id) {
@@ -39,7 +39,7 @@ public class AnalogStick {
         Log.i(tag, "" + center.toString());
         m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, -center.Y));
         m_CenterMarker.update();
-        m_CenterMarker.setVisible(true);
+        m_CenterMarker.setTexture(TextureType.analog_stick);
     }
 
     public void deactivate(Vector2 lastTouch) {
@@ -47,7 +47,7 @@ public class AnalogStick {
             m_ButtonPressPos = lastTouch;
         }
         m_Active = false;
-        m_CenterMarker.setVisible(false);
+        m_CenterMarker.setTexture(TextureType.none);
     }
 
     public Vector2 getDelta(){
