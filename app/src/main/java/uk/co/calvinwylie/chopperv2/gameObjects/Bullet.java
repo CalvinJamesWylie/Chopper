@@ -28,11 +28,6 @@ public class Bullet extends GameObject {
         updateModelMatrix();
     }
 
-    @Override
-    public void draw() {
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
-    }
-
 
     private void move(double deltaTime){
         //m_Velocity.scaleBy((float)deltaTime);
