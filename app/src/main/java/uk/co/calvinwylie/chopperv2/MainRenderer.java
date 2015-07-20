@@ -2,6 +2,9 @@ package uk.co.calvinwylie.chopperv2;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import static android.opengl.GLES20.GL_BLEND;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
@@ -23,10 +26,16 @@ import static android.opengl.GLES20.glViewport;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
+import uk.co.calvinwylie.chopperv2.lights.Attenuation;
+import uk.co.calvinwylie.chopperv2.lights.BaseLight;
+import uk.co.calvinwylie.chopperv2.lights.PointLight;
+import uk.co.calvinwylie.chopperv2.lights.SpotLight;
 import uk.co.calvinwylie.chopperv2.models.Mesh;
 import uk.co.calvinwylie.chopperv2.models.ModelManager;
+import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.models.TextureManager;
 
@@ -40,10 +49,6 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
     private Context m_Context;                              //used for shaders
     private GamePacket m_GamePack;
-    Mesh mesh = new Mesh();
-
-
-    // private ArrayList<Model> m_ModelList;
 
     public MainRenderer(Context context, GamePacket gamePacket){
         m_Context = context;
@@ -81,29 +86,35 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_GamePack.m_UICamera.onSurfaceChanged(width, height);
     }
 
+    private ArrayList<GameObject> clonedRenderList;
+
     @Override
     public void onDrawFrame(GL10 gl) {
         //Log.i(tag, "onDraw");
         glClear(GL_COLOR_BUFFER_BIT);
 
         m_GamePack.m_Camera.onDrawFrame();
-        for(GameObject go: m_GamePack.m_RenderList){
 
-                m_GamePack.getPhongShader().useProgram();
-                m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager,  go.getMaterial());
-                m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
-                                                                m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
-                                                                m_GamePack.getPhongShader().getNormalAttributeLocation());
+        clonedRenderList = (ArrayList<GameObject>)m_GamePack.m_RenderList.clone();
 
+        for(GameObject go: clonedRenderList){
+
+            m_GamePack.getPhongShader().useProgram();
+            m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager, go.getMaterial());
+            m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
+                                                            m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
+                                                            m_GamePack.getPhongShader().getNormalAttributeLocation());
         }
 
         m_GamePack.m_UICamera.onDrawFrame();
         for (UIElement uie: m_GamePack.m_UIRenderList){
             m_GamePack.getTextureShader().useProgram();
             m_GamePack.getTextureShader().setUniforms(m_GamePack.m_UICamera.getMVPMatrix(uie.getModelMatrix()), m_TextureManager.getTexture(uie.getTexture()));
-            m_GamePack.getTextureShader().bindData(uie.getVertexData());
-            uie.draw();
+            m_ModelManager.getModel(uie.getModelType()).draw(m_GamePack.getTextureShader().getPositionAttributeLocation(),
+                    m_GamePack.getTextureShader().getTextureCoordinatesAttributeLocation(),
+                    m_GamePack.getTextureShader().getNormalAttributeLocation());
         }
 
     }
+
 }
