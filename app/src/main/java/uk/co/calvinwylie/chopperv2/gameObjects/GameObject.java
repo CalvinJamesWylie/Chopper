@@ -36,7 +36,6 @@ public abstract class GameObject {
     private final float[] m_ModelMatrix = new float[16];
     protected Material m_Material;
     protected ModelType m_ModelType;
-    protected VertexArray m_VertexArray;
 
     public GameObject(){
         setIdentityM(m_ModelMatrix, 0);
@@ -54,14 +53,8 @@ public abstract class GameObject {
 
     public abstract void update(double deltaTime);
 
-    public abstract void draw();
-
     public Material getMaterial(){
         return m_Material;
-    }
-
-    public VertexArray getVertexData(){
-        return m_VertexArray;
     }
 
     public void updateModelMatrix() {
