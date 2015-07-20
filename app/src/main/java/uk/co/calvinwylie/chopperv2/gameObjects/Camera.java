@@ -16,7 +16,7 @@ public class Camera {
     private String tag = this.getClass().getSimpleName();
 
 
-    float[] modelViewProjectionMatrix = new float[16];
+    private float[] modelViewProjectionMatrix = new float[16];
     private final float[] m_ProjectionMatrix = new float[16];
     private final float[] m_ViewMatrix = new float[16];
     private final float[] m_ViewProjectionMatrix = new float[16];
