@@ -1,5 +1,7 @@
 package uk.co.calvinwylie.chopperv2.util;
 
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
+
 /**
  * Created by Calvin on 23/02/2015.
  */
@@ -33,5 +35,13 @@ public class MatrixHelper {
         m[13] = 0.0f;
         m[14] = -((2.0f * f * n)/(f - n));
         m[15] = 0.0f;
+    }
+
+    public static Vector3 getColumn(int column, float[] matrix){
+        column -= 1;
+        column *= 4;
+
+        return new Vector3(matrix[column], matrix[column+1], matrix[column+2]);
+
     }
 }

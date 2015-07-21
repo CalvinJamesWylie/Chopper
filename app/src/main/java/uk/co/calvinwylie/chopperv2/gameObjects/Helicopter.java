@@ -11,22 +11,25 @@ import uk.co.calvinwylie.chopperv2.physics.Engine;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
 import uk.co.calvinwylie.chopperv2.util.MathsHelper;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
+import uk.co.calvinwylie.chopperv2.util.MatrixHelper;
 
 
 public class Helicopter extends Vehicle {
 
+    private static final float TURN_SPEED_MULTIPLIER = 4.0f;
     private TouchHandler m_TouchHandler;
     private boolean m_Firing;
     private Vector3 m_TempVect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
-    float m_AngleToTarget;
+    private float m_AngleToTarget;
+    private Vector3 m_ForwardVector = new Vector3();
 
     public Helicopter(Context context, BulletManager bulletManager, TouchHandler touchHandler){
         super(bulletManager);
         m_TouchHandler = touchHandler;
         m_MaxSpeed = 5.0f;
-        m_Mass = 2.0f;
-        m_AirResistance = -0.75f;
+        m_Mass = 1.5f;              //change this if heli isnt fast enough
+        m_AirResistance = -0.75f;   //change this if heli isnt slowing down fast enough
         m_Material = new Material(TextureType.heli_texture);
         m_ModelType = ModelType.helicopter;
         m_Engine = new Engine(this);
@@ -50,6 +53,7 @@ public class Helicopter extends Vehicle {
         }
         move(deltaTime);
         updateModelMatrix();
+        m_ForwardVector = MatrixHelper.getColumn(3, getModelMatrix()).scaled(-1);
     }
 
     public void move(double deltaTime) {
@@ -58,14 +62,15 @@ public class Helicopter extends Vehicle {
 
         if(m_AngleToTarget > Math.PI){
             m_AngleToTarget = (float)(2*Math.PI) - m_AngleToTarget;
-            m_TurnSpeed = m_AngleToTarget/10;
+            m_TurnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
             m_Yaw -= m_TurnSpeed;
         }else{
-            m_TurnSpeed = m_AngleToTarget/10;
+            m_TurnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
             m_Yaw += m_TurnSpeed;
         }
-        float fireRange = 15.0f;
-        if(m_Firing && (m_AngleToTarget <= Math.toRadians(fireRange) || m_AngleToTarget >= Math.toRadians(360 - fireRange))){
+
+        float fireCutOffAngle = 15.0f;
+        if(m_Firing && (m_AngleToTarget <= Math.toRadians(fireCutOffAngle) || m_AngleToTarget >= Math.toRadians(360 - fireCutOffAngle))){
             m_Gun.requestFire();
         }
 
@@ -82,7 +87,12 @@ public class Helicopter extends Vehicle {
         m_Position.add(m_Velocity);
         m_TempVect.set(m_Velocity);
         m_Rotation.setAxis(m_TempVect.crossProduct(Up)); //TODO remove mem alloc in cross prod
-        m_Rotation.setAngle((float)(-m_Velocity.lengthSquared()*120000*deltaTime)); // TODO remove magic number, controlls the amount the heli leans.
+        m_Rotation.setAngle((float)(-m_Velocity.lengthSquared()*1000*m_Mass)); // TODO remove magic number, controlls the amount the heli leans.
 
+    }
+
+
+    public Vector3 getForwardVector() {
+        return m_ForwardVector;
     }
 }

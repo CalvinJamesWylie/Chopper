@@ -90,12 +90,10 @@ public class GameLogic {
         //m_GamePack.getPhongShader().getDirectionalLight().getDirection().set(tempX, tempY, 0);
 
         PhongShader.getPointLights()[0].setPosition(m_Heli.getPosition());
-        PhongShader.getPointLights()[0].getBase().setIntensity(tempX*tempX*10);
+        PhongShader.getPointLights()[0].getBase().setIntensity(tempX * tempX * 10);
         PhongShader.getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());
-        Vector3 heliForwardVector = new Vector3(m_Heli.getGun().getForwardVector().X,
-                                                -1.0f,
-                                                m_Heli.getGun().getForwardVector().Y);
-        PhongShader.getSpotLights()[0].getDirection().set(heliForwardVector);
+        Vector3 lightDirection = m_Heli.getForwardVector();
+        PhongShader.getSpotLights()[0].getDirection().set(lightDirection.X, -1, lightDirection.Z);
 
     }
 
