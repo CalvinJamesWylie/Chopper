@@ -71,14 +71,13 @@ public class GameLogic {
                 30);
         SpotLight sLight1 = new SpotLight(pLight2, new Vector3(1,0,1), 0.7f);
 
-        m_GamePack.getPhongShader().setPointLights(new PointLight[]{pLight1});//, pLight2});
-        m_GamePack.getPhongShader().setSpotLights(new SpotLight[]{sLight1});//, pLight2});
+        PhongShader.setPointLights(new PointLight[]{pLight1});//, pLight2});
+        PhongShader.setSpotLights(new SpotLight[]{sLight1});//, pLight2});
 
     }
 
     public void update(double deltaTime){
-        if(m_GamePack.getPhongShader() == null)
-            return;
+
         m_Camera.update(deltaTime);//Make this happen.
         m_GameObjectManager.update(deltaTime);
         m_BulletManager.update(deltaTime);
@@ -90,13 +89,13 @@ public class GameLogic {
 
         //m_GamePack.getPhongShader().getDirectionalLight().getDirection().set(tempX, tempY, 0);
 
-        m_GamePack.getPhongShader().getPointLights()[0].setPosition(m_Heli.getPosition());
-        m_GamePack.getPhongShader().getPointLights()[0].getBase().setIntensity(tempX*tempX*10);
-        m_GamePack.getPhongShader().getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());
+        PhongShader.getPointLights()[0].setPosition(m_Heli.getPosition());
+        PhongShader.getPointLights()[0].getBase().setIntensity(tempX*tempX*10);
+        PhongShader.getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());
         Vector3 heliForwardVector = new Vector3(m_Heli.getGun().getForwardVector().X,
                                                 -1.0f,
                                                 m_Heli.getGun().getForwardVector().Y);
-        m_GamePack.getPhongShader().getSpotLights()[0].getDirection().set(heliForwardVector);
+        PhongShader.getSpotLights()[0].getDirection().set(heliForwardVector);
 
     }
 

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.lights.AmbientLight;
 import uk.co.calvinwylie.chopperv2.lights.Attenuation;
 import uk.co.calvinwylie.chopperv2.lights.BaseLight;
 import uk.co.calvinwylie.chopperv2.lights.DirectionalLight;
@@ -35,12 +37,10 @@ public class PhongShader  extends Shader {
     private static final int MAX_POINT_LIGHTS = 4;
     private static final int MAX_SPOT_LIGHTS = 4;
 
-    private static Vector3 m_AmbientLight = new Vector3(0,0,0.2f);//(0.5f, 0.5f, 0.5f);
+    private static AmbientLight m_AmbientLight = new AmbientLight(new Vector3(0,0,0.2f));//(0.5f, 0.5f, 0.5f);
     private static DirectionalLight m_DirectionalLight = new DirectionalLight(
                                                                 new BaseLight(new Vector3(1,1,0.7f), 1.0f),
                                                                 new Vector3(0.5f,1,0.5f));
-
-
 
     private static PointLight[] m_PointLights = new PointLight[]{};
     private static SpotLight[] m_SpotLights = new SpotLight[]{};
@@ -92,8 +92,6 @@ public class PhongShader  extends Shader {
         addAttribute("a_Position");
         addAttribute("a_TextureCoords");
         addAttribute("a_Normal");
-
-
     }
 
     public void setUniforms(float[] MVPMatrix, float[] modelMatrix, Vector3 cameraPos, TextureManager textureManager, Material material){
@@ -102,16 +100,16 @@ public class PhongShader  extends Shader {
         setUniform("u_MMatrix", modelMatrix);                         //Pass the matrix into the shader program
         setUniform("u_EyePos", cameraPos);
 
-        setUniform("u_AmbientLight", m_AmbientLight);
-        setUniform("u_DirectionalLight", m_DirectionalLight);
+        setUniform(m_AmbientLight);
+        setUniform(m_DirectionalLight);
 
 
         for(int i = 0; i < m_PointLights.length; i++){
-            setUniform("u_PointLights[" + i + "]", m_PointLights[i]);
+            setUniform(m_PointLights[i]);//setUniform("u_PointLights[" + i + "]", m_PointLights[i]);
         }
 
         for(int i = 0; i < m_SpotLights.length; i++){
-            setUniform("u_SpotLights[" + i + "]", m_SpotLights[i]);
+            setUniform(m_SpotLights[i]);
         }
 
         glActiveTexture(GL_TEXTURE0);                                                       //Set the active texture unit to texture unit 0.
@@ -151,7 +149,7 @@ public class PhongShader  extends Shader {
         }
     }
 
-    public static Vector3 getAmbientLight() {
+    public static AmbientLight getAmbientLight() {
         return m_AmbientLight;
     }
 
@@ -167,7 +165,7 @@ public class PhongShader  extends Shader {
     }
 
     public static void setAmbientLight(Vector3 ambientLight) {
-        m_AmbientLight = ambientLight;
+        m_AmbientLight.setColor(ambientLight);
     }
 
     public static void setDirectionalLight(DirectionalLight directionalLight){
@@ -180,97 +178,129 @@ public class PhongShader  extends Shader {
             System.exit(1);
         }
         m_PointLights = pointLights;
-
-//        for (int i = 0; i < m_PointLights.length; i++){
-//            m_PointLights[i].getBase().colorLocation     = m_Uniforms.get("u_PointLights[" + i + "].base.color");
-//            m_PointLights[i].getBase().intensityLocation = m_Uniforms.get("u_PointLights[" + i + "].base.intensity");
-//
-//            m_PointLights[i].getAtten().constantLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.constant");
-//            m_PointLights[i].getAtten().linearLocation   = m_Uniforms.get("u_PointLights[" + i + "].atten.linear");
-//            m_PointLights[i].getAtten().exponentLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.exponent");
-//
-//            m_PointLights[i].positionLocation            = m_Uniforms.get("u_PointLights[" + i + "].position");
-//            m_PointLights[i].rangeLocation               = m_Uniforms.get("u_PointLights[" + i + "].range");
-//
-//        }
     }
 
-    public static void setSpotLights(SpotLight[] spotLights){
-        if(spotLights.length> MAX_POINT_LIGHTS){
+    public static void setSpotLights(SpotLight[] spotLights) {
+        if (spotLights.length > MAX_POINT_LIGHTS) {
             Log.e(tag, "ERROR: you passed in too many spot lights");
             new Exception().printStackTrace();
             System.exit(1);
         }
         m_SpotLights = spotLights;
-
-//        for (int i = 0; i < m_SpotLights.length; i++){
-//            m_SpotLights[i].getPointLight().getBase().colorLocation     = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.color");
-//            m_SpotLights[i].getPointLight().getBase().intensityLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.intensity");
-//
-//            m_SpotLights[i].getPointLight().getAtten().constantLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.constant");
-//            m_SpotLights[i].getPointLight().getAtten().linearLocation   = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.linear");
-//            m_SpotLights[i].getPointLight().getAtten().exponentLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.exponent");
-//
-//            m_SpotLights[i].getPointLight().positionLocation            = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.position");
-//            m_SpotLights[i].getPointLight().rangeLocation               = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.range");
-//
-//            m_SpotLights[i].directionLocation                           = m_Uniforms.get("u_SpotLights[" + i + "].direction");
-//            m_SpotLights[i].cutOffLocation                              = m_Uniforms.get("u_SpotLights[" + i + "].cutOff");
-//
-//        }
     }
 
-    public void setUniform(String uniform, BaseLight baseLight){
-        setUniform(uniform + ".color", baseLight.getColor());
-        setUniform(uniform + ".intensity", baseLight.getIntensity());
+    public void setLightHandles(){
+        for (short i = 0; i < m_PointLights.length; i++){
+            m_PointLights[i].getBase().colorLocation     = m_Uniforms.get("u_PointLights[" + i + "].base.color");
+            m_PointLights[i].getBase().intensityLocation = m_Uniforms.get("u_PointLights[" + i + "].base.intensity");
+
+            m_PointLights[i].getAtten().constantLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.constant");
+            m_PointLights[i].getAtten().linearLocation   = m_Uniforms.get("u_PointLights[" + i + "].atten.linear");
+            m_PointLights[i].getAtten().exponentLocation = m_Uniforms.get("u_PointLights[" + i + "].atten.exponent");
+
+            m_PointLights[i].positionLocation            = m_Uniforms.get("u_PointLights[" + i + "].position");
+            m_PointLights[i].rangeLocation               = m_Uniforms.get("u_PointLights[" + i + "].range");
+        }
+
+        for (int i = 0; i < m_SpotLights.length; i++){
+            m_SpotLights[i].getPointLight().getBase().colorLocation     = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.color");
+            m_SpotLights[i].getPointLight().getBase().intensityLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.base.intensity");
+
+            m_SpotLights[i].getPointLight().getAtten().constantLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.constant");
+            m_SpotLights[i].getPointLight().getAtten().linearLocation   = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.linear");
+            m_SpotLights[i].getPointLight().getAtten().exponentLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.atten.exponent");
+
+            m_SpotLights[i].getPointLight().positionLocation = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.position");
+            m_SpotLights[i].getPointLight().rangeLocation               = m_Uniforms.get("u_SpotLights[" + i + "].pointLight.range");
+
+            m_SpotLights[i].directionLocation                           = m_Uniforms.get("u_SpotLights[" + i + "].direction");
+            m_SpotLights[i].cutOffLocation = m_Uniforms.get("u_SpotLights[" + i + "].cutOff");
+        }
+
+        m_DirectionalLight.getBase().colorLocation = m_Uniforms.get("u_DirectionalLight.base.color");
+        m_DirectionalLight.getBase().intensityLocation = m_Uniforms.get("u_DirectionalLight.base.intensity");
+        m_DirectionalLight.directionLocation = m_Uniforms.get("u_DirectionalLight.direction");
+
+        m_AmbientLight.colorLocation = m_Uniforms.get("u_AmbientLight");
     }
 
-    public void setUniform(String uniform, DirectionalLight directionalLight){
-        setUniform(uniform + ".base", directionalLight.getBase());
-        setUniform(uniform + ".direction", directionalLight.getDirection());
+
+    public void setUniform(AmbientLight ambientLight){//(String uniform, AmbientLight ambientLight){
+        setUniform(ambientLight.colorLocation, ambientLight.getColor());
     }
 
-    public void setUniform(String uniform, PointLight pointLight) {
-        setUniform(uniform + ".base", pointLight.getBase());
-        setUniform(uniform + ".atten.constant", pointLight.getAtten().getConstant());
-        setUniform(uniform + ".atten.linear", pointLight.getAtten().getLinear());
-        setUniform(uniform + ".atten.exponent", pointLight.getAtten().getExponent());
-        setUniform(uniform + ".position", pointLight.getPosition());
-        setUniform(uniform + ".range", pointLight.getRange());
+    public void setUniform(DirectionalLight directionalLight){//(String uniform, DirectionalLight directionalLight){
+        setUniform(directionalLight.getBase().colorLocation,
+                   directionalLight.getBase().getColor());
+        setUniform(directionalLight.getBase().intensityLocation,
+                   directionalLight.getBase().getIntensity());
+        setUniform(directionalLight.directionLocation,
+                   directionalLight.getDirection());
+
+//        setUniform(uniform + ".base", directionalLight.getBase());
+//        setUniform(uniform + ".direction", directionalLight.getDirection());
     }
 
-    public void setUniform(String uniform , SpotLight spotlight){
-//        setUniform(spotlight.getPointLight().getBase().colorLocation,
-//                   spotlight.getPointLight().getBase().getColor());
+    public void setUniform(PointLight pointLight) {//(String uniform, PointLight pointLight) {
+
+        setUniform(pointLight.getBase().colorLocation,
+                   pointLight.getBase().getColor());
+        setUniform(pointLight.getBase().intensityLocation,
+                   pointLight.getBase().getIntensity());
+        setUniform(pointLight.getAtten().constantLocation,
+                   pointLight.getAtten().getConstant());
+        setUniform(pointLight.getAtten().linearLocation,
+                   pointLight.getAtten().getLinear());
+        setUniform(pointLight.getAtten().exponentLocation,
+                   pointLight.getAtten().getExponent());
+        setUniform(pointLight.positionLocation,
+                   pointLight.getPosition());
+        setUniform(pointLight.rangeLocation,
+                   pointLight.getRange());
+
 //
-//        setUniform(spotlight.getPointLight().getBase().intensityLocation,
-//                   spotlight.getPointLight().getBase().getIntensity());
-//
-//        setUniform(spotlight.getPointLight().getAtten().constantLocation,
-//                   spotlight.getPointLight().getAtten().getConstant());
-//
-//        setUniform(spotlight.getPointLight().getAtten().linearLocation,
-//                   spotlight.getPointLight().getAtten().getLinear());
-//
-//        setUniform(spotlight.getPointLight().getAtten().exponentLocation,
-//                   spotlight.getPointLight().getAtten().getExponent());
-//
-//        setUniform(spotlight.getPointLight().positionLocation,
-//                   spotlight.getPointLight().getPosition());
-//
-//        setUniform(spotlight.getPointLight().rangeLocation,
-//                   spotlight.getPointLight().getRange());
-//
-//        setUniform(spotlight.directionLocation, spotlight.getDirection());
-//
-//        setUniform(spotlight.cutOffLocation, spotlight.getCutOff());
+//        setUniform(uniform + ".base", pointLight.getBase());
+//        setUniform(uniform + ".atten.constant", pointLight.getAtten().getConstant());
+//        setUniform(uniform + ".atten.linear", pointLight.getAtten().getLinear());
+//        setUniform(uniform + ".atten.exponent", pointLight.getAtten().getExponent());
+//        setUniform(uniform + ".position", pointLight.getPosition());
+//        setUniform(uniform + ".range", pointLight.getRange());
+    }
+
+    public void setUniform(SpotLight spotLight){//(String uniform , SpotLight spotlight){
+        setUniform(spotLight.getPointLight().getBase().colorLocation,
+                spotLight.getPointLight().getBase().getColor());
+
+        setUniform(spotLight.getPointLight().getBase().intensityLocation,
+                spotLight.getPointLight().getBase().getIntensity());
+
+        setUniform(spotLight.getPointLight().getAtten().constantLocation,
+                spotLight.getPointLight().getAtten().getConstant());
+
+        setUniform(spotLight.getPointLight().getAtten().linearLocation,
+                spotLight.getPointLight().getAtten().getLinear());
+
+        setUniform(spotLight.getPointLight().getAtten().exponentLocation,
+                spotLight.getPointLight().getAtten().getExponent());
+
+        setUniform(spotLight.getPointLight().positionLocation,
+                spotLight.getPointLight().getPosition());
+
+        setUniform(spotLight.getPointLight().rangeLocation,
+                spotLight.getPointLight().getRange());
+
+        setUniform(spotLight.directionLocation,
+                spotLight.getDirection());
+
+        setUniform(spotLight.cutOffLocation,
+                spotLight.getCutOff());
 
 
 
 
-        setUniform(uniform + ".pointLight", spotlight.getPointLight());
-        setUniform(uniform + ".direction", spotlight.getDirection());
-        setUniform(uniform + ".cutOff", spotlight.getCutOff());
+//        setUniform(uniform + ".pointLight", spotlight.getPointLight());
+//        setUniform(uniform + ".direction", spotlight.getDirection());
+//        setUniform(uniform + ".cutOff", spotlight.getCutOff());
     }
 
 }
