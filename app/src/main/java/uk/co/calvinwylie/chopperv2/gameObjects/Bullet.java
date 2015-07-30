@@ -11,10 +11,12 @@ import uk.co.calvinwylie.chopperv2.models.TextureType;
 
 public class Bullet extends GameObject {
 
+    private Vector3 m_OrginalVelocity = new Vector3();
 
     public Bullet(Vector3 position, float yaw, Vector2 forwardVector, float speed){
         m_Position.set(position);
         forwardVector.scaleBy(speed);
+        m_OrginalVelocity.set(forwardVector);
         m_Velocity.set(forwardVector);
         m_Rotation.setAngle((float) Math.toDegrees(yaw));
         m_Scale.set(0.5f);
@@ -30,7 +32,8 @@ public class Bullet extends GameObject {
 
 
     private void move(double deltaTime){
-        //m_Velocity.scaleBy((float)deltaTime);
+        m_Velocity.scaleBy((float)deltaTime);
         m_Position.add(m_Velocity);
+        m_Velocity.set(m_OrginalVelocity);
     }
 }
