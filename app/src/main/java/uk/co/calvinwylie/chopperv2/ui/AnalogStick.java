@@ -12,7 +12,7 @@ public class AnalogStick {
 
     private Vector2 m_Center          = new Vector2();
     private Vector2 m_CurrentPosition = new Vector2();
-    private Vector2 m_ButtonPressPos  = new Vector2();
+    private Vector2 m_OutputDelta     = new Vector2();
     private Vector2 m_DeltaPosition   = new Vector2();
 
     private float m_Angle = 0.0f;
@@ -32,7 +32,7 @@ public class AnalogStick {
     public void activate(Vector2 center, int id) {
         m_Center.set(center);
         m_CurrentPosition.set(center);
-        m_DeltaPosition = new Vector2();
+        m_DeltaPosition.set(0,0);
         m_Active = true;
         m_AssociatedPointerId = id;
 
@@ -44,14 +44,14 @@ public class AnalogStick {
 
     public void deactivate(Vector2 lastTouch) {
         if (!m_Moved){
-            m_ButtonPressPos = lastTouch;
+ //           m_ButtonPressPos = lastTouch;
         }
         m_Active = false;
         m_CenterMarker.setTexture(TextureType.none);
     }
 
     public Vector2 getDelta(){
-        return m_DeltaPosition;
+        return m_OutputDelta;
     }
 
     public float getAngle(){
@@ -77,7 +77,7 @@ public class AnalogStick {
 
         float ratio = length/m_MaxRange;
         m_DeltaPosition.scaleBy(ratio); // Delta Position returned between 0 and 1;
-
+        m_OutputDelta.set(m_DeltaPosition);
         // -- Update the angle the stick is currently at. -- //
         float x = m_DeltaPosition.X;
         float y = m_DeltaPosition.Y;
