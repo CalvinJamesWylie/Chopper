@@ -184,4 +184,11 @@ public class Vector3 {
         return false;
     }
 
+    public static Vector3 crossProduct(Vector3 first, Vector3 second) {
+        m_TempVector.set(
+                (first.Y * second.Z) - (first.Z * second.Y),
+                (first.Z * second.X) - (first.X * second.Z),
+                (first.X * second.Y) - (first.Y * second.X));
+        return m_TempVector;
+    }
 }
