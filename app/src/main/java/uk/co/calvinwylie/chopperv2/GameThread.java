@@ -14,7 +14,7 @@ public class GameThread extends Thread {
     private long m_NewTime;
     private long m_OldTime;
     private long m_DeltaTime;
-    private long m_FrameRate = 1000L / 40;
+    private long m_FrameRate = 1000L / 60;
     private static int MILLIS_IN_SECOND = 1000;
 
 
