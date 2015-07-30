@@ -16,7 +16,7 @@ public class Gun {
     private boolean m_WeaponReady = false;
     private GameObject m_Parent;
     private BulletManager m_BulletManager;
-    private float m_MuzzleVelocity = 1.0f;
+    private float m_MuzzleVelocity = 20.0f;
     private float m_TimeSinceLastFire = 0.0f;
     private float m_ReloadTime = 0.25f;
 
@@ -38,7 +38,7 @@ public class Gun {
         m_BulletManager.add(bullet);
         m_WeaponReady = false;
     }
-
+    //direction is for bullet travel, yaw is for rotation of the bullet.
     public void setDirection(Vector2 direction, float yaw) {
         m_ForwardVector = direction;
         m_ForwardVector.normalise();
