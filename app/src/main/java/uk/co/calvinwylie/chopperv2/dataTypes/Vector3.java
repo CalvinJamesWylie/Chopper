@@ -191,4 +191,13 @@ public class Vector3 {
                 (first.X * second.Y) - (first.Y * second.X));
         return m_TempVector;
     }
+
+    public Vector3 add(float x, int y, float z) {
+
+        return new Vector3(
+                X + x,
+                Y + y,
+                Z + z
+        );
+    }
 }

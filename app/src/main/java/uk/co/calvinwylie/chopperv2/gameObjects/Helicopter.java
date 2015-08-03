@@ -26,7 +26,9 @@ public class Helicopter extends Vehicle {
     private Vector3 m_TempVect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
     private float m_AngleToTarget;
-    private Vector3 m_ForwardVector = new Vector3();
+    private Vector3 m_ForwardVector = new Vector3(0,0,-1);
+    private Vector3 m_UpVector = new Vector3(0,1,0);
+    private Vector3 m_RightVector = new Vector3(1,0,0);
 
     public Helicopter(Context context, BulletManager bulletManager, TouchHandler touchHandler){
         super(bulletManager);
@@ -57,6 +59,8 @@ public class Helicopter extends Vehicle {
         move(deltaTime);
         updateModelMatrix();
         m_ForwardVector = MatrixHelper.getColumn(3, getModelMatrix()).scaled(-1);
+        m_UpVector = MatrixHelper.getColumn(2, getModelMatrix());
+        m_RightVector = MatrixHelper.getColumn(1, getModelMatrix());
     }
 
     public void move(double deltaTime) {
@@ -98,5 +102,9 @@ public class Helicopter extends Vehicle {
 
     public Vector3 getForwardVector() {
         return m_ForwardVector;
+    }
+
+    public Vector3 getRightVector() {
+        return m_RightVector;
     }
 }

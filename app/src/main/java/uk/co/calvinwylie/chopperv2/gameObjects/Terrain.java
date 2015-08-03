@@ -12,6 +12,8 @@ public class Terrain extends GameObject {
 
     public Terrain(){
         m_Material = new Material(TextureType.check);
+        m_Material.setSpecularIntensity(1);
+        m_Material.setSpecularPower(2);
         m_ModelType = ModelType.lamina;
 
         m_Scale = new Vector3(256, 1, 256);

@@ -2,6 +2,7 @@ package uk.co.calvinwylie.chopperv2;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.models.ModelManager;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.models.TextureManager;
+import uk.co.calvinwylie.chopperv2.util.FrameRateLogger;
 
 
 public class MainRenderer implements GLSurfaceView.Renderer {
@@ -44,6 +46,10 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
     private Context m_Context;                              //used for shaders
     private GamePacket m_GamePack;
+    private double m_OldTime = 0;
+    private double m_NewTime = 0;
+    private double m_FrameRate = 0;
+    private FrameRateLogger m_FRL = new FrameRateLogger("Renderer");
 
     public MainRenderer(Context context, GamePacket gamePacket){
         m_Context = context;
@@ -87,6 +93,8 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 gl) {
 
+        m_FRL.tick();
+
         //Log.i(tag, "onDraw");
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -117,6 +125,8 @@ public class MainRenderer implements GLSurfaceView.Renderer {
                     m_GamePack.getTextureShader().getTextureCoordinatesAttributeLocation(),
                     m_GamePack.getTextureShader().getNormalAttributeLocation());
         }
+
+
 
     }
 

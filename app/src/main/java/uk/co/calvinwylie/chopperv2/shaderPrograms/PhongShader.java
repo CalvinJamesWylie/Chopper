@@ -37,9 +37,9 @@ public class PhongShader  extends Shader {
     private static final int MAX_POINT_LIGHTS = 4;
     private static final int MAX_SPOT_LIGHTS = 4;
 
-    private static AmbientLight m_AmbientLight = new AmbientLight(new Vector3(0,0,0.2f));//(0.5f, 0.5f, 0.5f);
+    private static AmbientLight m_AmbientLight = new AmbientLight(new Vector3(0.1f,0.1f,0.3f));//(0.5f, 0.5f, 0.5f);
     private static DirectionalLight m_DirectionalLight = new DirectionalLight(
-                                                                new BaseLight(new Vector3(1,1,0.7f), 0.3f),
+                                                                new BaseLight(new Vector3(1.0f,1.0f,1.0f), 1.0f),
                                                                 new Vector3(0.5f,1,0.5f));
 
     private static PointLight[] m_PointLights = new PointLight[]{};
