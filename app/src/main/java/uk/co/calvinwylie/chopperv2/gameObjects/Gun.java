@@ -11,11 +11,13 @@ import uk.co.calvinwylie.chopperv2.game.GamePacket;
 
 public class Gun {
 
+    private GameObject m_Parent;
+
     private Vector2 m_ForwardVector = new Vector2(0,-1);
     private float m_Yaw;
     private boolean m_WeaponReady = false;
-    private GameObject m_Parent;
     private BulletManager m_BulletManager;
+
     private float m_MuzzleVelocity = 20.0f;
     private float m_TimeSinceLastFire = 0.0f;
     private float m_ReloadTime = 0.25f;
@@ -34,10 +36,10 @@ public class Gun {
 
     public void fire(){
         m_TimeSinceLastFire = 0.0f;
-        Bullet bullet = new Bullet(m_Parent.getPosition(), m_Yaw, m_ForwardVector, m_MuzzleVelocity);
-        m_BulletManager.add(bullet);
+        m_BulletManager.add(m_Parent.getAffiliation(), m_Parent.getPosition(), m_Yaw, m_ForwardVector, m_MuzzleVelocity);
         m_WeaponReady = false;
     }
+
     //direction is for bullet travel, yaw is for rotation of the bullet.
     public void setDirection(Vector2 direction, float yaw) {
         m_ForwardVector = direction;

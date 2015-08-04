@@ -11,17 +11,7 @@ public class ModelManager {
         ModelType[] models = ModelType.values();
 
         for(ModelType modelType: models){
-            switch(modelType){
-                case helicopter:
-                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
-                    break;
-                case lamina:
-                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
-                    break;
-                case cube:
-                    m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
-                    break;
-            }
+            m_Models[modelType.ordinal()] = ModelLoader.loadModel(context, modelType.name() + ".obj");
         }
     }
 

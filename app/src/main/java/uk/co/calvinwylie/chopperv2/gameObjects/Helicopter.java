@@ -5,6 +5,7 @@ import android.util.Log;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
+import uk.co.calvinwylie.chopperv2.game.Affiliation;
 import uk.co.calvinwylie.chopperv2.game.BulletManager;
 import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
@@ -26,9 +27,7 @@ public class Helicopter extends Vehicle {
     private Vector3 m_TempVect = new Vector3(); //TODO clean this up and make members
     private Vector3 Up = new Vector3(0,1,0);
     private float m_AngleToTarget;
-    private Vector3 m_ForwardVector = new Vector3(0,0,-1);
-    private Vector3 m_UpVector = new Vector3(0,1,0);
-    private Vector3 m_RightVector = new Vector3(1,0,0);
+
 
     public Helicopter(Context context, BulletManager bulletManager, TouchHandler touchHandler){
         super(bulletManager);
@@ -39,6 +38,7 @@ public class Helicopter extends Vehicle {
         m_Material = new Material(TextureType.heli_texture);
         m_ModelType = ModelType.helicopter;
         m_Engine = new Engine(this);
+        m_Affiliation = Affiliation.Blue;
     }
 
     @Override

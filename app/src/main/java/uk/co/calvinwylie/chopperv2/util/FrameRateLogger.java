@@ -8,12 +8,17 @@ public class FrameRateLogger {
     private long m_OldTime = 0;
     private long m_NewTime = 0;
     private long m_FrameRate = 0;
+    private boolean m_Active = true;
+
 
     public FrameRateLogger(String name){
         m_Name = name;
     }
 
     public void tick(){
+        if (!m_Active)
+            return;
+
         m_NewTime = System.currentTimeMillis();
 
         if(m_OldTime == 0){
@@ -26,6 +31,8 @@ public class FrameRateLogger {
         m_OldTime = m_NewTime;
     }
 
-
+    public void setActive(boolean active){
+        m_Active = active;
+    }
 
 }

@@ -17,7 +17,10 @@ public class GameObjectManager {
     }
 
     public void update(double deltaTime){
-        for (GameObject go: m_GameObjectList){
+        GameObject go;
+        int i;
+        for (i = 0; i < m_GameObjectList.size(); i++){
+            go = m_GameObjectList.get(i);
             go.update(deltaTime);
         }
     }

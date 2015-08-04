@@ -39,27 +39,26 @@ import uk.co.calvinwylie.chopperv2.util.FrameRateLogger;
 
 public class MainRenderer implements GLSurfaceView.Renderer {
 
-    private String tag = this.getClass().getSimpleName();
+    private static String tag = "MainRenderer";
 
     private TextureManager m_TextureManager = new TextureManager();
     private ModelManager m_ModelManager = new ModelManager();
 
     private Context m_Context;                              //used for shaders
     private GamePacket m_GamePack;
-    private double m_OldTime = 0;
-    private double m_NewTime = 0;
-    private double m_FrameRate = 0;
-    private FrameRateLogger m_FRL = new FrameRateLogger("Renderer");
+
+    private FrameRateLogger m_FRL = new FrameRateLogger(tag);
 
     public MainRenderer(Context context, GamePacket gamePacket){
         m_Context = context;
         m_GamePack = gamePacket;
+        m_FRL.setActive(false);
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         glClearColor(1.0f, 1.0f, 0.3f, 1.0f);
-//        glEnable(GL_CULL_FACE);
+//        glEnable(GL_CULL_FACE); //TODO fix camera.
 //        glCullFace(GL_BACK);
 
         glEnable(GL_DEPTH_TEST);
@@ -107,12 +106,13 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         GameObject go;
         for(i = 0; i < m_ClonedRenderList.size(); i++){
             go = m_ClonedRenderList.get(i);
-
-            m_GamePack.getPhongShader().useProgram();
-            m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager, go.getMaterial());
-            m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
-                                                            m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
-                                                            m_GamePack.getPhongShader().getNormalAttributeLocation());
+            if(go.isVisible()) {
+                m_GamePack.getPhongShader().useProgram();
+                m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager, go.getMaterial());
+                m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
+                        m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
+                        m_GamePack.getPhongShader().getNormalAttributeLocation());
+            }
         }
 
         m_GamePack.m_UICamera.onDrawFrame();

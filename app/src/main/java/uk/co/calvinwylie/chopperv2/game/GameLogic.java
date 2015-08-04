@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
+import uk.co.calvinwylie.chopperv2.gameObjects.Enemy;
 import uk.co.calvinwylie.chopperv2.gameObjects.Helicopter;
 import uk.co.calvinwylie.chopperv2.gameObjects.Terrain;
 import uk.co.calvinwylie.chopperv2.gameObjects.Vehicle;
@@ -28,6 +29,7 @@ public class GameLogic {
     private Camera m_Camera;
     private UICamera m_UICamera;
     private Helicopter m_Heli;
+    private Enemy m_Enemy;
     private Terrain m_Terrain;
 
     //-- Managers -- //
@@ -51,6 +53,10 @@ public class GameLogic {
         m_Heli.setPosition(new Vector3(0.0f, 2, 0.0f));
         m_GamePack.addToRenderer(m_Heli);
         m_GameObjectManager.add(m_Heli);
+
+        m_Enemy = new Enemy();
+        m_GamePack.addToRenderer(m_Enemy);
+        m_GameObjectManager.add(m_Enemy);
 
         m_Camera = new Camera(0.0f, 50f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
         m_Camera.setFollow(m_Heli);
@@ -85,8 +91,7 @@ public class GameLogic {
         SpotLight sLight3 = new SpotLight(pLight3, new Vector3(1,0,1), 0.9f);
         SpotLight sLight4 = new SpotLight(pLight4, new Vector3(1,0,1), 0.9f);
 
-        //PhongShader.setPointLights(new PointLight[]{pLight1});//, pLight2});
-        PhongShader.setSpotLights(new SpotLight[]{sLight1, sLight2, sLight3, sLight4});//, pLight2});
+        PhongShader.setSpotLights(new SpotLight[]{sLight1, sLight2, sLight3, sLight4});
 
     }
 
@@ -103,14 +108,9 @@ public class GameLogic {
         float tempX = (float)Math.cos(m_TotalTime);
         float tempY = (float)Math.sin(m_TotalTime);
 
-//        Vector3 lightDirection = m_Heli.getForwardVector();
-        Vector3 forward = m_Heli.getForwardVector();//.add(tempX, 0, tempY);
+        Vector3 forward = m_Heli.getForwardVector();
         Vector3 right = m_Heli.getRightVector();
 
-        //m_GamePack.getPhongShader().getDirectionalLight().getDirection().set(tempX, tempY, 0);
-
-        //PhongShader.getPointLights()[0].setPosition(m_Heli.getPosition());
-        //PhongShader.getPointLights()[0].getBase().setIntensity(tempX * tempX * 10);
 
         PhongShader.getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());
         PhongShader.getSpotLights()[1].getPointLight().setPosition(m_Heli.getPosition());
@@ -123,10 +123,6 @@ public class GameLogic {
         PhongShader.getSpotLights()[3].getDirection().set(-right.X, -right.Y, -right.Z);
 
     }
-
-//    public void addToUpdate(GameObject go){
-//        m_UpdateList.add(go);
-//    }
 
     public Context getContext() {
         return m_Context;

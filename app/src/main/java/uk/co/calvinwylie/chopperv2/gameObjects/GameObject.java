@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.dataTypes.VertexArray;
+import uk.co.calvinwylie.chopperv2.game.Affiliation;
 import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
@@ -19,6 +20,9 @@ public abstract class GameObject {
 
     //Physical attibutes
 
+    protected Vector3 m_ForwardVector = new Vector3(0,0,-1);
+    protected Vector3 m_UpVector = new Vector3(0,1,0);
+    protected Vector3 m_RightVector = new Vector3(1,0,0);
     protected Rotation  m_Rotation;
     protected Vector3 m_Scale = new Vector3(1.0f, 1.0f, 1.0f);
     protected float m_Yaw = 0.0f;
@@ -35,7 +39,11 @@ public abstract class GameObject {
     //Model attributes
     private final float[] m_ModelMatrix = new float[16];
     protected Material m_Material;
+    protected boolean m_Visible = true;
     protected ModelType m_ModelType;
+    protected float m_CollisionRadius = 1.0f;
+
+    protected Affiliation m_Affiliation = Affiliation.Default;
 
     public GameObject(){
         setIdentityM(m_ModelMatrix, 0);
@@ -117,5 +125,25 @@ public abstract class GameObject {
 
     public ModelType getModelType() {
         return m_ModelType;
+    }
+
+    public Vector3 getVelocity() {
+        return m_Velocity;
+    }
+
+    public float getCollisionRadius() {
+        return m_CollisionRadius;
+    }
+
+    public boolean isVisible() {
+        return m_Visible;
+    }
+
+    public Affiliation getAffiliation() {
+        return m_Affiliation;
+    }
+
+    public float getScale() {
+        return m_Scale.length();
     }
 }

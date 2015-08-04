@@ -7,8 +7,7 @@ import uk.co.calvinwylie.chopperv2.physics.Engine;
 
 public abstract class Vehicle extends GameObject {
 
-    private String tag = this.getClass().getSimpleName();
-    private Vector3 m_ForwardVector;
+    private String tag = "Vehicle";
     protected Engine m_Engine;
     protected Gun m_Gun;
 
