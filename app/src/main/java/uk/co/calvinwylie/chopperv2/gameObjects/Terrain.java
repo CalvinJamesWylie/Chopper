@@ -11,12 +11,12 @@ import uk.co.calvinwylie.chopperv2.models.TextureType;
 public class Terrain extends GameObject {
 
     public Terrain(){
-        m_Material = new Material(TextureType.check);
-        m_Material.setSpecularIntensity(1);
-        m_Material.setSpecularPower(2);
+        m_Material = new Material(TextureType.grass);
+        m_Material.setSpecularIntensity(0.0f);
+        m_Material.setSpecularPower(0.0f);
         m_ModelType = ModelType.lamina;
 
-        m_Scale = new Vector3(256, 1, 256);
+        m_Scale = new Vector3(100, 1, 100);
         updateModelMatrix();
     }
 
@@ -25,9 +25,4 @@ public class Terrain extends GameObject {
 
     }
 
-//    @Override
-//    public void loadTexture(Context context) {
-//        m_Texture = TextureHelper.loadTexture(context, R.drawable.check);
-//
-//    }
 }

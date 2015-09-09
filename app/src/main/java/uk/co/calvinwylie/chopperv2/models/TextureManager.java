@@ -26,11 +26,20 @@ public class TextureManager{
                 case check:
                     id = R.drawable.check;
                     break;
-                case heli_texture:
-                    id = R.drawable.heli_texture;
+                case helicopter:
+                    id = R.drawable.helicopter;
                     break;
                 case none:
                     id = R.drawable.none;
+                    break;
+                case grass:
+                    id = R.drawable.grass;
+                    break;
+                case robot:
+                    id = R.drawable.robot;
+                    break;
+                case base:
+                    id = R.drawable.base;
                     break;
                 default:
                     id = R.drawable.ic_launcher;

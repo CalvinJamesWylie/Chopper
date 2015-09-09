@@ -5,6 +5,9 @@ public enum TextureType {
     orange,
     analog_stick,
     check,
-    heli_texture,
+    helicopter,
     none,
+    grass,
+    robot,
+    base
 }

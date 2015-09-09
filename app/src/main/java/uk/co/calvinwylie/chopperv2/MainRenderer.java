@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import static android.opengl.GLES20.GL_BLEND;
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 import static android.opengl.GLES20.GL_DEPTH_TEST;
+import static android.opengl.GLES20.GL_FRONT;
 import static android.opengl.GLES20.GL_LEQUAL;
 import static android.opengl.GLES20.GL_ONE_MINUS_SRC_ALPHA;
 import static android.opengl.GLES20.GL_SRC_ALPHA;
@@ -22,6 +23,7 @@ import static android.opengl.GLES20.glClearDepthf;
 import static android.opengl.GLES20.glDepthFunc;
 import static android.opengl.GLES20.glDepthMask;
 import static android.opengl.GLES20.glDepthRangef;
+import static android.opengl.GLES20.glDisable;
 import static android.opengl.GLES20.glEnable;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.GLES20.glCullFace;
@@ -52,14 +54,14 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     public MainRenderer(Context context, GamePacket gamePacket){
         m_Context = context;
         m_GamePack = gamePacket;
-        m_FRL.setActive(false);
+        m_FRL.setActive(true);
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         glClearColor(1.0f, 1.0f, 0.3f, 1.0f);
-//        glEnable(GL_CULL_FACE); //TODO fix camera.
-//        glCullFace(GL_BACK);
+        glEnable(GL_CULL_FACE); //TODO fix camera.
+        glCullFace(GL_BACK);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -94,14 +96,12 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
         m_FRL.tick();
 
-        //Log.i(tag, "onDraw");
         glClear(GL_COLOR_BUFFER_BIT);
 
         m_GamePack.m_Camera.onDrawFrame();
 
         m_ClonedRenderList = (ArrayList<GameObject>)m_GamePack.m_RenderList.clone();
 
-       // for(GameObject go: m_ClonedRenderList){
         int i = 0;
         GameObject go;
         for(i = 0; i < m_ClonedRenderList.size(); i++){
@@ -114,6 +114,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
                         m_GamePack.getPhongShader().getNormalAttributeLocation());
             }
         }
+
 
         m_GamePack.m_UICamera.onDrawFrame();
         //for (UIElement uie: m_GamePack.m_UIRenderList){

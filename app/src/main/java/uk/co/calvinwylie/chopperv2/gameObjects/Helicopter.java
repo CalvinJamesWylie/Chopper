@@ -35,7 +35,7 @@ public class Helicopter extends Vehicle {
         m_MaxSpeed = 5.0f;
         m_Mass = 1.5f;              //change this if heli isnt fast enough
         m_AirResistance = 0.75f;   //change this if heli isnt slowing down fast enough
-        m_Material = new Material(TextureType.heli_texture);
+        m_Material = new Material(TextureType.helicopter);
         m_ModelType = ModelType.helicopter;
         m_Engine = new Engine(this);
         m_Affiliation = Affiliation.Blue;
@@ -96,7 +96,7 @@ public class Helicopter extends Vehicle {
         m_Position.add(m_TempVect);
         Dynamics.calcAirResistance(m_Velocity, m_AirResistance, (float) deltaTime);
         m_Rotation.setAxis(Vector3.crossProduct(m_TempVect, Up));
-        m_Rotation.setAngle(-m_Velocity.lengthSquared() * (float) (Math.PI/8)); // TODO remove magic number, controlls the amount the heli leans.
+        m_Rotation.setAngle(-m_Velocity.lengthSquared() * (float) (Math.PI/4)); // TODO remove magic number, controlls the amount the heli leans.
     }
 
 

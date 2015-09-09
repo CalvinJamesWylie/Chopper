@@ -125,12 +125,13 @@ public class Vector3 {
         );
     }
 
-    public static Vector3 vector3Between(Vector3 rv, Vector3 from, Vector3 to){
-        rv.set(to.X - from.X,
+    public static Vector3 vector3Between(Vector3 returnedVector, Vector3 from, Vector3 to){
+        returnedVector.set(
+                to.X - from.X,
                 to.Y - from.Y,
                 to.Z - from.Z
         );
-        return rv;
+        return returnedVector;
     }
 
     public static Vector3 vector3Between(Vector3 from, Vector3 to){
@@ -140,6 +141,7 @@ public class Vector3 {
                 to.Z - from.Z
         );
     }
+
 
     public static void vector2Between(Vector2 rv, Vector3 from, Vector3 to, String XY_XZ_YZ){
         m_TempVector.set(
@@ -199,5 +201,11 @@ public class Vector3 {
                 Y + y,
                 Z + z
         );
+    }
+
+    public void add(Vector3 vector, double multiplier) {
+        X += vector.X*multiplier;
+        Y += vector.Y*multiplier;
+        Z += vector.Z*multiplier;
     }
 }

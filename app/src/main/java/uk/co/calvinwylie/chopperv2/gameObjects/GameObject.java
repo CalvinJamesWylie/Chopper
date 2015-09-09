@@ -92,6 +92,12 @@ public abstract class GameObject {
         m_Position = position;
     }
 
+    public void setPosition(float x, float y, float z){
+        m_Position.X = x;
+        m_Position.Y = y;
+        m_Position.Z = z;
+    }
+
     public Vector3 getPosition(){
         return m_Position;
     }

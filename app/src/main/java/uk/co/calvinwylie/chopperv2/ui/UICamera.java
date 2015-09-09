@@ -21,9 +21,9 @@ public class UICamera {
     private Vector3 m_UpVector;
 
     public UICamera(){
-        m_Position = new Vector3(0, -1, 0);
+        m_Position = new Vector3(0, 1, 0);
         m_LookAt   = new Vector3(0, 0, 0);
-        m_UpVector = new Vector3(0, 0, 1);
+        m_UpVector = new Vector3(0, 0, -1);
 
     }
 

@@ -186,7 +186,7 @@ public class MainActivity extends Activity {
         }
         if(m_GameThread.isPaused()){
             m_GameThread.setPaused(false);
-            m_GameThread.start();
+            //m_GameThread.start();
         }
     }
 }

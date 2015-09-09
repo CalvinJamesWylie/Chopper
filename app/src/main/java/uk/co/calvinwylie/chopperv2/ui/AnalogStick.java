@@ -26,7 +26,7 @@ public class AnalogStick {
     private UISprite m_CenterMarker;
 
     public AnalogStick(){
-        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 64f , 64f, TextureType.none); //TODO add params
+        m_CenterMarker = new UISprite(new Vector3(), new Rotation(), 64f , 64f, TextureType.none);
     }
 
     public void activate(Vector2 center, int id) {
@@ -37,7 +37,7 @@ public class AnalogStick {
         m_AssociatedPointerId = id;
 
         Log.i(tag, "" + center.toString());
-        m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, -center.Y));
+        m_CenterMarker.setPosition(new Vector3(center.X, 0.0f, center.Y));
         m_CenterMarker.update();
         m_CenterMarker.setTexture(TextureType.analog_stick);
     }
@@ -93,7 +93,7 @@ public class AnalogStick {
             m_Angle = 0;
         }
 
-        m_CenterMarker.setRotation((float) Math.toDegrees(-m_Angle), 0.0f, 1.0f, 0.0f);
+        m_CenterMarker.setRotation((float) Math.toDegrees(m_Angle) - 180 , 0.0f, 1.0f, 0.0f);
         m_CenterMarker.update();
 //        if(!m_Moved && m_DeltaPosition.length() > 10){
 //            m_Moved = true;
