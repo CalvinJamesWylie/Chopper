@@ -1,6 +1,7 @@
 package uk.co.calvinwylie.chopperv2.game;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
+import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.Shader;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
@@ -17,7 +19,9 @@ import uk.co.calvinwylie.chopperv2.ui.UIElement;
 
 public class GamePacket {
 
-    public ArrayList<GameObject> m_RenderList = new ArrayList<>();
+    private String tag = "GamePacket";
+
+    public ArrayList<ArrayList<GameObject>> m_RenderList = new ArrayList<>();
     public ArrayList<UIElement> m_UIRenderList = new ArrayList<>();
 
     private static PhongShader m_PhongShader;
@@ -28,9 +32,11 @@ public class GamePacket {
     public UICamera m_UICamera;// and this
 
     public GamePacket(Context context){
+        for(int i = 0; i < ModelType.values().length; i++){
+            m_RenderList.add(new ArrayList<GameObject>());
+            Log.i(tag, "ADD LIST:" + i);
+        }
         m_Context = context;
-        m_RenderList.clear();
-        m_UIRenderList.clear();
 
     }
 
@@ -39,7 +45,7 @@ public class GamePacket {
     }
 
     public void addToRenderer(GameObject go){
-        m_RenderList.add(go);
+        m_RenderList.get(go.getModelType().ordinal()).add(go);
     }
 
     public void addToRenderer(UIElement uie){

@@ -37,11 +37,12 @@ public class MatrixHelper {
         m[15] = 0.0f;
     }
 
-    public static Vector3 getColumn(int column, float[] matrix){
+    public static Vector3 getColumn(Vector3 rv, int column, float[] matrix){
         column -= 1;
         column *= 4;
 
-        return new Vector3(matrix[column], matrix[column+1], matrix[column+2]);
+        rv.set(matrix[column], matrix[column+1], matrix[column+2]);
+        return rv;
 
     }
 }

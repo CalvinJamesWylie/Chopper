@@ -14,18 +14,18 @@ public class Bullet extends GameObject {
 
     public Bullet(Affiliation affiliation, Vector3 position, float yaw, Vector2 forwardVector, float muzzleVelocity){
         init(affiliation, position, yaw, forwardVector, muzzleVelocity);
-        m_Scale.set(0.5f);
+        m_PhysAttribs.scale.set(0.5f);
         m_Material = new Material(TextureType.orange);
         m_ModelType = ModelType.cube;
     }
 
     private void init(Affiliation affiliation, Vector3 position, float yaw, Vector2 forwardVector, float muzzleVelocity){
         m_Affiliation = affiliation;
-        m_Position.set(position);
+        m_PhysAttribs.position.set(position);
         forwardVector.scaleBy(muzzleVelocity);
         m_OrginalVelocity.set(forwardVector);
-        m_Velocity.set(forwardVector);
-        m_Rotation.setAngle((float) Math.toDegrees(yaw));
+        m_PhysAttribs.velocity.set(forwardVector);
+        m_PhysAttribs.rotation.setAngle((float) Math.toDegrees(yaw));
     }
 
     @Override
@@ -36,9 +36,9 @@ public class Bullet extends GameObject {
 
 
     private void move(double deltaTime){
-        m_Velocity.scaleBy((float)deltaTime);
-        m_Position.add(m_Velocity);
-        m_Velocity.set(m_OrginalVelocity);
+        m_PhysAttribs.velocity.scaleBy((float)deltaTime);
+        m_PhysAttribs.position.add(m_PhysAttribs.velocity);
+        m_PhysAttribs.velocity.set(m_OrginalVelocity);
     }
 
     public void setVisibility(boolean visible){

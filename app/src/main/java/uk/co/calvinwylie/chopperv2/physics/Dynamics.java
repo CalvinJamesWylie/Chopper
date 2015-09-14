@@ -7,24 +7,13 @@ public class Dynamics {
 
     private static Vector3 tempVector = new Vector3();
 
-    public static void calcAirResistance(Vector3 vel, float airResistanceConst, float deltaTime) {
+    public static void calcAirResistance(Vector3 vel, float airResistanceConst) {
 
-        float speed = vel.length();
-
-        tempVector.X = -airResistanceConst * vel.X * speed * deltaTime;
-        tempVector.Y = -airResistanceConst * vel.Y * speed * deltaTime;
-        tempVector.Z = -airResistanceConst * vel.Z * speed * deltaTime;
+        tempVector.X = -airResistanceConst * vel.X;
+        tempVector.Y = -airResistanceConst * vel.Y;
+        tempVector.Z = -airResistanceConst * vel.Z;
 
         vel.add(tempVector);
 
-//        if (vel.isZero()){
-//            return vel;
-//        }
-//
-//        return new Vector3(
-//                (vel.X * vel.X) * Constants.AIR_RESISTANCE,
-//                (vel.Y * vel.Y) * Constants.AIR_RESISTANCE,
-//                (vel.Z * vel.Z) * Constants.AIR_RESISTANCE
-//        );
     }
 }

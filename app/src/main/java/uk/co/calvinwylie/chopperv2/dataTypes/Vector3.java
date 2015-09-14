@@ -143,7 +143,7 @@ public class Vector3 {
     }
 
 
-    public static void vector2Between(Vector2 rv, Vector3 from, Vector3 to, String XY_XZ_YZ){
+    public static Vector2 vector2Between(Vector2 rv, Vector3 from, Vector3 to, String XY_XZ_YZ){
         m_TempVector.set(
                 to.X - from.X,
                 to.Y - from.Y,
@@ -165,6 +165,8 @@ public class Vector3 {
             default:
                 throw new InvalidParameterException("Incorrect string used in vector2Between");
         }
+
+        return rv;
     }
 
     public void normalise(){

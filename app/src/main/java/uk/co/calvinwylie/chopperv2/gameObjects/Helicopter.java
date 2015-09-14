@@ -1,9 +1,7 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
 import android.content.Context;
-import android.util.Log;
 
-import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.Affiliation;
 import uk.co.calvinwylie.chopperv2.game.BulletManager;
@@ -32,12 +30,12 @@ public class Helicopter extends Vehicle {
     public Helicopter(Context context, BulletManager bulletManager, TouchHandler touchHandler){
         super(bulletManager);
         m_TouchHandler = touchHandler;
-        m_MaxSpeed = 5.0f;
-        m_Mass = 1.5f;              //change this if heli isnt fast enough
-        m_AirResistance = 0.75f;   //change this if heli isnt slowing down fast enough
+        m_PhysAttribs.speed = 2.0f;
+        m_PhysAttribs.mass = 1.5f;
+        m_PhysAttribs.airResistance = 0.2f;
         m_Material = new Material(TextureType.helicopter);
         m_ModelType = ModelType.helicopter;
-        m_Engine = new Engine(this);
+        m_PhysAttribs.engine = new Engine(this.m_PhysAttribs);
         m_Affiliation = Affiliation.Blue;
     }
 
@@ -46,34 +44,33 @@ public class Helicopter extends Vehicle {
 
         m_Gun.update(deltaTime);
         if(m_TouchHandler.leftAnalogStick.isActive()) {
-            m_Engine.exertForce(m_TouchHandler.leftAnalogStick.getDelta(), 2.0f);
-            m_Velocity.add(m_Engine.getAcceleration());
+            m_PhysAttribs.engine.exertForce(m_TouchHandler.leftAnalogStick.getDelta(), m_PhysAttribs.speed);
+            m_PhysAttribs.velocity.add(m_PhysAttribs.engine.getAcceleration());
         }
         if(m_TouchHandler.rightAnalogStick.isActive()){
-            m_TargetYaw = m_TouchHandler.rightAnalogStick.getAngle();
-            m_Gun.setDirection(m_TouchHandler.rightAnalogStick.getDelta(), m_TargetYaw);
+            m_PhysAttribs.targetYaw = m_TouchHandler.rightAnalogStick.getAngle();
+            m_Gun.setDirection(m_TouchHandler.rightAnalogStick.getDelta(), m_PhysAttribs.targetYaw);
             m_Firing = true;
         }else{
             m_Firing = false;
         }
+
         move(deltaTime);
         updateModelMatrix();
-        m_ForwardVector = MatrixHelper.getColumn(3, getModelMatrix()).scaled(-1);
-        m_UpVector = MatrixHelper.getColumn(2, getModelMatrix());
-        m_RightVector = MatrixHelper.getColumn(1, getModelMatrix());
+        m_PhysAttribs.updateDirVectors();
     }
 
     public void move(double deltaTime) {
 
-        m_AngleToTarget = (float) ((m_TargetYaw - m_Yaw + (2 * Math.PI)) % (2 * Math.PI));
+        m_AngleToTarget = (float) ((m_PhysAttribs.targetYaw - m_PhysAttribs.yaw + (2 * Math.PI)) % (2 * Math.PI));
 
         if(m_AngleToTarget > Math.PI){
             m_AngleToTarget = (float)(2*Math.PI) - m_AngleToTarget;
-            m_TurnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
-            m_Yaw -= m_TurnSpeed;
+            m_PhysAttribs.turnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
+            m_PhysAttribs.yaw -= m_PhysAttribs.turnSpeed;
         }else{
-            m_TurnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
-            m_Yaw += m_TurnSpeed;
+            m_PhysAttribs.turnSpeed = (float)(m_AngleToTarget*deltaTime*TURN_SPEED_MULTIPLIER);
+            m_PhysAttribs.yaw += m_PhysAttribs.turnSpeed;
         }
 
         float fireCutOffAngle = 15.0f;
@@ -81,30 +78,31 @@ public class Helicopter extends Vehicle {
             m_Gun.requestFire();
         }
 
-        m_Yaw = MathsHelper.RoundClamp(m_Yaw, 0, (float) Math.PI * 2);
+        m_PhysAttribs.yaw = MathsHelper.RoundClamp(m_PhysAttribs.yaw, 0, (float) Math.PI * 2);
 
-        if(m_Velocity.isZero()){
+        if(m_PhysAttribs.velocity.isZero()){
             return;
         }
-        if (m_Velocity.lengthSquared() < Math.pow(0.01, 2)){
-            m_Velocity.setToZero();
+        if (m_PhysAttribs.velocity.lengthSquared() < Math.pow(0.01, 2)){
+            m_PhysAttribs.velocity.setToZero();
             return;
         }
 
-        m_TempVect.set(m_Velocity);
+        m_TempVect.set(m_PhysAttribs.velocity);
         m_TempVect.scaleBy((float) deltaTime);
-        m_Position.add(m_TempVect);
-        Dynamics.calcAirResistance(m_Velocity, m_AirResistance, (float) deltaTime);
-        m_Rotation.setAxis(Vector3.crossProduct(m_TempVect, Up));
-        m_Rotation.setAngle(-m_Velocity.lengthSquared() * (float) (Math.PI/4)); // TODO remove magic number, controlls the amount the heli leans.
+        m_PhysAttribs.position.add(m_TempVect);
+        Dynamics.calcAirResistance(m_PhysAttribs.velocity, m_PhysAttribs.airResistance);
+
+        m_PhysAttribs.rotation.setAxis(Vector3.crossProduct(m_TempVect, Up));
+        m_PhysAttribs.rotation.setAngle(-m_PhysAttribs.velocity.lengthSquared() * (float) (Math.PI/4)); // TODO remove magic number, controlls the amount the heli leans.
     }
 
 
     public Vector3 getForwardVector() {
-        return m_ForwardVector;
+        return m_PhysAttribs.forwardVector;
     }
 
     public Vector3 getRightVector() {
-        return m_RightVector;
+        return m_PhysAttribs.rightVector;
     }
 }

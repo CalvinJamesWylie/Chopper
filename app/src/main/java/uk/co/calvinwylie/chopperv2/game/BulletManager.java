@@ -24,7 +24,8 @@ public class BulletManager {
     //Variables used in ColDet
     Vector3 newBulletPos = new Vector3();
     Vector3 newGameObjectPos = new Vector3();
-    Vector3 tempVector = new Vector3();
+    Vector3 tempVector3 = new Vector3();
+    Vector2 tempVector2 = new Vector2();
 
     public BulletManager(GameLogic gameLogic){
         m_GameLogic = gameLogic;
@@ -98,7 +99,7 @@ public class BulletManager {
 
         newGameObjectPos.set(GO.getPosition());
 
-        float distBetweenObjsSqr = Vector3.vector3Between(tempVector, newBulletPos, newGameObjectPos).lengthSquared();
+        float distBetweenObjsSqr = Vector3.vector2Between(tempVector2, newBulletPos, newGameObjectPos, "XZ").lengthSquared();
         float collisionRadiiSqr =(float) Math.pow((bullet.getCollisionRadius() * bullet.getScale() + (GO.getCollisionRadius()*GO.getScale())), 2);
 
         if(distBetweenObjsSqr <= collisionRadiiSqr){

@@ -1,7 +1,5 @@
 package uk.co.calvinwylie.chopperv2.gameObjects;
 
-import android.opengl.GLES20;
-
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.models.Material;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
@@ -16,7 +14,7 @@ public class Terrain extends GameObject {
         m_Material.setSpecularPower(0.0f);
         m_ModelType = ModelType.lamina;
 
-        m_Scale = new Vector3(100, 1, 100);
+        m_PhysAttribs.scale = new Vector3(100, 1, 100);
         updateModelMatrix();
     }
 

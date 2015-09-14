@@ -10,17 +10,12 @@ import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 public class Engine {
     private final static String tag = "Engine";
 
-    private GameObject m_GameObject;
     private Vector3 m_Acceleration = new Vector3();
     private Vector3 m_Force = new Vector3();
-    private Vector3 m_TempVect = new Vector3(); // TODO remove this temp
     private float m_InverseMass;
-    private float m_MaxSpeed;
 
-    public Engine(GameObject go){
-        m_GameObject = go;
-        m_InverseMass = 1.0f/go.getMass();
-        m_MaxSpeed = go.getMaxSpeed();
+    public Engine(GameObject.PhysicalAttribs pA){
+        m_InverseMass = 1.0f/pA.mass;
 
     }
 
@@ -31,12 +26,11 @@ public class Engine {
     }
 
 
-    public void exertForce(Vector3 vector, double deltaTime){
+    public void exertForce(Vector3 vector, float multiplier){
 
         m_Force.set(vector);
-        m_Force.scaleBy((float)deltaTime);
-
-        m_Acceleration = m_Force.scaled(m_InverseMass);
+        m_Force.scaleBy(multiplier*m_InverseMass);
+        m_Acceleration = m_Force;
     }
 
     public Vector3 getAcceleration() {

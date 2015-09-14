@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import uk.co.calvinwylie.chopperv2.ai.Behaviour_Target;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Base;
 import uk.co.calvinwylie.chopperv2.gameObjects.Enemy;
@@ -54,7 +55,7 @@ public class GameLogic {
         m_GamePack.addToRenderer(m_Terrain);
 
         m_Heli = new Helicopter(m_Context, m_BulletManager, touchHandler);
-        m_Heli.setPosition(new Vector3(0.0f, 3f, 0.0f));
+        m_Heli.setPosition(new Vector3(0.0f, 5f, 0.0f));
         m_GamePack.addToRenderer(m_Heli);
         m_GameObjectManager.add(m_Heli);
 
@@ -65,7 +66,8 @@ public class GameLogic {
 
         for(int i = 0; i < m_EnemyList.length; i++){
             m_Enemy = new Enemy();
-            m_Enemy.setPosition((i/9)*5, 0, (i%9)*5);
+            m_Enemy.setPosition((i / 9) * 5, 0, (i % 9) * 5);
+            m_Enemy.setTarget(m_Heli);
             m_GamePack.addToRenderer(m_Enemy);
             m_GameObjectManager.add(m_Enemy);
         }
@@ -121,12 +123,12 @@ public class GameLogic {
         m_TotalTime += deltaTime;
 
         MathsHelper.RoundClamp((float) m_TotalTime, 0, (float)Math.PI);
-
-        float tempX = (float)Math.cos(m_TotalTime);
-        float tempY = (float)Math.sin(m_TotalTime);
-
-        Vector3 forward = m_Heli.getForwardVector();
-        Vector3 right = m_Heli.getRightVector();
+//
+//        float tempX = (float)Math.cos(m_TotalTime);
+//        float tempY = (float)Math.sin(m_TotalTime);
+//
+//        Vector3 forward = m_Heli.getForwardVector();
+//        Vector3 right = m_Heli.getRightVector();
 
         //PhongShader.getDirectionalLight().getDirection().set(tempX,tempY,0.0f);
 

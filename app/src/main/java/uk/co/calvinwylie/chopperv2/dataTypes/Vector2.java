@@ -46,9 +46,12 @@ public class Vector2 {
 
     public float length() {
         return FloatMath.sqrt(
-                X * X
-              + Y * Y
+                X * X + Y * Y
         );
+    }
+
+    public float lengthSquared() {
+        return X * X + Y * Y;
     }
 
     public Vector2 scaled(float multiplier){

@@ -5,4 +5,5 @@ package uk.co.calvinwylie.chopperv2.util;
  */
 public class LoggerConfig {
     public static final boolean ON = true;
+    public static boolean DEBUG = false;
 }

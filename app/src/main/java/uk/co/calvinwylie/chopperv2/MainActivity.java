@@ -20,6 +20,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.game.GameLogic;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 import uk.co.calvinwylie.chopperv2.ui.TouchHandler;
+import uk.co.calvinwylie.chopperv2.util.LoggerConfig;
 
 
 public class MainActivity extends Activity {
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
             m_GlSurfaceView.setEGLContextClientVersion(2);
             m_GlSurfaceView.setRenderer(m_MainRenderer);
             m_GlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
             m_RendererSet  = true;
             m_TouchHandler = new TouchHandler(m_DisplaySize.x, m_DisplaySize.y, R.drawable.analog_stick);
             m_Logic        = new GameLogic(this, m_GamePack, m_TouchHandler);
@@ -145,7 +147,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        LoggerConfig.DEBUG = true;
         return true;
     }
 

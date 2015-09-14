@@ -34,6 +34,7 @@ import javax.microedition.khronos.opengles.GL10;
 import uk.co.calvinwylie.chopperv2.game.GamePacket;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.models.ModelManager;
+import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.ui.UIElement;
 import uk.co.calvinwylie.chopperv2.models.TextureManager;
 import uk.co.calvinwylie.chopperv2.util.FrameRateLogger;
@@ -60,7 +61,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         glClearColor(1.0f, 1.0f, 0.3f, 1.0f);
-        glEnable(GL_CULL_FACE); //TODO fix camera.
+        glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
         glEnable(GL_DEPTH_TEST);
@@ -89,7 +90,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
         m_GamePack.m_UICamera.onSurfaceChanged(width, height);
     }
 
-    private ArrayList<GameObject> m_ClonedRenderList;
+    private ArrayList<ArrayList<GameObject>> m_ClonedRenderList;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -100,31 +101,41 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
         m_GamePack.m_Camera.onDrawFrame();
 
-        m_ClonedRenderList = (ArrayList<GameObject>)m_GamePack.m_RenderList.clone();
+        m_ClonedRenderList = (ArrayList<ArrayList<GameObject>>)m_GamePack.m_RenderList.clone();
 
         int i = 0;
         GameObject go;
+        m_GamePack.getPhongShader().useProgram();
         for(i = 0; i < m_ClonedRenderList.size(); i++){
-            go = m_ClonedRenderList.get(i);
-            if(go.isVisible()) {
-                m_GamePack.getPhongShader().useProgram();
-                m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager, go.getMaterial());
-                m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getPhongShader().getPositionAttributeLocation(),
-                        m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
-                        m_GamePack.getPhongShader().getNormalAttributeLocation());
+            m_ModelManager.getModelByOrdinal(i).enableVertexAttribArrays(
+                    m_GamePack.getPhongShader().getPositionAttributeLocation(),
+                    m_GamePack.getPhongShader().getTextureCoordinatesAttributeLocation(),
+                    m_GamePack.getPhongShader().getNormalAttributeLocation()
+            );
+            for (int j = 0; j < m_ClonedRenderList.get(i).size(); j++) {
+
+                go = m_ClonedRenderList.get(i).get(j);
+                if (go.isVisible()) {
+                    m_GamePack.getPhongShader().setUniforms(m_GamePack.m_Camera.getMVPMatrix(go.getModelMatrix()), go.getModelMatrix(), m_GamePack.m_Camera.getPosition(), m_TextureManager, go.getMaterial());
+                    m_ModelManager.getModel(go.getModelType()).draw(
+                    );
+                }
             }
         }
 
 
         m_GamePack.m_UICamera.onDrawFrame();
+
+        m_GamePack.getTextureShader().useProgram();
         //for (UIElement uie: m_GamePack.m_UIRenderList){
+
+        m_ModelManager.getModel(ModelType.lamina).enableVertexAttribArrays(m_GamePack.getTextureShader().getPositionAttributeLocation(),
+                m_GamePack.getTextureShader().getTextureCoordinatesAttributeLocation(),
+                m_GamePack.getTextureShader().getNormalAttributeLocation());
         for (i = 0; i < m_GamePack.m_UIRenderList.size(); i++){
             go = m_GamePack.m_UIRenderList.get(i);
-            m_GamePack.getTextureShader().useProgram();
             m_GamePack.getTextureShader().setUniforms(m_GamePack.m_UICamera.getMVPMatrix(go.getModelMatrix()), m_TextureManager.getTexture(go.getMaterial().getTextureType()));
-            m_ModelManager.getModel(go.getModelType()).draw(m_GamePack.getTextureShader().getPositionAttributeLocation(),
-                    m_GamePack.getTextureShader().getTextureCoordinatesAttributeLocation(),
-                    m_GamePack.getTextureShader().getNormalAttributeLocation());
+            m_ModelManager.getModel(go.getModelType()).draw();
         }
 
 

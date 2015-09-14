@@ -55,6 +55,7 @@ public class TextureShader extends Shader {
     }
     public int getTextureCoordinatesAttributeLocation(){
         int result = getAttributeLocation("a_TextureCoordinates");
+
         if(result == -1){
             Log.e(tag, "a_TextureCoords aint a thing");
             return result;

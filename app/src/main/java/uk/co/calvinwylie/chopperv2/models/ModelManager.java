@@ -18,4 +18,8 @@ public class ModelManager {
     public Mesh getModel(ModelType modelType){
         return m_Models[modelType.ordinal()];
     }
+
+    public Mesh getModelByOrdinal(int ordinal){
+        return m_Models[ordinal];
+    }
 }

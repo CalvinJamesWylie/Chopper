@@ -28,8 +28,8 @@ public abstract class UIElement extends GameObject{
     public UIElement(){
         setIdentityM(m_ModelMatrix, 0);
         m_ModelType = ModelType.lamina;
-        m_Position = new Vector3();             //empty Vector constructor sets values to 0;
-        m_Rotation = new Rotation();           //empty Rotation constructor sets values to 0 bar the yAxis to ensure no NaNs;
+        m_PhysAttribs.position = new Vector3();             //empty Vector constructor sets values to 0;
+        m_PhysAttribs.rotation = new Rotation();           //empty Rotation constructor sets values to 0 bar the yAxis to ensure no NaNs;
         updateModelMatrix();
     }
 
