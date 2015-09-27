@@ -2,12 +2,12 @@ package uk.co.calvinwylie.chopperv2.models;
 
 
 public enum TextureType {
-    orange,
+    orange, brown, green, blue, none,
     analog_stick,
     check,
     helicopter,
-    none,
     grass,
     robot,
-    base
+    base,
+    terrain
 }

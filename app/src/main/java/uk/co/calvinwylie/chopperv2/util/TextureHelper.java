@@ -26,6 +26,35 @@ public class TextureHelper {
 
     private static final String tag = "TextureHelper";
 
+    public static int loadTexture(Bitmap bitmap){
+        final int[] textureObjectIds = new int[1];
+        glGenTextures(1,textureObjectIds,0);
+
+        if(textureObjectIds[0] == 0){
+            if(LoggerConfig.ON){
+                Log.w(tag, "Could not generate a new OpenGL texture object.");
+            }
+            return 0;
+        }
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+
+        glBindTexture(GL_TEXTURE_2D, textureObjectIds[0]);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);//GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);//GL_LINEAR);
+
+        GLUtils.texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
+
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        bitmap.recycle();
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        return textureObjectIds[0];
+    }
+
     public static int loadTexture(Context context, int resourceId){
         final int[] textureObjectIds = new int[1];
         glGenTextures(1,textureObjectIds,0);

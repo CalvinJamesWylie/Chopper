@@ -4,6 +4,7 @@ import android.opengl.Matrix;
 
 import uk.co.calvinwylie.chopperv2.ai.Controller;
 import uk.co.calvinwylie.chopperv2.dataTypes.Rotation;
+import uk.co.calvinwylie.chopperv2.dataTypes.Vector2;
 import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.game.Affiliation;
 import uk.co.calvinwylie.chopperv2.models.Material;
@@ -165,8 +166,8 @@ public abstract class GameObject {
         return m_Affiliation;
     }
 
-    public float getScale() {
-        return m_PhysAttribs.scale.length();
+    public Vector3 getScale() {
+        return m_PhysAttribs.scale;
     }
 
     public PhysicalAttribs getPhysicalAttribs(){

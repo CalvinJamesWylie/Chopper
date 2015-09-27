@@ -1,6 +1,7 @@
 package uk.co.calvinwylie.chopperv2.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import uk.co.calvinwylie.chopperv2.R;
 import uk.co.calvinwylie.chopperv2.util.TextureHelper;
@@ -8,9 +9,15 @@ import uk.co.calvinwylie.chopperv2.util.TextureHelper;
 
 public class TextureManager{
 
+    private Context m_Context;
+
+    public TextureManager(Context context){
+        m_Context = context;
+    }
+
     private int[] m_TextureHandles = new int[TextureType.values().length];
 
-    public void loadTextures(Context context){
+    public void loadTextures(){
 
         TextureType textures[] = TextureType.values();
 
@@ -20,6 +27,15 @@ public class TextureManager{
                 case orange:
                     id = R.drawable.orange;
                     break;
+                case green:
+                    id = R.drawable.green;
+                    break;
+                case blue:
+                    id = R.drawable.blue;
+                    break;
+                case brown:
+                    id = R.drawable.brown;
+                    break;
                 case analog_stick:
                     id = R.drawable.analog_stick;
                     break;
@@ -27,7 +43,7 @@ public class TextureManager{
                     id = R.drawable.check;
                     break;
                 case helicopter:
-                    id = R.drawable.helicopter;
+                    id = R.drawable.helicopter_grey;
                     break;
                 case none:
                     id = R.drawable.none;
@@ -39,15 +55,18 @@ public class TextureManager{
                     id = R.drawable.robot;
                     break;
                 case base:
-                    id = R.drawable.base;
+                    id = R.drawable.base_pixel;
                     break;
                 default:
                     id = R.drawable.ic_launcher;
             }
-            m_TextureHandles[texture.ordinal()] = TextureHelper.loadTexture(context, id);
+            m_TextureHandles[texture.ordinal()] = TextureHelper.loadTexture(m_Context, id);
         }
     }
 
+    public void loadTexture(TextureType textureType, Bitmap bitmap){
+        m_TextureHandles[textureType.ordinal()] = TextureHelper.loadTexture(bitmap);
+    }
 
     public int getTexture(TextureType texture) {
         return m_TextureHandles[texture.ordinal()];

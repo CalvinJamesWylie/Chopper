@@ -8,8 +8,10 @@ import uk.co.calvinwylie.chopperv2.game.Affiliation;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
 import uk.co.calvinwylie.chopperv2.models.TextureType;
 import uk.co.calvinwylie.chopperv2.physics.Engine;
+import uk.co.calvinwylie.chopperv2.util.MathsHelper;
 
 public class Enemy extends GameObject{
+
 
     public Enemy(){
         m_ModelType = ModelType.robot;
@@ -35,5 +37,21 @@ public class Enemy extends GameObject{
     }
 
     public void Collision(){
+        int i = MathsHelper.rand.nextInt(4);
+        switch (i % 4) {
+            case 0:
+                setPosition(MathsHelper.rand.nextFloat() * 100 - 50, 0, 50);
+                break;
+            case 1:
+                setPosition(50, 0, MathsHelper.rand.nextFloat() * 100 - 50);
+                break;
+            case 2:
+                setPosition(MathsHelper.rand.nextFloat() * 100 - 50, 0, -50);
+                break;
+            case 3:
+                setPosition(-50, 0, MathsHelper.rand.nextFloat() * 100 - 50);
+                break;
+        }
+
     }
 }

@@ -10,6 +10,7 @@ import uk.co.calvinwylie.chopperv2.dataTypes.Vector3;
 import uk.co.calvinwylie.chopperv2.gameObjects.Camera;
 import uk.co.calvinwylie.chopperv2.gameObjects.GameObject;
 import uk.co.calvinwylie.chopperv2.models.ModelType;
+import uk.co.calvinwylie.chopperv2.models.TextureManager;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.PhongShader;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.Shader;
 import uk.co.calvinwylie.chopperv2.shaderPrograms.TextureShader;
@@ -31,12 +32,17 @@ public class GamePacket {
     public Camera m_Camera; //Todo make not public
     public UICamera m_UICamera;// and this
 
+    private TextureManager m_TextureManager;
+
+
     public GamePacket(Context context){
         for(int i = 0; i < ModelType.values().length; i++){
             m_RenderList.add(new ArrayList<GameObject>());
             Log.i(tag, "ADD LIST:" + i);
         }
         m_Context = context;
+
+        m_TextureManager = new TextureManager(context);
 
     }
 
@@ -73,4 +79,17 @@ public class GamePacket {
         m_TextureShader = new TextureShader(m_Context);
         m_PhongShader = new PhongShader(m_Context);
     }
+
+    public Camera getPerspCamera(){
+        return m_Camera;
+    }
+    public UICamera getUICamera(){
+        return m_UICamera;
+    }
+
+    public TextureManager getTextureManager(){
+        return m_TextureManager;
+    }
+
+
 }

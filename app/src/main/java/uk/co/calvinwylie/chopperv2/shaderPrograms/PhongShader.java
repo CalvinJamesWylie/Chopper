@@ -49,7 +49,7 @@ public class PhongShader  extends Shader {
         super(context, R.raw.phong_vertex_shader, R.raw.phong_fragment_shader);
 
         //Camera and model data
-        addUniform("u_MVPMatrix");
+        addUniform("u_VPMatrix");
         addUniform("u_MMatrix");
         addUniform("u_EyePos");
 
@@ -94,10 +94,8 @@ public class PhongShader  extends Shader {
         addAttribute("a_Normal");
     }
 
-    public void setUniforms(float[] MVPMatrix, float[] modelMatrix, Vector3 cameraPos, TextureManager textureManager, Material material){
-
-        setUniform("u_MVPMatrix", MVPMatrix);                         //Pass the matrix into the shader program
-        setUniform("u_MMatrix", modelMatrix);                         //Pass the matrix into the shader program
+    public void setPerFrameUniforms( float[] VPMatrix, Vector3 cameraPos) {
+        setUniform("u_VPMatrix", VPMatrix);                         //Pass the matrix into the shader program7
         setUniform("u_EyePos", cameraPos);
 
         setUniform(m_AmbientLight);
@@ -105,12 +103,19 @@ public class PhongShader  extends Shader {
 
 
         for(int i = 0; i < m_PointLights.length; i++){
-            setUniform(m_PointLights[i]);//setUniform("u_PointLights[" + i + "]", m_PointLights[i]);
+            setUniform(m_PointLights[i]);
         }
 
         for(int i = 0; i < m_SpotLights.length; i++){
             setUniform(m_SpotLights[i]);
         }
+
+    }
+
+    public void setPerModelUniforms( float[] modelMatrix, TextureManager textureManager, Material material){
+
+
+        setUniform("u_MMatrix", modelMatrix);                         //Pass the matrix into the shader program
 
         glActiveTexture(GL_TEXTURE0);                                                       //Set the active texture unit to texture unit 0.
         glBindTexture(GL_TEXTURE_2D, textureManager.getTexture(material.getTextureType())); //Bind the texture to this unit.
@@ -302,6 +307,7 @@ public class PhongShader  extends Shader {
 //        setUniform(uniform + ".direction", spotlight.getDirection());
 //        setUniform(uniform + ".cutOff", spotlight.getCutOff());
     }
+
 
 }
 

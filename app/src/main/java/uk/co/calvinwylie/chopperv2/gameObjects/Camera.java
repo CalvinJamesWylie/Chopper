@@ -105,4 +105,8 @@ public class Camera {
     public Vector3 getPosition() {
         return m_Position;
     }
+
+    public float[] getVPMatrix() {
+        return m_ViewProjectionMatrix;
+    }
 }

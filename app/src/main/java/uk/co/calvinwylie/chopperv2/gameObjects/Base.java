@@ -10,6 +10,10 @@ public class Base extends GameObject {
     public Base(){
         m_ModelType = ModelType.base;
         m_Material.setTextureType(TextureType.base);
+        m_PhysAttribs.scale.set(30,30,30);
+        m_Material.setSpecularIntensity(0);
+        m_Material.setSpecularPower(0);
+        updateModelMatrix();
     }
 
     @Override

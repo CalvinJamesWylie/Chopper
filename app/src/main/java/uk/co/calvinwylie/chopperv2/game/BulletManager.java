@@ -100,7 +100,9 @@ public class BulletManager {
         newGameObjectPos.set(GO.getPosition());
 
         float distBetweenObjsSqr = Vector3.vector2Between(tempVector2, newBulletPos, newGameObjectPos, "XZ").lengthSquared();
-        float collisionRadiiSqr =(float) Math.pow((bullet.getCollisionRadius() * bullet.getScale() + (GO.getCollisionRadius()*GO.getScale())), 2);
+        float collisionRadiiSqr =
+                (bullet.getCollisionRadius() * bullet.getScale().lengthSquared() + //bullet colRadius * size + go colRadius * size
+                        GO.getCollisionRadius()*GO.getScale().lengthSquared());
 
         if(distBetweenObjsSqr <= collisionRadiiSqr){
             return true;
