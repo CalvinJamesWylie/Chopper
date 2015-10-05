@@ -91,7 +91,7 @@ public class GameLogic {
         }
 
 
-        m_Camera = new Camera(0.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
+        m_Camera = new Camera(0.0f, 35.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
         m_Camera.setFollow(m_Heli);
         m_GamePack.assignCamera(m_Camera);
 
@@ -148,7 +148,7 @@ public class GameLogic {
 //        Vector3 forward = m_Heli.getForwardVector();
 //        Vector3 right = m_Heli.getRightVector();
 //
-        PhongShader.getDirectionalLight().getDirection().set(tempX,tempY,0.0f);
+        //PhongShader.getDirectionalLight().getDirection().set(tempX,tempY,0.0f);
 //
 //
 //        PhongShader.getSpotLights()[0].getPointLight().setPosition(m_Heli.getPosition());

@@ -37,25 +37,22 @@ public class TextureManager{
                     id = R.drawable.brown;
                     break;
                 case analog_stick:
-                    id = R.drawable.analog_stick;
+                    id = R.drawable.analog;
                     break;
                 case check:
                     id = R.drawable.check;
                     break;
                 case helicopter:
-                    id = R.drawable.helicopter_grey;
+                    id = R.drawable.helicopter;
                     break;
                 case none:
                     id = R.drawable.none;
-                    break;
-                case grass:
-                    id = R.drawable.grass;
                     break;
                 case robot:
                     id = R.drawable.robot;
                     break;
                 case base:
-                    id = R.drawable.base_pixel;
+                    id = R.drawable.sprite_sheet;
                     break;
                 default:
                     id = R.drawable.ic_launcher;

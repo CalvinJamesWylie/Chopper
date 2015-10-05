@@ -6,7 +6,6 @@ public enum TextureType {
     analog_stick,
     check,
     helicopter,
-    grass,
     robot,
     base,
     terrain

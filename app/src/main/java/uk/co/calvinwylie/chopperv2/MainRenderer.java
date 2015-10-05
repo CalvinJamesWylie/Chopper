@@ -59,8 +59,8 @@ public class MainRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         glClearColor(1.0f, 1.0f, 0.3f, 1.0f);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
+     //   glEnable(GL_CULL_FACE);
+//        glCullFace(GL_BACK);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);

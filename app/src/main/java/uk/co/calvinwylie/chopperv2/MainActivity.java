@@ -7,6 +7,7 @@ import android.content.pm.ConfigurationInfo;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.e("tag", "on Create");
 
         super.onCreate(savedInstanceState);
 
@@ -188,8 +191,8 @@ public class MainActivity extends Activity {
             m_GlSurfaceView.onResume();
         }
         if(m_GameThread.isPaused()){
-            m_GameThread.setPaused(false);
-            //m_GameThread.start();
+           m_GameThread.setPaused(false);
+            m_GameThread.start();
         }
     }
 }

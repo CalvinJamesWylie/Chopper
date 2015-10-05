@@ -33,7 +33,8 @@ public class Helicopter extends Vehicle {
         m_PhysAttribs.speed = 2.0f;
         m_PhysAttribs.mass = 1.5f;
         m_PhysAttribs.airResistance = 0.2f;
-        m_Material = new Material(TextureType.helicopter, new Vector3(), 0.5f, 0.5f);
+        m_PhysAttribs.scale.set(20f, 20f, 20f);
+        m_Material = new Material(TextureType.base, new Vector3(), 0.5f, 0.5f);
         m_ModelType = ModelType.helicopter;
         m_PhysAttribs.engine = new Engine(this.m_PhysAttribs);
         m_Affiliation = Affiliation.Blue;

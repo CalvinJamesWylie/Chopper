@@ -25,7 +25,7 @@ public class MapCreator {
         int mapHeight = mapData.getHeight();
 
 
-        final Bitmap tileTexture = BitmapFactory.decodeResource(m_Context.getResources(), R.drawable.terrain);
+        final Bitmap tileTexture = BitmapFactory.decodeResource(m_Context.getResources(), R.drawable.terrain16);
         int tileTextureWidth = tileTexture.getWidth();
         int tileTextureSize = tileTexture.getHeight();
 
